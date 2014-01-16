@@ -1,0 +1,374 @@
+html, body.gametracker {
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+div#omniture {
+	display:none;
+}
+#topper {
+	width:100%;
+	height:100px;
+	position:fixed;
+	top:0;
+	left:0;
+	background:#002E4D;
+	font-family: 'Chivo', Helvetica, Arial, sans-serif;
+	z-index: 50;
+}
+#adwrapper {
+	position: fixed;
+	top:100px;
+	left:0;
+	right:0;
+	width:100%;
+	background: #222;
+	height:100px;
+	overflow:hidden;
+}
+#adwrapper p {
+	color:#555;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size:.8em;
+}
+#adwrapper a.boxclose {
+    position: absolute;
+    top:70px;
+    left:0;
+    width:15px;
+    height:0px;
+    cursor:pointer;
+    color: #fff;
+    border: 2px solid #AEAEAE;
+    border-radius: 30px;
+    background: #605F61;
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;   
+    z-index:5;
+    text-decoration: none;
+}
+#adwrapper .boxclose:before {
+    content: "×";
+    margin-left:-1px;
+    text-decoration: none;
+}
+#slider {
+	background: #2f2f2f;
+	background-image:url('back-arrow.png');
+	background-position:50% 50%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	width:100%;
+	z-index:1;
+	top:200px;
+	left:0;
+	bottom:100px;
+}
+#bottombuttons {
+	background:#050505;
+	width:100%;
+	height:100px;
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index: 50;
+}
+img.dplogo {
+	width:90px;
+	height:90px;
+	margin:5px 20px 5px 5px;
+	display: inline-block;
+	float:left;
+}
+#home {
+	height:90px;
+	color:#eee;
+	display: inline-block;
+	float:left;
+	margin:5px;
+}
+#scores {
+	height:90px;
+	color:#eee;
+	display: inline-block;
+	float:left;
+	margin:5px 10px;
+}
+#away {
+	height:90px;
+	color:#eee;
+	display: inline-block;
+	float:left;
+	margin:5px;
+}
+#home span, #away span {
+	height:45px;
+	width:100%;
+	text-align:center;
+	font-size:42px;
+	line-height:44px;
+	display:block;
+}
+#home img, #away img {
+	height:45px;
+	margin:0 auto;
+	clear:both;
+	display:block;
+}
+#scores div.teams {
+	height:45%;
+	display: block;
+	clear: both;
+	text-align:center;
+}
+#scores div.gamedata {
+	height:25%;
+	width:100%;
+	display: block;
+	clear: both;
+	text-align:center;
+	position: relative;
+}
+div.gamedata {
+	font-size:1em;
+}
+span.possessors {
+	display:none;
+}
+span.possession {
+	display:inline-block!important;
+}
+span#awayposs {
+	text-align:left;
+	left:0;
+	position: absolute;
+}
+span#homeposs {
+	text-align:right;
+	right:0;
+	position: absolute;
+}
+#scores h2 {
+	font-size:45px;
+	line-height:1;
+	text-align:center;
+	margin:0;
+	width:100%;
+}
+#scores h2 span {
+	font-size:25px;
+	margin: 0 10px;
+	font-weight:normal;
+}
+#scores h2, #scores h3 {
+	display:inline-block;
+	float:left;
+}
+#slider .slide {
+	margin:0;
+	overflow:hidden;
+}
+.swipe {
+	overflow: hidden;
+	visibility: hidden;
+	position: relative;
+}
+.swipe-wrap {
+	overflow: hidden;
+	position: relative;
+}
+.swipe-wrap > div {
+	float:left;
+	width:100%;
+	min-height:100%;
+	position: relative;
+}
+.gallerywrap {
+	background: #2f2f2f;
+	margin:10px auto;
+	width:50%;
+	height:100%;
+}
+.gallerychunk {
+	margin-bottom:30px;
+}
+.gallerychunk .vid-embed-wrap {
+    width: 100%;
+    position: relative;
+    display: block;
+    overflow:hidden;
+}
+.gallerychunk .vid-height-space {
+	height:0;
+	margin:0;
+	padding-bottom:53%;
+}
+.gallerychunk .vid-embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+p.newserror {
+	font-style:.9em;
+	color:#888;
+}
+#headlinesrefresh {
+	position: absolute;
+	top:0;
+	right:5px;
+	width:40px;
+	height:40px;
+	background: #111;
+	-moz-opacity: 0.90;
+	opacity: 0.90;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=90);
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+#headlinesrefresh img {
+	width:30px;
+	height:30px;
+	margin:5px;
+}
+.news-heds {
+	background:#fff;
+	width:50%;
+	height:100%;
+	margin:0 auto;
+	padding:10px;
+}
+.news-heds h2 {
+	font-family: 'Chivo', Helvetica, Arial, sans-serif;
+	font-size:2em;
+	font-weight:600;
+	display:block;
+	clear:both;
+}
+.news-heds h2 a {
+	color:#445;
+	text-decoration:none;
+}
+.news-heds img {
+	width:100%;
+	margin:10px auto 0;
+}
+.news-heds p {
+	color:#222;
+	font-family: Georgia,Times,serif;
+	font-size:1.2em;
+	font-weight:normal;
+	display:block;
+	clear:both;
+}
+.news-heds p.dp-blogs-timestamp {
+	font-size:1em;
+	color:#999;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	text-align:right;
+	width:100%;
+}
+#bottombuttons ul {
+	list-style-type: none;
+	padding:0;
+	margin:0;
+}
+#bottombuttons ul li {
+	float:left;
+	display: inline-block;
+	width:20%;
+	text-align:center;
+}
+#bottombuttons ul li img {
+	margin:5px auto;
+	clear:both;
+	display:block;
+	height:60px;
+}
+#bottombuttons ul li a {
+	font-family: 'Open Sans',Helvetica,Arial,sans-serif;
+	color:#999;
+	text-transform:uppercase;
+	text-decoration:none;
+	font-size:.85em;
+}
+@media only screen and (max-width:740px) {
+	#topper {
+		height:50px;
+	}
+	#adwrapper {
+		top:50px;
+		height:50px;
+	}
+	#adwrapper a.boxclose {
+	    top:25px;
+	}
+	#slider {
+		top:100px;
+		bottom:50px;
+	}
+	#bottombuttons {
+		height:50px;
+	}
+	img.dplogo {
+		width:45px;
+		height:45px;
+		margin:2.5px 12px 2.5px 2.5px;
+	}
+	#home {
+		height:45px;
+	}
+	#scores {
+		height:50px;
+		margin:2.5px 7px;
+	}
+	#away {
+		height:45px;
+	}
+	#home span, #away span {
+		height:22px;
+		font-size:20px;
+		line-height:22px;
+	}
+	#home img, #away img {
+		height:22px;
+	}
+	div.gamedata {
+		font-size:.7em;
+		line-height:.8;
+	}
+	#scores h2 {
+		font-size:20px;
+	}
+	#scores h2 span {
+		font-size:15px;
+	}
+	.gallerywrap {
+		width:95%;
+		margin:10px auto;
+	}
+	.news-heds {
+		width:95%;
+		margin:0 auto;
+	}
+	.news-heds h2 {
+		font-size:1.8em;
+	}
+	#bottombuttons ul li img {
+		height:24px;
+	}
+	#bottombuttons ul li a {
+		font-size:.75em;
+	}
+}
