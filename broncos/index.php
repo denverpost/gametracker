@@ -38,12 +38,12 @@
 
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="custom.modernizr.js"></script>
-<script type="text/javascript" src="swipe.js"></script>
-<script type="text/javascript" src="jquery.mobile-1.4.0.min.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/custom.modernizr.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/swipe.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/jquery.mobile-1.4.0.min.js"></script>
 <script type="text/javascript" src="//local.digitalfirstmedia.com/common/dfm/assets/js/dfm-core-level1.js"></script>
-<script type="text/javascript" src="http://extras.mnginteractive.com/live/partners/MediaCenter/embedded_galleries/mc_embed.js"></script>
-<script type="text/javascript" src="http://www.googletagservices.com/tag/js/gpt.js"></script>
+<script type="text/javascript" src="//extras.mnginteractive.com/live/partners/MediaCenter/embedded_galleries/mc_embed.js"></script>
+<script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js"></script>
 
 
 <script type="text/javascript">
@@ -297,7 +297,7 @@
 <div id="slider" class="swipe">
     <div class="swipe-wrap" id="slidehi">
         <div id="swipe1" class="slide">
-            <iframe src="http://live.denverpost.com/Event/Super_Bowl_XLVIII_Denver_Broncos_vs_Seattle_Seahawks_live_streaming_blog_Peyton_Manning_vs/mobile" width="100%" height="2000" frameborder="0"></iframe>
+            <iframe src="http://mobile.scribblelive.com/Event/Super_Bowl_XLVIII_Denver_Broncos_vs_Seattle_Seahawks_live_streaming_blog_Peyton_Manning_vs" width="100%" height="2000" frameborder="0"></iframe>
         </div>
         <div id="swipe2" class="slide">
             <div class="gallerywrap">

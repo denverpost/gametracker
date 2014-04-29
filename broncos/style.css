@@ -307,6 +307,7 @@ p.newserror {
 #bottombuttons ul li a.showing {
 	color:#444;
 }
+#swipe1 { background:#fff; }
 @media only screen and (max-width:740px) {
 	#topper {
 		height:50px;

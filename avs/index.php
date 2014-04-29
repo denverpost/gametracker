@@ -327,20 +327,12 @@
                         } else if ( strpos($line,'photos.denverpost.com') !== false) {
                             $output .= sprintf('<div class="gallerychunk"><div id="mc-embed-container%2$s"></div> <div class="clear" style="margin-bottom:10px;"></div> <script> $(document).ready(function(){ setTimeout(function(){ mc_embed_gallery = new MCGallery({ url : \'%1$s\',captionHeight : \'85px\', parentContainer: \'mc-embed-container%2$s\' }); }, %2$s000); }); </script> </div>',
                                 (string)$line,
-                                $i
+                                ($i * 2)
                             );
                         }
                     }
                     echo $output;
                 ?>
-                <div class="gallerychunk">
-                    <div style="width:300px; height:360px; margin:0 auto;">
-                        <div id='perfku6qbj1iqfg61d4i4jnhsapsm'></div>
-                        <script type='text/javascript' src='http://static.eplayer.performgroup.com/flash/js/swfobject.js'></script>
-                        <script type='text/javascript' src='http://static.eplayer.performgroup.com/flash/js/performgroup.js'></script>
-                        <script>addCustomPlayer('ku6qbj1iqfg61d4i4jnhsapsm', '', '', 300, 360, 'perfku6qbj1iqfg61d4i4jnhsapsm', 'eplayer2');</script>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="swipe4" class="slide">
