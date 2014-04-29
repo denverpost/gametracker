@@ -13,7 +13,7 @@ div#omniture {
 	position:fixed;
 	top:0;
 	left:0;
-	background:#e55515;
+	background:#01548A;
 	font-family: 'Chivo', Helvetica, Arial, sans-serif;
 	z-index: 50;
 }
@@ -307,6 +307,7 @@ p.newserror {
 #bottombuttons ul li a.showing {
 	color:#444;
 }
+#swipe1 { background:#fff; }
 @media only screen and (max-width:740px) {
 	#topper {
 		height:50px;

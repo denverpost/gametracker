@@ -15,16 +15,16 @@ function simplexml_insert_after(SimpleXMLElement $insert, SimpleXMLElement $targ
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
 while($i < 20) {
-	$xml = file_get_contents('http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/livescores_42017.xml');
-	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
-	//var_dump($xml);
+	//$xml = file_get_contents('http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/livescores/livescores_63057.xml');
+	$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/avs/nhl_1st_period_sample.xml'); //for testing purposes
+	var_dump($xml);
 	if ($xml) {
 		$object = simplexml_load_string($xml);
 
 		//echo isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'});
 
 		//find a particular tag that has both attributes and a value and insert the values as key-value pairs in the DOM instead
-		if (isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}) ) {
+		/* if (isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}) ) {
 			
 			$yardlineside = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}[0]->attributes()->align;
 
@@ -34,15 +34,15 @@ while($i < 20) {
 				simplexml_insert_after($insert, $target);
 				$object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-direction'} = $yardlineside;
 			}
-		}
+		}*/
 	
 	}
 
 	//write the xml to disk if it exists, else place a blank xml file that the interpreter knows to ignore -- but only up until game time -- then we keep whatever we got last.
 	if ($xml) {
 		$object->asXML('updates.xml');
-	} else if (time() < 1391347800) {
-		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/football/competition:42017</id><start-date>2014-02-02T18:30:00-05:00</start-date></competition></league-content></team-sport-content></sport:content>';
+	} else if (time() < 1398893400) {
+		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/hockey/competition:63057</id><start-date>2014-04-30T21:30:00-04:00</start-date></competition></league-content></team-sport-content></sport:content>';
 		file_put_contents('updates.xml', $alternative);
 		//echo $i;
 	}

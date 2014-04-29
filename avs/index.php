@@ -3,34 +3,34 @@
 
 <head profile="http://gmpg.org/xfn/11">
 
-<title>Denver Broncos Gametracker from The Denver Post</title>
+<title>Colorado Avalanche Gametracker from The Denver Post</title>
 
 <meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <meta name="twitter:card" value="summary" />
-<meta name="twitter:url" value="http://gametracker.denverpost.com/broncos/" />
-<meta name="twitter:title" value="Denver Broncos Gametracker from The Denver Post" />
-<meta name="twitter:description" value="Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more" />
-<meta name="twitter:image" value="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
+<meta name="twitter:url" value="http://gametracker.denverpost.com/avs/" />
+<meta name="twitter:title" value="Colorado Avalanche Gametracker from The Denver Post" />
+<meta name="twitter:description" value="Colorado Avalanche vs. Minnesota Wild Game 7: Live updates, news, photos, videos and more" />
+<meta name="twitter:image" value="http://gametracker.denverpost.com/avs/gametracker-fb-image-avs.jpg" />
 <meta name="twitter:site" value="@denversportnews" />
 <meta name="twitter:domain" value="gametracker.denverpost.com" />
 <meta name="twitter:creator" content="@denversportnews" />
 
-<meta property="og:title" content="Denver Broncos Gametracker from The Denver Post" />
+<meta property="og:title" content="Colorado Avalanche Gametracker from The Denver Post" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://gametracker.denverpost.com/broncos/" />
-<meta property="og:image" content="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
-<meta property="og:site_name" content="Denver Broncos Gametracker from The Denver Post" />
-<meta property="og:description" content="Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more" />
+<meta property="og:url" content="http://gametracker.denverpost.com/avs/" />
+<meta property="og:image" content="http://gametracker.denverpost.com/avs/gametracker-fb-image-avs.jpg" />
+<meta property="og:site_name" content="Colorado Avalanche Gametracker from The Denver Post" />
+<meta property="og:description" content="Colorado Avalanche vs. Minnesota Wild Game 7: Live updates, news, photos, videos and more" />
 <meta property="article:publisher" content="http://www.facebook.com/denversports" />
 
 <meta name="distribution" content="global" />
 <meta name="robots" content="follow, all" />
 <meta name="language" content="en, sv" />
 <meta name="Copyright" content="Copyright 2014 The Denver Post." />
-<link rel="canonical" href="http://gametracker.denverpost.com/broncos/" />
-<meta name="news_keywords" content="Super Bowl XLVIII, Denver Broncos, Seattle Seahawks, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates" />
+<link rel="canonical" href="http://gametracker.denverpost.com/avs/" />
+<meta name="news_keywords" content="Colorado Avalanche, Minnesota Wild, Game 7, Playoffs, NHL, playoffs, postseason, stanley cup, game, stats, live, blog, video, photos, social, tracker, score, updates" />
 
 <link rel="stylesheet" type="text/css" href="./style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Chivo:400,900,400italic,900italic' rel='stylesheet' type='text/css'>
@@ -38,38 +38,38 @@
 
 
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="custom.modernizr.js"></script>
-<script type="text/javascript" src="swipe.js"></script>
-<script type="text/javascript" src="jquery.mobile-1.4.0.min.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/custom.modernizr.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/swipe.js"></script>
+<script type="text/javascript" src="//extras.denverpost.com/media/js/gt/jquery.mobile-1.4.0.min.js"></script>
 <script type="text/javascript" src="//local.digitalfirstmedia.com/common/dfm/assets/js/dfm-core-level1.js"></script>
-<script type="text/javascript" src="http://extras.mnginteractive.com/live/partners/MediaCenter/embedded_galleries/mc_embed.js"></script>
-<script type="text/javascript" src="http://www.googletagservices.com/tag/js/gpt.js"></script>
+<script type="text/javascript" src="//extras.mnginteractive.com/live/partners/MediaCenter/embedded_galleries/mc_embed.js"></script>
+<script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js"></script>
 
 
 <script type="text/javascript">
 //Configure DFM Variables
     dfm.api("data","siteId",          "Gametracker"); //Assign a siteid for your property
-    dfm.api("data","siteName",        "Broncos Gametracker"); //Assign user-friendly name for site
+    dfm.api("data","siteName",        "Avs Gametracker"); //Assign user-friendly name for site
     dfm.api("data","siteDomain",      "gametracker.denverpost.com"); //Domain of the News.com, WordPress, Blog
-    dfm.api("data","actualDomain",    "gametracker.denverpost.com/broncos");//Full URl of site
+    dfm.api("data","actualDomain",    "gametracker.denverpost.com/avs");//Full URl of site
     dfm.api("data","localCommonUrl",  "");
     dfm.api("data","localAssetsUrl",  "");
-    dfm.api("data","contentId",       "Broncos Gametracker");
-    dfm.api("data","sectionName",     "Broncos Gametracker"); //Omniture section/category name
+    dfm.api("data","contentId",       "Avs Gametracker");
+    dfm.api("data","sectionName",     "Avs Gametracker"); //Omniture section/category name
     dfm.api("data","pageId",          "");
-    dfm.api("data","pageUrl",         "http://gamecenter.denverpost.com/broncos/"); //Full URl of site
-    dfm.api("data","pageVanityUrl",   "http://gamecenter.denverpost.com/broncos/"); //Full URl of site
-    dfm.api("data","pageTitle",       "Denver Broncos Gametracker from The Denver Post");
+    dfm.api("data","pageUrl",         "http://gamecenter.denverpost.com/avs/"); //Full URl of site
+    dfm.api("data","pageVanityUrl",   "http://gamecenter.denverpost.com/avs/"); //Full URl of site
+    dfm.api("data","pageTitle",       "Colorado Avalanche Gametracker from The Denver Post");
     dfm.api("data","pageType",        "");
-    dfm.api("data","abstract",        "Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more");
-    dfm.api("data","keywords",        "Super Bowl XLVIII, Denver Broncos, Seattle Seahawks, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates");
-    dfm.api("data","title",           "Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more");
-    dfm.api("data","sectionId",       "Broncos Gametracker");
-    dfm.api("data","slug",            "broncos-gametracker");
+    dfm.api("data","abstract",        "Colorado Avalanche vs. Minnesota Wild Game 7: Live updates, news, photos, videos and more");
+    dfm.api("data","keywords",        "Colorado Avalanche, Minnesota Wild, Game 7, Playoffs, NHL, playoffs, postseason, stanley cup, game, stats, live, blog, video, photos, social, tracker, score, updates");
+    dfm.api("data","title",           "Colorado Avalanche vs. Minnesota Wild Game 7: Live updates, news, photos, videos and more");
+    dfm.api("data","sectionId",       "Avs Gametracker");
+    dfm.api("data","slug",            "avs-gametracker");
     dfm.api("data","byline",          "The Denver Post");
     dfm.api("data","NetworkID",       "8013");
     dfm.api("data","Taxonomy1",       "Gametracker");
-    dfm.api("data","Taxonomy2",       "Broncos");
+    dfm.api("data","Taxonomy2",       "Avs");
     dfm.api("data","Taxonomy3",       "");
     dfm.api("data","Taxonomy4",       "");
     dfm.api("data","kv",              "News");
@@ -244,24 +244,24 @@
     <img src="denverpost-twitter-template-large.png" class="dplogo" />
     
     <div id="away">
-        <img src="logo-seahawks.png" alt="Seahawks logo" />
+        <img src="logo-wild.png" alt="Wild logo" />
         <span id="awayscore"></span>
     </div>
 
     <div id="scores">
-        <div class="teams"><h2>SEA <span class="vs">vs</span> DEN</h2></div>
+        <div class="teams"><h2>MIN <span class="vs">vs</span> COL</h2></div>
         <div class="gamedata"><span id="quarter"></span> <span id="bullet"></span> <time id="remaining"></time></div>
         <div class="gamedata"><span id="awayposs" class="possessors">&#x25c4;</span><span id="down"><span id="countdownform"></span></span><span id="homeposs" class="possessors">&#x25ba;</span></div>
     </div>
     
     <div id="home">
-        <img src="logo-broncos.png" alt="Broncos logo" />
+        <img src="logo-avs.png" alt="Avs logo" />
         <span id="homescore"></span>
     </div>
 
 </div>
 
-<div id="adwrapper">
+<!-- <div id="adwrapper">
     <a class="boxclose" href="javascript:void(0)" onclick="hideAdManual();"></a>
     
     <center>
@@ -292,12 +292,12 @@
     </div>
     </center>
 
-</div>
+</div> -->
 
 <div id="slider" class="swipe">
     <div class="swipe-wrap" id="slidehi">
         <div id="swipe1" class="slide">
-            <iframe src="http://live.denverpost.com/Event/Super_Bowl_XLVIII_Denver_Broncos_vs_Seattle_Seahawks_live_streaming_blog_Peyton_Manning_vs/mobile" width="100%" height="2000" frameborder="0"></iframe>
+            <iframe src="http://mobile.scribblelive.com/Event/Super_Bowl_XLVIII_Denver_Broncos_vs_Seattle_Seahawks_live_streaming_blog_Peyton_Manning_vs" width="100%" height="2000" frameborder="0"></iframe>
         </div>
         <div id="swipe2" class="slide">
             <div class="gallerywrap">
@@ -345,7 +345,7 @@
         </div>
         <div id="swipe4" class="slide">
             <div id="ajaxheadlines">
-                <script type="text/javascript" src="http://extras.denverpost.com/cache/gametracker-broncos.js"></script>
+                <script type="text/javascript" src="http://extras.denverpost.com/cache/gametracker-avs.js"></script>
             </div>
             <div id="headlinesrefresh">
                 <img src="button-refresh.png" alt="Tap to refresh headlines" />
@@ -615,10 +615,10 @@
     var moreAd = true;
     if ( $(window).width() >= 300 && $(window).width() < 740 ) {
             hideheight = '50px';
-            heightin = '100px';
+            heightin = '50px'; // 100px if ad
         } else if ($(window).width() > 740 ) {
             hideheight = '100px';
-            heightin = '200px';
+            heightin = '100px'; // 200px if ad
         }
     function hideAd() {
         $('#slider').css('top', hideheight);
@@ -645,7 +645,7 @@
     determineAd();
 
     function refreshNews() {
-        $.getScript('http://extras.denverpost.com/cache/gametracker-broncos.js').done(function( script, textStatus) {
+        $.getScript('http://extras.denverpost.com/cache/gametracker-avs.js').done(function( script, textStatus) {
                 console.log('Successfully refreshed headlines.');
             }).fail(function(jqxhr, settings,exception ) {
                 $('#ajaxheadlines').prepend('<p class="newserror">There was a problem retreiving new headlines.</p>')
@@ -667,10 +667,10 @@
 <script type="text/javascript">
     var _sf_async_config={};
     /** CONFIGURATION START **/
-    _sf_async_config.title = "Denver Broncos Gametracker from The Denver Post";
+    _sf_async_config.title = "Colorado Avalanche Gametracker from The Denver Post";
     _sf_async_config.uid = 2671;
     _sf_async_config.domain = "denverpost.com";
-    _sf_async_config.sections = "Broncos Gametracker";
+    _sf_async_config.sections = "Avs Gametracker";
     _sf_async_config.useCanonical = true;
     /** CONFIGURATION END **/
     (function(){
