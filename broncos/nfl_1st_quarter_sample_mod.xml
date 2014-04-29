@@ -16,10 +16,10 @@
                 <start-date>2009-06-11T10:00:00.000-04:00</start-date>
                 <result-scope>
                     <competition-status>in-progress</competition-status>
-                    <scope num="3" type="period" />
+                    <scope num="1" type="period"/>
                     <scope-status>in-progress</scope-status>
-                    <clock>00:02:20</clock>
-                    <update-date>2009-06-11T10:22:10.000-04:00</update-date>
+                    <clock>00:13:32</clock>
+                    <update-date>2009-06-11T10:10:32.000-04:00</update-date>
                 </result-scope>
                 <home-team-content>
                     <team>
@@ -27,20 +27,12 @@
                         <name>New England</name>
                     </team>
                     <stat-group>
-                        <scope type="competition" />
-                        <stat num="16" type="score" />
+                        <scope type="competition"/>
+                        <stat num="3" type="score"/>
                     </stat-group>
                     <stat-group>
-                        <scope num="1" type="period" />
-                        <stat num="3" type="score" />
-                    </stat-group>
-                    <stat-group>
-                        <scope num="2" type="period" />
-                        <stat num="3" type="score" />
-                    </stat-group>
-                    <stat-group>
-                        <scope num="3" type="period" />
-                        <stat num="10" type="score" />
+                        <scope num="1" type="period"/>
+                        <stat num="3" type="score"/>
                     </stat-group>
                 </home-team-content>
                 <away-team-content>
@@ -49,28 +41,19 @@
                         <name>Green Bay</name>
                     </team>
                     <stat-group>
-                        <scope type="competition" />
-                        <stat num="10" type="score" />
+                        <scope type="competition"/>
+                        <stat num="7" type="score"/>
                     </stat-group>
                     <stat-group>
-                        <scope num="1" type="period" />
-                        <stat num="7" type="score" />
-                    </stat-group>
-                    <stat-group>
-                        <scope num="2" type="period" />
-                        <stat num="0" type="score" />
-                    </stat-group>
-                    <stat-group>
-                        <scope num="3" type="period" />
-                        <stat num="3" type="score" />
+                        <scope num="1" type="period"/>
+                        <stat num="7" type="score"/>
                     </stat-group>
                 </away-team-content>
                 <competition-state xsi:type="sport:football-competition-state">
-                    <possession>away</possession>
-                    <yard-line align="away">46</yard-line>
-                    <down>3</down>
-                    <distance>inches</distance>
-                    <stop-in-play align="away">timeout</stop-in-play>
+                    <possession>home</possession>
+                    <yard-line align="away">24</yard-line><yard-direction>away</yard-direction>
+                    <down>1</down>
+                    <distance>10</distance>
                 </competition-state>
             </competition>
         </league-content>
