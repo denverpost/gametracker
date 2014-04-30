@@ -3,25 +3,13 @@
 
 <?php 
 
-function csv_to_array($filename='', $delimiter=',') {
-    if(!file_exists($filename) || !is_readable($filename))
-      return FALSE;
-    $header = NULL;
-    $data = array();
-    if (($handle = fopen($filename, 'r')) !== FALSE) {
-      while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
-        if(!$header)
-          $header = $row;
-        else
-          $data[] = array_combine($header, $row);
-        }
-        fclose($handle);
-      }
-    return $data;
-    }
-
-    $inputcsv = csv_to_array('config.csv');
-
+$fileteam = 'avs';
+function get_config($teamdir) {
+// Puts the config into an array
+    $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
+    return $configs;
+}
+$config = get_config($fileteam);
 ?>
 
 <head profile="http://gmpg.org/xfn/11">
@@ -320,45 +308,14 @@ function csv_to_array($filename='', $delimiter=',') {
 <div id="slider" class="swipe">
     <div class="swipe-wrap" id="slidehi">
         <div id="swipe1" class="slide">
-            <iframe src="<?php echo $inputcsv[0]['scribble']; ?>" width="100%" height="2000" frameborder="0"></iframe>
+            <iframe src="<?php echo $config[0]['scribble']; ?>" width="100%" height="2000" frameborder="0"></iframe>
         </div>
         <div id="swipe2" class="slide">
             <div class="gallerywrap">
-                <iframe src="<?php echo $inputcsv[0]['boxscore']; ?>" style="height:7000px;width:100%;background:#fff;" frameborder="no"></iframe>
+                <iframe src="<?php echo $config[0]['boxscore']; ?>" style="height:7000px;width:100%;background:#fff;" frameborder="no"></iframe>
             </div>
         </div>
         <div id="swipe3" class="slide">
-            <div class="gallerywrap">
-                <?php
-                    $lines = file("media.txt", FILE_IGNORE_NEW_LINES);
-                    array_reverse($lines);
-                    $output = '';
-                    $i = 0;
-                    foreach($lines as $line) {
-                        $i++;
-                        if (strlen($line) == 13) {
-                            $output .= sprintf('<div class="gallerychunk"><div class="vid-embed-wrap" id="videoEmbed%3$s"><script type="text/javascript"> if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) { var videoWidth = document.getElementById("videoEmbed%3$s").offsetWidth; var videoRatio = 56.3; var videoHeight = (videoRatio / 100) * videoWidth; document.write(\'<style type="text/css">div.vid-embed iframe { height:\' + videoHeight + \'px; }</style>\'); } </script><div class="vid-height-space"></div><div class="vid-embed"><div style="display:none"></div><script language="JavaScript" type="text/javascript" src="http://admin.brightcove.com/js/BrightcoveExperiences.js"></script><object id="myExperience%1$s" class="BrightcoveExperience"><param name="bgcolor" value="#FFFFFF" /><param name="width" value="100%%" /><param name="height" value="100%%" /><param name="playerID" value="747347108001" /><param name="playerKey" value="AQ~~,AAAAADe65VU~,G496cZ36A_WJiqq5Paft4yTJ0a5PQX2r" /><param name="isVid" value="true" /><param name="isUI" value="true" /><param name="dynamicStreaming" value="true" /><param name="@videoPlayer" value="%2$s" /></object><script type="text/javascript">brightcove.createExperiences();</script></div><div class="clear"></div></div></div>',
-                                (string)$line,
-                                (string)$line,
-                                $i
-                            );
-                        } else if (strlen($line) == 32) {
-                            $output .= sprintf('<div class="gallerychunk"><div class="vid-embed-wrap" id="videoEmbed%2$s"><script type="text/javascript"> if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) { var videoWidth = document.getElementById("videoEmbed%2$s").offsetWidth; var videoRatio = 56.3; var videoHeight = (videoRatio / 100) * videoWidth; document.write(\'<style type="text/css">div.vid-embed iframe { height:\' + videoHeight + \'px; }</style>\'); } </script><div class="vid-height-space"></div><div class="vid-embed"><iframe width="100%%" height="100%%" src="http://player.ooyala.com/iframe.html?ec=%1$s&pbid=335ee8af53a04d778127e935cf28cc21&platform=html5-fallback&options[autoplay]=false" frameborder="0" allowfullscreen></iframe></div><div class="clear"></div></div></div>',
-                                (string)$line,
-                                $i
-                            );
-                        } else if ( strpos($line,'photos.denverpost.com') !== false) {
-                            $output .= sprintf('<div class="gallerychunk"><div id="mc-embed-container%2$s"></div> <div class="clear" style="margin-bottom:10px;"></div> <script> $(document).ready(function(){ setTimeout(function(){ mc_embed_gallery = new MCGallery({ url : \'%1$s\',captionHeight : \'85px\', parentContainer: \'mc-embed-container%2$s\' }); }, %2$s000); }); </script> </div>',
-                                (string)$line,
-                                ($i * 2)
-                            );
-                        }
-                    }
-                    echo $output;
-                ?>
-            </div>
-        </div>
-        <div id="swipe4" class="slide">
             <div id="ajaxheadlines">
                 <script type="text/javascript" src="http://extras.denverpost.com/cache/gametracker-avs.js"></script>
             </div>
@@ -366,8 +323,41 @@ function csv_to_array($filename='', $delimiter=',') {
                 <img src="button-refresh.png" alt="Tap to refresh headlines" />
             </div>
         </div>
+        <div id="swipe4" class="slide">
+            <div class="gallerywrap">
+                <?php
+                    if ( strpos($config[0]['photos'],'photos.denverpost.com') !== false) {
+                        $photosout = sprintf('<div class="gallerychunk"><div id="mc-embed-container"></div> <div class="clear" style="margin-bottom:10px;"></div> <script> $(document).ready(function(){ setTimeout(function(){ mc_embed_gallery = new MCGallery({ url : \'%1$s\',captionHeight : \'85px\', parentContainer: \'mc-embed-container\' }); }, 1000); }); </script> </div>',
+                            $config[0]['photos']
+                        );
+                    }
+                    echo $photosout;
+                ?>
+            </div>
+        </div>
         <div id="swipe5" class="slide">
-            <script type="text/javascript" class="rebelmouse-embed-script" src="<?php echo $inputcsv[0]['rebel']; ?>"></script>
+            <div class="gallerywrap">
+                <?php
+                    $output = '';
+                    $videos = $config[0]['videos'];
+                    for($i=0;$i <= count($videos);$i++) {
+                        if (strlen(trim($videos[$i])) == 13) {
+                            $output .= sprintf('<div class="gallerychunk"><div class="vid-embed-wrap" id="bcEmbed%3$s"><script type="text/javascript"> if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) { var videoWidth = document.getElementById("bcEmbed%3$s").offsetWidth; var videoRatio = 56.3; var videoHeight = (videoRatio / 100) * videoWidth; document.write(\'<style type="text/css">div.vid-embed iframe { height:\' + videoHeight + \'px; }</style>\'); } </script><div class="vid-height-space"></div><div class="vid-embed"><div style="display:none"></div><script language="JavaScript" type="text/javascript" src="http://admin.brightcove.com/js/BrightcoveExperiences.js"></script><object id="myExperience%1$s" class="BrightcoveExperience"><param name="bgcolor" value="#FFFFFF" /><param name="width" value="100%%" /><param name="height" value="100%%" /><param name="playerID" value="747347108001" /><param name="playerKey" value="AQ~~,AAAAADe65VU~,G496cZ36A_WJiqq5Paft4yTJ0a5PQX2r" /><param name="isVid" value="true" /><param name="isUI" value="true" /><param name="dynamicStreaming" value="true" /><param name="@videoPlayer" value="%2$s" /></object><script type="text/javascript">brightcove.createExperiences();</script></div><div class="clear"></div></div></div>',
+                                $videos[$i],
+                                $videos[$i],
+                                $i
+                            );
+                        } else if (strlen(trim($videos[$i])) == 32) {
+                            echo $videos[$i];
+                            $output .= sprintf('<div class="gallerychunk"><div class="vid-embed-wrap" id="ooEmbed%2$s"><script type="text/javascript"> if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) { var videoWidth = document.getElementById("ooEmbed%2$s").offsetWidth; var videoRatio = 56.3; var videoHeight = (videoRatio / 100) * videoWidth; document.write(\'<style type="text/css">div.vid-embed iframe { height:\' + videoHeight + \'px; }</style>\'); } </script><div class="vid-height-space"></div><div class="vid-embed"><script height="100%%" width="100%%" src="http://player.ooyala.com/iframe.js#pbid=fce2cf476df14253a15351f1727031b4&ec=%1$s"></script></div><div class="clear"></div></div></div>',
+                                $videos[$i],
+                                $i
+                            );
+                        }
+                    }
+                    echo $output;
+                ?>
+            </div>
         </div>
     </div>
 </div>
@@ -376,9 +366,9 @@ function csv_to_array($filename='', $delimiter=',') {
     <ul>
         <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(0,200);switchShowingClass(this);"><img src="button-live.png" />Live</a></li>
         <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(1,200);switchShowingClass(this);"><img src="button-stats.png" />Stats</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(2,200);switchShowingClass(this);"><img src="button-media.png" />Media</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(3,200);switchShowingClass(this);"><img src="button-news.png" />News</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(4,200);switchShowingClass(this);"><img src="button-social.png" />Social</a></li>
+        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(2,200);switchShowingClass(this);"><img src="button-news.png" />News</a></li>
+        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(3,200);switchShowingClass(this);"><img src="button-media.png" />Photos</a></li>
+        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(4,200);switchShowingClass(this);"><img src="button-video.png" />Video</a></li>
     </ul>
 </div>
 
