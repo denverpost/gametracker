@@ -16,11 +16,10 @@
 <id>/sport/hockey/competition:23816</id>
 <start-date>2009-01-28T14:00:00.000-05:00</start-date>
 <result-scope>
-<competition-status>in-progress</competition-status>
-<scope num="1" type="period"/>
-<scope-status>in-progress</scope-status>
-<clock>00:07:11</clock>
-<update-date>2009-01-28T14:28:56.000-05:00</update-date>
+<competition-status>complete</competition-status>
+<scope num="1" type="overtime"/>
+<scope-status>complete</scope-status>
+<update-date>2009-01-28T14:30:36.000-05:00</update-date>
 </result-scope>
 <home-team-content>
 <team>
@@ -29,11 +28,23 @@
 </team>
 <stat-group>
 <scope type="competition"/>
-<stat num="2" type="score"/>
+<stat num="4" type="score"/>
 </stat-group>
 <stat-group>
 <scope num="1" type="period"/>
 <stat num="2" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="2" type="period"/>
+<stat num="0" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="3" type="period"/>
+<stat num="1" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="1" type="overtime"/>
+<stat num="1" type="score"/>
 </stat-group>
 </home-team-content>
 <away-team-content>
@@ -43,10 +54,22 @@
 </team>
 <stat-group>
 <scope type="competition"/>
-<stat num="0" type="score"/>
+<stat num="3" type="score"/>
 </stat-group>
 <stat-group>
 <scope num="1" type="period"/>
+<stat num="0" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="2" type="period"/>
+<stat num="0" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="3" type="period"/>
+<stat num="3" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="1" type="overtime"/>
 <stat num="0" type="score"/>
 </stat-group>
 </away-team-content>

@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 
+<?php 
+
+function csv_to_array($filename='', $delimiter=',') {
+    if(!file_exists($filename) || !is_readable($filename))
+      return FALSE;
+    $header = NULL;
+    $data = array();
+    if (($handle = fopen($filename, 'r')) !== FALSE) {
+      while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+        if(!$header)
+          $header = $row;
+        else
+          $data[] = array_combine($header, $row);
+        }
+        fclose($handle);
+      }
+    return $data;
+    }
+
+    $inputcsv = csv_to_array('config.csv');
+
+?>
+
 <head profile="http://gmpg.org/xfn/11">
 
 <title>Colorado Avalanche Gametracker from The Denver Post</title>
@@ -250,8 +273,8 @@
 
     <div id="scores">
         <div class="teams"><h2>MIN <span class="vs">vs</span> COL</h2></div>
+        <div class="gamedata"></div>
         <div class="gamedata"><span id="quarter"></span> <span id="bullet"></span> <time id="remaining"></time></div>
-        <div class="gamedata"><span id="awayposs" class="possessors">&#x25c4;</span><span id="down"><span id="countdownform"></span></span><span id="homeposs" class="possessors">&#x25ba;</span></div>
     </div>
     
     <div id="home">
@@ -297,11 +320,11 @@
 <div id="slider" class="swipe">
     <div class="swipe-wrap" id="slidehi">
         <div id="swipe1" class="slide">
-            <iframe src="http://mobile.scribblelive.com/Event/Super_Bowl_XLVIII_Denver_Broncos_vs_Seattle_Seahawks_live_streaming_blog_Peyton_Manning_vs" width="100%" height="2000" frameborder="0"></iframe>
+            <iframe src="<?php echo $inputcsv[0]['scribble']; ?>" width="100%" height="2000" frameborder="0"></iframe>
         </div>
         <div id="swipe2" class="slide">
             <div class="gallerywrap">
-                <iframe src="http://m.denverpost.sportsdirectinc.com/football/nfl-boxscores.aspx?page=/data/nfl/results/2013-2014/boxscore42017.html" style="height:7000px;width:100%;background:#fff;" frameborder="no"></iframe>
+                <iframe src="<?php echo $inputcsv[0]['boxscore']; ?>" style="height:7000px;width:100%;background:#fff;" frameborder="no"></iframe>
             </div>
         </div>
         <div id="swipe3" class="slide">
@@ -344,7 +367,7 @@
             </div>
         </div>
         <div id="swipe5" class="slide">
-            <script type="text/javascript" class="rebelmouse-embed-script" src="http://www.rebelmouse.com/static/js-build/embed/embed.js?site=denverpost%2FBroncos-vs-Seahawks&height=1500&flexible=1&theme=2000"></script>
+            <script type="text/javascript" class="rebelmouse-embed-script" src="<?php echo $inputcsv[0]['rebel']; ?>"></script>
         </div>
     </div>
 </div>
@@ -468,48 +491,6 @@
     function parseGameData() {
         // live updates from feed parse
         $.getJSON('./livescore.parse.php', function(data) {
-            //change possession arrow
-            if (data["team-sport-content"]["league-content"]["competition"]["competition-state"]) {
-                var possessor = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["possession"];
-                var possession = '#' + possessor + 'poss';
-                $('.possessors').removeClass('possession');
-                $(possession).addClass('possession');
-                
-                // get the status of the game (down, distance, key event)
-                var keyEvent = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["key-event"];
-                var timeOut = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["stop-in-play"];
-                var down = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["down"];
-                var distance = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["distance"];
-                var yardline = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["yard-line"];
-                var yarddirection = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["yard-direction"];
-                downDistanceOut = '';
-                if (keyEvent != null) {
-                    downDistanceOut = keyEvent.charAt(0).toUpperCase() + keyEvent.slice(1);
-                } else if (timeOut == 'timeout') {
-                    downDistanceOut = 'Time out';
-                } else if (timeOut == 'playunderreview') {
-                    downDistanceOut = 'Play under review';
-                } else if (down != null) {
-                    if (down == 1) { 
-                        downPretty = '1st';
-                    } else if (down == 2) {
-                        downPretty = '2nd';
-                    } else if (down == 3) {
-                        downPretty = '3rd';
-                    } else if (down == 4) {
-                        downPretty = '4th';
-                    }
-                    if (possessor == yarddirection) {
-                        var yardside = 'own';
-                    } else if (yarddirection == 'away') {
-                        var yardside = 'SEA';
-                    } else if (yarddirection == 'home') {
-                        var yardside = 'DEN';
-                    }
-                    downDistanceOut = downPretty + ' &amp; ' + distance + ', ' + yardside + ' ' + yardline;
-                }
-                $('#down').html(downDistanceOut);
-            }
             //update home team score
             var homescore = '';
             if (data["team-sport-content"]["league-content"]["competition"]["home-team-content"]) {
@@ -546,6 +527,7 @@
             }
             var timeDisplay = (startTime.getMonth() + 1) + '/' + startTime.getDate() + ', ' + formatAMPM(startTime); 
             
+            // parse and beautify the period/overtime (no code for shootout yet)
             if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]) {
                 // if the game isn't over
                 var quarterOut = '';
@@ -555,13 +537,11 @@
                 var quarterover = data["team-sport-content"]["league-content"]["competition"]["result-scope"]["scope-status"];
                 if (overtime == 'period') {
                     if (quarter == 1) {
-                        quarterOut = (quarterover == 'complete') ? 'End of 1st' : '1st quarter';
+                        quarterOut = (quarterover == 'complete') ? 'End of 1st' : '1st period';
                     } else if (quarter == 2) {
-                        quarterOut = (quarterover == 'complete') ? 'Halftime' : '2nd quarter';
+                        quarterOut = (quarterover == 'complete') ? 'End of 2nd' : '2nd period';
                     } else if (quarter == 3) {
-                        quarterOut = (quarterover == 'complete') ? 'End of 3rd' : '3rd quarter';
-                    } else if (quarter == 4) {
-                        quarterOut = (quarterover == 'complete') ? 'Final' : '4th quarter';
+                        quarterOut = (quarterover == 'complete') ? 'End of 3rd' : '3rd period';
                     }
                 } else if (overtime == 'overtime') {
                     if (quarter == 1) {
@@ -583,7 +563,7 @@
                     var timeRemaining = timeChunks[1] + ':' + timeChunks[2];
                 }
             }
-            // if we have a quarter, we'll display it, otherwise we'll put in the start time
+            // if we have a quarter we'll display it, otherwise we'll put in the start time
             if (quarter != null) {
                 $('#quarter').html(quarterOut);
                 if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]) {

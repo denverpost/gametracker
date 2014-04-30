@@ -15,8 +15,8 @@ function simplexml_insert_after(SimpleXMLElement $insert, SimpleXMLElement $targ
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
 while($i < 20) {
-	//$xml = file_get_contents('http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/livescores/livescores_63057.xml');
-	$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/avs/nhl_1st_period_sample.xml'); //for testing purposes
+	$xml = file_get_contents('http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/livescores/livescores_63057.xml');
+	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/avs/nhl_overtime_complete_sample.xml'); //for testing purposes
 	var_dump($xml);
 	if ($xml) {
 		$object = simplexml_load_string($xml);
