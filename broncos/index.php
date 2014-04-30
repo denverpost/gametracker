@@ -445,13 +445,13 @@ $config = get_config($fileteam);
         case '#stats':
             mySwipe.slide(1,200);
             break;
-        case '#media':
+        case '#news':
             mySwipe.slide(2,200);
             break;
-        case '#news':
+        case '#photos':
             mySwipe.slide(3,200);
             break;
-        case '#social':
+        case '#video':
             mySwipe.slide(4,200);
             break;
         default:

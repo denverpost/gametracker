@@ -11,11 +11,27 @@ function simplexml_insert_after(SimpleXMLElement $insert, SimpleXMLElement $targ
         return $target_dom->parentNode->appendChild($insert_dom);
     }
 }
+function get_http_response_code($url) {
+    $headers = get_headers($url);
+    return substr($headers[0], 9, 3);
+}
+
+$fileteam = 'broncos';
+function get_config($teamdir) {
+	// Puts the config into an array
+    $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
+    return $configs;
+}
+$config = get_config($fileteam);
+$feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/livescores_' . $config[0]['gameid'] . '.xml';
+//echo $feedurl;
 
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
 while($i < 20) {
-	$xml = file_get_contents('http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/livescores_42017.xml');
+	if (get_http_response_code($feedurl) != "404") {
+		$xml = file_get_contents($feedurl);
+	}
 	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
 	//var_dump($xml);
 	if ($xml) {

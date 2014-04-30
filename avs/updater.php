@@ -14,7 +14,7 @@ function get_config($teamdir) {
 }
 $config = get_config($fileteam);
 $feedurl = 'http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/livescores/livescores_' . $config[0]['gameid'] . '.xml';
-echo $feedurl;
+//echo $feedurl;
 
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
