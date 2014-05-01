@@ -348,7 +348,6 @@ $config = get_config($fileteam);
                                 $i
                             );
                         } else if (strlen(trim($videos[$i])) == 32) {
-                            echo $videos[$i];
                             $output .= sprintf('<div class="gallerychunk"><div class="vid-embed-wrap" id="ooEmbed%2$s"><script type="text/javascript"> if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) { var videoWidth = document.getElementById("ooEmbed%2$s").offsetWidth; var videoRatio = 56.3; var videoHeight = (videoRatio / 100) * videoWidth; document.write(\'<style type="text/css">div.vid-embed iframe { height:\' + videoHeight + \'px; }</style>\'); } </script><div class="vid-height-space"></div><div class="vid-embed"><script height="100%%" width="100%%" src="http://player.ooyala.com/iframe.js#pbid=fce2cf476df14253a15351f1727031b4&ec=%1$s"></script></div><div class="clear"></div></div></div>',
                                 $videos[$i],
                                 $i
