@@ -29,10 +29,10 @@ $feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/live
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
 while($i < 20) {
-	if (get_http_response_code($feedurl) != "404") {
+	/*if (get_http_response_code($feedurl) != "404") {
 		$xml = file_get_contents($feedurl);
-	}
-	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
+	} */
+	$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
 	//var_dump($xml);
 	if ($xml) {
 		$object = simplexml_load_string($xml);
@@ -57,8 +57,8 @@ while($i < 20) {
 	//write the xml to disk if it exists, else place a blank xml file that the interpreter knows to ignore -- but only up until game time -- then we keep whatever we got last.
 	if ($xml) {
 		$object->asXML('updates.xml');
-	} else if (time() < 1391347800) {
-		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/football/competition:42017</id><start-date>2014-02-02T18:30:00-05:00</start-date></competition></league-content></team-sport-content></sport:content>';
+	} else if (time() < 1407459600) {
+		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/football/competition:42390</id><start-date>2014-08-07T21:00:00-04:00</start-date></competition></league-content></team-sport-content></sport:content>';
 		file_put_contents('updates.xml', $alternative);
 		//echo $i;
 	}

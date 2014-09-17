@@ -22,18 +22,18 @@ $config = get_config($fileteam);
 <meta name="twitter:card" value="summary" />
 <meta name="twitter:url" value="http://gametracker.denverpost.com/broncos/" />
 <meta name="twitter:title" value="Denver Broncos Gametracker from The Denver Post" />
-<meta name="twitter:description" value="Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more" />
+<meta name="twitter:description" value="Live updates, news, photos, videos and more from tonight's Denver Broncos game." />
 <meta name="twitter:image" value="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
-<meta name="twitter:site" value="@denversportnews" />
+<meta name="twitter:site" value="@DPostSports" />
 <meta name="twitter:domain" value="gametracker.denverpost.com" />
-<meta name="twitter:creator" content="@denversportnews" />
+<meta name="twitter:creator" content="@DPostSports" />
 
 <meta property="og:title" content="Denver Broncos Gametracker from The Denver Post" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://gametracker.denverpost.com/broncos/" />
 <meta property="og:image" content="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
 <meta property="og:site_name" content="Denver Broncos Gametracker from The Denver Post" />
-<meta property="og:description" content="Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more" />
+<meta property="og:description" content="Live updates, news, photos, videos and more from tonight's Denver Broncos game." />
 <meta property="article:publisher" content="http://www.facebook.com/denversports" />
 
 <meta name="distribution" content="global" />
@@ -41,7 +41,9 @@ $config = get_config($fileteam);
 <meta name="language" content="en, sv" />
 <meta name="Copyright" content="Copyright 2014 The Denver Post." />
 <link rel="canonical" href="http://gametracker.denverpost.com/broncos/" />
-<meta name="news_keywords" content="Super Bowl XLVIII, Denver Broncos, Seattle Seahawks, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates" />
+<meta name="news_keywords" content="Denver Broncos, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates" />
+
+<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 
 <link rel="stylesheet" type="text/css" href="./style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Chivo:400,900,400italic,900italic' rel='stylesheet' type='text/css'>
@@ -72,9 +74,9 @@ $config = get_config($fileteam);
     dfm.api("data","pageVanityUrl",   "http://gamecenter.denverpost.com/broncos/"); //Full URl of site
     dfm.api("data","pageTitle",       "Denver Broncos Gametracker from The Denver Post");
     dfm.api("data","pageType",        "");
-    dfm.api("data","abstract",        "Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more");
-    dfm.api("data","keywords",        "Super Bowl XLVIII, Denver Broncos, Seattle Seahawks, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates");
-    dfm.api("data","title",           "Super Bowl XLVIII: Denver Broncos vs. Seattle Seahawks: Live updates, news, photos, videos and more");
+    dfm.api("data","abstract",        "Live updates, news, photos, videos and more from tonight's Denver Broncos game.");
+    dfm.api("data","keywords",        "Live updates, news, photos, videos and more from tonight's Denver Broncos game.");
+    dfm.api("data","title",           "Live updates, news, photos, videos and more from tonight's Denver Broncos game.");
     dfm.api("data","sectionId",       "Broncos Gametracker");
     dfm.api("data","slug",            "broncos-gametracker");
     dfm.api("data","byline",          "The Denver Post");
@@ -255,18 +257,16 @@ $config = get_config($fileteam);
     <img src="denverpost-twitter-template-large.png" class="dplogo" />
     
     <div id="away">
-        <img src="logo-seahawks.png" alt="Seahawks logo" />
         <span id="awayscore"></span>
     </div>
 
     <div id="scores">
-        <div class="teams"><h2>SEA <span class="vs">vs</span> DEN</h2></div>
+        <div class="teams"></div>
         <div class="gamedata"><span id="quarter"></span> <span id="bullet"></span> <time id="remaining"></time></div>
         <div class="gamedata"><span id="awayposs" class="possessors">&#x25c4;</span><span id="down"><span id="countdownform"></span></span><span id="homeposs" class="possessors">&#x25ba;</span></div>
     </div>
     
     <div id="home">
-        <img src="logo-broncos.png" alt="Broncos logo" />
         <span id="homescore"></span>
     </div>
 
@@ -480,6 +480,23 @@ $config = get_config($fileteam);
     function parseGameData() {
         // live updates from feed parse
         $.getJSON('./livescore.parse.php', function(data) {
+            hometeamid = awayteamid = hometeamname = awayteamname = '';
+            //set up team names and logos
+            if (data["team-sport-content"]["league-content"]["competition"]) {
+                hometeamid = data["team-sport-content"]["league-content"]["competition"]["home-team-content"]["team"]["name"][1];
+                awayteamid = data["team-sport-content"]["league-content"]["competition"]["away-team-content"]["team"]["name"][1];
+                hometeamname = data["team-sport-content"]["league-content"]["competition"]["home-team-content"]["team"]["name"][0];
+                awayteamname = data["team-sport-content"]["league-content"]["competition"]["away-team-content"]["team"]["name"][0];
+                $('#scores > div.teams').html('<h2>' + awayteamid.toUpperCase() + ' <span class="vs">vs</span> ' + hometeamid.toUpperCase() + '</h2>');
+                if ( $('#away > img').length == 0) {
+                    $('#away').prepend('<img src="./img/logo-' + awayteamid.toLowerCase() + '.png" alt="' + awayteamname + ' logo" />');
+                }
+                if ( $('#home > img').length == 0) {
+                $('#home').prepend('<img src="./img/logo-' + hometeamid.toLowerCase() + '.png" alt="' + hometeamname + ' logo" />');
+                }
+                console.log(hometeamid + ', ' + awayteamid + ', ' + hometeamname + ', ' + awayteamname);
+            }
+
             //change possession arrow
             if (data["team-sport-content"]["league-content"]["competition"]["competition-state"]) {
                 var possessor = data["team-sport-content"]["league-content"]["competition"]["competition-state"]["possession"];
@@ -514,9 +531,9 @@ $config = get_config($fileteam);
                     if (possessor == yarddirection) {
                         var yardside = 'own';
                     } else if (yarddirection == 'away') {
-                        var yardside = 'SEA';
+                        var yardside = awayteamid.toUpperCase();
                     } else if (yarddirection == 'home') {
-                        var yardside = 'DEN';
+                        var yardside = hometeamid.toUpperCase();
                     }
                     downDistanceOut = downPretty + ' &amp; ' + distance + ', ' + yardside + ' ' + yardline;
                 }

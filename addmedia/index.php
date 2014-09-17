@@ -22,7 +22,42 @@
 		ini_set('display_errors', TRUE);
 		ini_set('display_startup_errors', TRUE);
 
-		$fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids') ) ? $_REQUEST['team'] : false;
+		$teams = array(
+			'HOU' => 'Houston Texans',
+			'JAC' => 'Jacksonville Jaguars',
+			'IND' => 'Indianapolis Colts',
+			'TEN' => 'Tennessee Titans',
+			'BAL' => 'Baltimore Ravens',
+			'PIT' => 'Pittsburgh Steelers',
+			'CLE' => 'Cleveland Browns',
+			'CIN' => 'Cincinnati Bengals',
+			'MIA' => 'Miami Dolphins',
+			'NE' => 'New England Patriots',
+			'BUF' => 'Buffalo Bills',
+			'NYJ' => 'New York Jets',
+			'KC' => 'Kansas City Chiefs',
+			'DEN' => 'Denver Broncos',
+			'SD' => 'San Diego Chargers',
+			'OAK' => 'Oakland Raiders',
+			'MIN' => 'Minnesota Vikings',
+			'GB' => 'Green Bay Packers',
+			'DET' => 'Detroit Lions',
+			'CHI' => 'Chicago Bears',
+			'PHI' => 'Philadeplphia Eagles',
+			'DAL' => 'Dallas Cowboys',
+			'NYG' => 'New York Giants',
+			'WAS' => 'Washington Redskins',
+			'ARI' => 'Arizona Cardinals',
+			'STL' => 'St. Louis Rams',
+			'SF' => 'San Francisco 49ers',
+			'SEA' => 'Seattle Seahawks',
+			'ATL' => 'Atlanta Falcons',
+			'TB' => 'Tampa Bay Buccaneers',
+			'NO' => 'New Orleans',
+			'CAR' => 'Carolina Panthers'
+		);
+
+		$fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
 		$savedmessage = '';
 
   		function get_config($teamdir) {
@@ -42,6 +77,8 @@
 		<ul>
 			<li><a href="index.php?team=avs">Avalanche</a></li>
 			<li><a href="index.php?team=broncos">Broncos</a></li>
+			<li><a href="index.php?team=csu">CSU Rams</a></li>
+			<li><a href="index.php?team=cu">CU Buffs</a></li>
 		</ul>
 
 		<?php } else {
@@ -67,7 +104,7 @@
 			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
 		} ?>
 
-<h2>Updating the <?php echo ucfirst($fileteam); ?> gametracker</h2>
+<h2>Updating the <?php echo $config[0]['teamname']; ?> gametracker</h2>
 <p>Mostly you will only use this to add and remove media items. Don't change the top three configuration items if you're not sure what you're doing!</p>
 <p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
 
@@ -87,8 +124,8 @@
 	<h3>Videos</h3>
 	<p>You can add multiple videos to the videos tab:</p>
 	<ul>
-		<li><strong>Brightcove video:</strong> Use only the videoID &mdash; it should be a 13-digit number.</li>
-		<li><strong>Ooyala video:</strong> Use the player ID or video ID &mdash; it should be a long hexadecimal (alphanumeric) string.</li>
+		<li><strong>Brightcove video:</strong> Use only the videoID &mdash; it should be a 13-digit number (deprecated).</li>
+		<li><strong>Ooyala video:</strong> Use the video ID (not the player ID) &mdash; it should be a 32-character hexadecimal (alphanumeric) string.</li>
 	</ul>
 	<p>You can rearrange the order of the videos by changing the order in this list. They are displayed in the order they are listed.</p>
 	<textarea id="styled" name="videos" cols="120" rows="5"><?php $media = (isset($config[0]['videos']) ) ? implode("\n",$config[0]['videos']) : ''; echo $media; ?></textarea>

@@ -21,7 +21,7 @@ if ( array_key_exists('callback', $_GET) ) {
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
     $callback = $_GET['callback'];
-    //echo $callback.'('.XmlToJson::Parse("nfl_1st_quarter_sample_mod.xml").');';
+    //echo $callback.'('.XmlToJson::Parse("nfl_1st_quarter_sample.xml").');';
     echo $callback.'('.XmlToJson::Parse("updates.xml").');';
 
 } else {
@@ -29,7 +29,7 @@ if ( array_key_exists('callback', $_GET) ) {
     header('Content-Type: application/json; charset=utf8');
 
     echo XmlToJson::Parse("updates.xml");
-    //echo XmlToJson::Parse("nfl_1st_quarter_sample_mod.xml");
+    //echo XmlToJson::Parse("nfl_1st_quarter_sample.xml");
 }
 
 ?>

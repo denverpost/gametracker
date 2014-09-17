@@ -1,80 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <team-sport-content>
-        <sport>
-            <id>/sport/football</id>
-            <name>football</name>
-        </sport>
-        <league-content>
-            <league>
-                <id>/sport/football/league:1</id>
-                <name>National Football League</name>
-                <name type="nick">NFL</name>
-            </league>
-            <competition>
-                <id>/sport/football/competition:42017</id>
-                <start-date>2014-02-02T18:30:00.000-05:00</start-date>
-                <result-scope>
-                    <competition-status>complete</competition-status>
-                    <scope type="period" num="4" />
-                    <scope-status>complete</scope-status>
-                    <update-date>2014-02-02T21:49:54.000-05:00</update-date>
-                </result-scope>
-                <home-team-content>
-                    <team>
-                        <id>/sport/football/team:21</id>
-                        <name>Denver</name>
-                        <name type="short">DEN</name>
-                    </team>
-                    <stat-group>
-                        <scope type="competition" />
-                        <stat type="score" num="8" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="1" />
-                        <stat type="score" num="0" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="2" />
-                        <stat type="score" num="0" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="3" />
-                        <stat type="score" num="8" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="4" />
-                        <stat type="score" num="0" />
-                    </stat-group>
-                </home-team-content>
-                <away-team-content>
-                    <team>
-                        <id>/sport/football/team:19</id>
-                        <name>Seattle</name>
-                        <name type="short">SEA</name>
-                    </team>
-                    <stat-group>
-                        <scope type="competition" />
-                        <stat type="score" num="43" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="1" />
-                        <stat type="score" num="8" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="2" />
-                        <stat type="score" num="14" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="3" />
-                        <stat type="score" num="14" />
-                    </stat-group>
-                    <stat-group>
-                        <scope type="period" num="4" />
-                        <stat type="score" num="7" />
-                    </stat-group>
-                </away-team-content>
-            </competition>
-        </league-content>
-    </team-sport-content>
+<team-sport-content>
+<sport>
+<id>/sport/football</id>
+<name>football</name>
+</sport>
+<league-content>
+<league>
+<id>/sport/football/league:1</id>
+<name>National Football League</name>
+<name type="nick">NFL</name>
+</league>
+
+<competition>
+<id>/sport/football/competition:26315</id>
+<start-date>2009-06-11T10:00:00.000-04:00</start-date>
+<result-scope>
+<competition-status>in-progress</competition-status>
+<scope num="1" type="period"/>
+<scope-status>in-progress</scope-status>
+<clock>00:13:32</clock>
+<update-date>2009-06-11T10:10:32.000-04:00</update-date>
+</result-scope>
+<home-team-content>
+<team>
+<id>/sport/football/team:18</id>
+<name>New England</name>
+</team>
+<stat-group>
+<scope type="competition"/>
+<stat num="3" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="1" type="period"/>
+<stat num="3" type="score"/>
+</stat-group>
+</home-team-content>
+<away-team-content>
+<team>
+<id>/sport/football/team:17</id>
+<name>Green Bay</name>
+</team>
+<stat-group>
+<scope type="competition"/>
+<stat num="7" type="score"/>
+</stat-group>
+<stat-group>
+<scope num="1" type="period"/>
+<stat num="7" type="score"/>
+</stat-group>
+</away-team-content>
+<competition-state xsi:type="sport:football-competition-state">
+<possession>home</possession>
+<yard-line align="away">24</yard-line><yard-direction>away</yard-direction>
+<down>1</down>
+<distance>10</distance>
+</competition-state>
+</competition></league-content>
+</team-sport-content>
 </sport:content>
