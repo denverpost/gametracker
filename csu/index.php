@@ -3,7 +3,7 @@
 
 <?php 
 
-$fileteam = 'broncos';
+$fileteam = end(array_filter(explode('/',trim($_SERVER['REQUEST_URI']))));
 function get_config($teamdir) {
 // Puts the config into an array
     $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
@@ -14,33 +14,36 @@ $config = get_config($fileteam);
 
 <head profile="http://gmpg.org/xfn/11">
 
-<title>Denver Broncos Gametracker from The Denver Post</title>
+<title><?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post</title>
 
 <meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+
 <meta name="twitter:card" value="summary" />
-<meta name="twitter:url" value="http://gametracker.denverpost.com/broncos/" />
-<meta name="twitter:title" value="Denver Broncos Gametracker from The Denver Post" />
-<meta name="twitter:description" value="Live updates, news, photos, videos and more from tonight's Denver Broncos game." />
-<meta name="twitter:image" value="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
+<meta name="twitter:url" value="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/" />
+<meta name="twitter:title" value="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
+<meta name="twitter:description" value="Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game." />
+<meta name="twitter:image" value="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/gametracker-fb-image.png" />
 <meta name="twitter:site" value="@DPostSports" />
 <meta name="twitter:domain" value="gametracker.denverpost.com" />
 <meta name="twitter:creator" content="@DPostSports" />
 
-<meta property="og:title" content="Denver Broncos Gametracker from The Denver Post" />
+<meta property="og:title" content="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://gametracker.denverpost.com/broncos/" />
-<meta property="og:image" content="http://gametracker.denverpost.com/broncos/gametracker-fb-image.png" />
-<meta property="og:site_name" content="Denver Broncos Gametracker from The Denver Post" />
-<meta property="og:description" content="Live updates, news, photos, videos and more from tonight's Denver Broncos game." />
+<meta property="og:url" content="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/" />
+<meta property="og:image" content="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/gametracker-fb-image.png" />
+<meta property="og:site_name" content="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
+<meta property="og:description" content="Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game." />
 <meta property="article:publisher" content="http://www.facebook.com/denversports" />
 
 <meta name="distribution" content="global" />
 <meta name="robots" content="follow, all" />
 <meta name="language" content="en, sv" />
 <meta name="Copyright" content="Copyright 2014 The Denver Post." />
-<link rel="canonical" href="http://gametracker.denverpost.com/broncos/" />
+<link rel="canonical" href="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/" />
+
+
 <meta name="news_keywords" content="Denver Broncos, Playoffs, NFL, playoffs, NFC, AFC, postseason, super bowl, game, stats, live, blog, video, photos, social, tracker, score, updates" />
 
 <link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
@@ -58,6 +61,13 @@ $config = get_config($fileteam);
 <script type="text/javascript" src="//extras.mnginteractive.com/live/partners/MediaCenter/embedded_galleries/mc_embed.js"></script>
 <script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js"></script>
 
+<?php if (isset($config[0]['teamcolor'])): ?>
+<style type="text/css">
+#topper {
+    background:#<?php echo $config[0]['teamcolor']; ?>!important;
+}
+</style>
+<?php endif; ?>
 
 <script type="text/javascript">
 //Configure DFM Variables

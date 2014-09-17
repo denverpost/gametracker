@@ -22,6 +22,7 @@
 		ini_set('display_errors', TRUE);
 		ini_set('display_startup_errors', TRUE);
 
+		//Just here for safekeeping for now...
 		$teams = array(
 			'HOU' => 'Houston Texans',
 			'JAC' => 'Jacksonville Jaguars',
@@ -59,6 +60,7 @@
 
 		$fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
 		$savedmessage = '';
+		$editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
 
   		function get_config($teamdir) {
   		// Puts the config into an array
@@ -80,7 +82,7 @@
 			<li><a href="index.php?team=csu">CSU Rams</a></li>
 			<li><a href="index.php?team=cu">CU Buffs</a></li>
 		</ul>
-
+		
 		<?php } else {
 
 		$config = get_config($fileteam);
@@ -88,24 +90,38 @@
 		$saving = (isset($_REQUEST['saving'])) ? $_REQUEST['saving'] : false;
 
 		if ($saving == 1) {
-			$data = explode("\n", $_POST['videos']);
-			unset($config[0]['videos']);
-			$i = 0;
-			foreach ($data as $line) {
-				$config[0]['videos'][$i] = trim($line);
-				$i++;
-			}
-			$photos = explode("#",trim($_POST['photos']));
-			$config[0]['gameid'] = trim($_POST['gameid']);
-			$config[0]['photos'] = $photos[0];
-			$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
-			$config[0]['boxscore'] = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
 			
+			if ($editdetails == 1) {
+				$teamcolorclean = str_replace('#','',trim($_POST['teamcolor']));
+				$config[0]['teamname'] = trim($_POST['teamname']);
+				$config[0]['nickname'] = trim($_POST['nickname']);
+				$config[0]['shortname'] = strtoupper(trim($_POST['shortname']));
+				$config[0]['displayshort'] = strtoupper(trim($_POST['displayshort']));
+				$config[0]['teamcolor'] = $teamcolorclean;
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " team details updated.</p>" : "There was an error updating the configuration.";
+			} else {
+				$data = explode("\n", $_POST['videos']);
+				unset($config[0]['videos']);
+				$i = 0;
+				foreach ($data as $line) {
+					$config[0]['videos'][$i] = trim($line);
+					$i++;
+				}
+				$photos = explode("#",trim($_POST['photos']));
+				$config[0]['gameid'] = trim($_POST['gameid']);
+				$config[0]['photos'] = $photos[0];
+				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
+				$config[0]['boxscore'] = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
+			}
+
 			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
 		} ?>
 
-<h2>Updating the <?php echo $config[0]['teamname']; ?> gametracker</h2>
+<?php if (!$editdetails) { ?>
+<h2>Updating the <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> gametracker</h2>
 <p>Mostly you will only use this to add and remove media items. Don't change the top three configuration items if you're not sure what you're doing!</p>
+<p><a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> - DON'T TOUCH!</p>
 <p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
 
 <form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
@@ -132,10 +148,39 @@
 	<input type="submit" value="Update Gametracker!"><?php echo $savedmessage; ?>
 </form>
 
+<p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
+
+<?php } else if ($editdetails) { ?>
+
+<h2>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h2>
+<p style="color:red">IF YOU DO NOT KNOW EXACTLY WHAT YOU ARE DOING, DO NOT TOUCH ANYTHING HERE. YOU RISK BREAKING NOT ONLY THE GAMETRACKER FOR THIS TEAM, BUT ALL GAMETRACKERS EVERYWHERE.</p>
+<p>The world will mourn them and shun you if you fail.</p>
+<p><a href="index.php?team=<?php echo $fileteam; ?>">GO BACK TO GAMETRACKER MEDIA EDITOR</a> (strongly recommended)</p>
+
+<form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
+	<h3>Team Name</h3>
+	<p>Used to identify the team in SportsDirect feeds.</p>
+	<input type="text" name="teamname" cols="120" value="<?php echo $config[0]['teamname']; ?>">
+	<h3>Team Nickname</h3>
+	<p>Also used as a team identifier in some feeds ("mascot," esp for college teams).</p>
+	<input type="text" name="nickname" cols="120" value="<?php echo $config[0]['nickname']; ?>">
+	<h3>Shortname</h3>
+	<p>Used as an identifier in SportsDirect feeds (yes, three ways of identifying teams).</p>
+	<input type="text" name="shortname" cols="120" value="<?php echo $config[0]['shortname']; ?>">
+	<h3>Display shortname</h3>
+	<p>Used as an alternate to display team shortname in live scores area (addresses "COLO" vs. "CU").</p>
+	<input type="text" name="displayshort" cols="120" value="<?php echo $config[0]['displayshort']; ?>">
+	<h3>Team color</h3>
+	<p>Official team color, used for background of live scores area (#topper). Preferably the brightest color available from the teams colors, i.e. Orange for Broncos, Blue for Avalanche, Gold for CU, etc. Use Hex numeric color.</p>
+	<input type="text" name="teamcolor" cols="120" value="<?php echo $config[0]['teamcolor']; ?>">
+	
+	<input type="submit" value="Update team details"><?php echo $savedmessage; ?>
+</form>
 
 <p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
 
 <?php }
+}
 ?>
 </div>
 </body>
