@@ -1,18 +1,8 @@
 <html>
 <head>
 	<title>Add Media | Denver Post Gametracker</title>
-	<style type="text/css">
-		#wrapper { width:1000px; margin:0 auto;}
-		p.savedTo { color:#dd0000; font-size:20px; float:left; padding-left:20px; margin-top:15px; margin-bottom: 0; }
-		p.clear { clear:both;padding-top:10px; }
-		h2 { font-size:32px; color:#444499; font-family: 'Helvetica','Arial',sans-serif; margin:15px 0; }
-		h3 { font-size:24px; color:#444466; font-family: 'Helvetica','Arial',sans-serif; margin:15px 0; }
-		p,ul { font-size:18px; color:#181818; line-height:1.25; margin:0 0 10px; font-family: 'Helvetica','Arial',sans-serif; }
-		ul li { margin:0 0 6px; }
-		textarea#styled { font-size:15px; color:#292929; font-family:'Courier New',monospace; line-height:1.2; padding:5px; width:100%; }
-		input[type="submit"] { margin-top:10px; float:left; width:200px; font-size:14px; line-height:1.2; height:32px; }
-		input[type="text"] { font-size:15px; color:#292929; font-family:'Courier New',monospace; line-height:1.2; padding:5px; width:100%; margin: 0 0 10px; }
-	</style>
+
+	<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
@@ -71,6 +61,19 @@
 			file_put_contents('../'.$teamdir.'/config.json', json_encode($configin)) or die("Couldn't open $teamdir config for writing!");
 			return get_config($teamdir);
 		}
+		function test_img_url($image_url) {
+			$handle = curl_init($image_url);
+			curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+			$response = curl_exec($handle);
+			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+			if($httpCode != 200) {
+			    $returns = 'Please try again with a valid URL.';
+			} else {
+				$returns = $image_url;
+			}
+			curl_close($handle);
+			return $returns;
+		}
 
 		if (!$fileteam) { ?>
 		
@@ -92,12 +95,19 @@
 		if ($saving == 1) {
 			
 			if ($editdetails == 1) {
+				$share_imgclean = test_img_url(trim($_POST['share_img']));
 				$teamcolorclean = str_replace('#','',trim($_POST['teamcolor']));
-				$config[0]['teamname'] = trim($_POST['teamname']);
-				$config[0]['nickname'] = trim($_POST['nickname']);
+				$news_keywordsclean = rtrim(trim($_POST['news_keywords']),',');
+				$twitter_creatorclean = ltrim(trim($_POST['twitter_creator']),'@');
+				$config[0]['teamname'] = ucfirst(trim($_POST['teamname']));
+				$config[0]['nickname'] = ucfirst(trim($_POST['nickname']));
 				$config[0]['shortname'] = strtoupper(trim($_POST['shortname']));
+				$config[0]['friendlyname'] = ucfirst(trim($_POST['friendlyname']));
 				$config[0]['displayshort'] = strtoupper(trim($_POST['displayshort']));
 				$config[0]['teamcolor'] = $teamcolorclean;
+				$config[0]['news_keywords'] = $news_keywordsclean;
+				$config[0]['twitter_creator'] = $twitter_creatorclean;
+				$config[0]['share_img'] = $share_imgclean;
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " team details updated.</p>" : "There was an error updating the configuration.";
 			} else {
 				$data = explode("\n", $_POST['videos']);
@@ -160,20 +170,32 @@
 <form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
 	<h3>Team Name</h3>
 	<p>Used to identify the team in SportsDirect feeds.</p>
-	<input type="text" name="teamname" cols="120" value="<?php echo $config[0]['teamname']; ?>">
+	<input type="text" name="teamname" cols="120" value="<?php echo isset($config[0]['teamname']) ? $config[0]['teamname'] : ''; ?>">
 	<h3>Team Nickname</h3>
 	<p>Also used as a team identifier in some feeds ("mascot," esp for college teams).</p>
-	<input type="text" name="nickname" cols="120" value="<?php echo $config[0]['nickname']; ?>">
+	<input type="text" name="nickname" cols="120" value="<?php echo isset($config[0]['nickname']) ? $config[0]['nickname'] : ''; ?>">
+	<h3>Friendly name</h3>
+	<p>Used to refer to the team in a friendly/colloquial way, i.e. "Avs," or "Buffs."</p>
+	<input type="text" name="friendlyname" cols="120" value="<?php echo isset($config[0]['friendlyname']) ? $config[0]['friendlyname'] : ''; ?>">
 	<h3>Shortname</h3>
 	<p>Used as an identifier in SportsDirect feeds (yes, three ways of identifying teams).</p>
-	<input type="text" name="shortname" cols="120" value="<?php echo $config[0]['shortname']; ?>">
+	<input type="text" name="shortname" cols="120" value="<?php echo isset($config[0]['shortname']) ? $config[0]['shortname'] : ''; ?>">
 	<h3>Display shortname</h3>
 	<p>Used as an alternate to display team shortname in live scores area (addresses "COLO" vs. "CU").</p>
-	<input type="text" name="displayshort" cols="120" value="<?php echo $config[0]['displayshort']; ?>">
+	<input type="text" name="displayshort" cols="120" value="<?php echo isset($config[0]['displayshort']) ? $config[0]['displayshort'] : ''; ?>">
 	<h3>Team color</h3>
 	<p>Official team color, used for background of live scores area (#topper). Preferably the brightest color available from the teams colors, i.e. Orange for Broncos, Blue for Avalanche, Gold for CU, etc. Use Hex numeric color.</p>
-	<input type="text" name="teamcolor" cols="120" value="<?php echo $config[0]['teamcolor']; ?>">
-	
+	<input type="text" name="teamcolor" cols="120" value="<?php echo isset($config[0]['teamcolor']) ? $config[0]['teamcolor'] : ''; ?>">
+	<h3>News keywords</h3>
+	<p>Written into the news_keywords meta tag exactly as displayed here. Separate with a comma and a space for neatness.</p>
+	<input type="text" name="news_keywords" cols="120" value="<?php echo isset($config[0]['news_keywords']) ? $config[0]['news_keywords'] : ''; ?>">
+	<h3>Twitter creator</h3>
+	<p>The twitter account that will be promoted in the Twitter Card code on the page -- usually @DPostSports. THe '@' is not required.</p>
+	<input type="text" name="twitter_creator" cols="120" value="<?php echo isset($config[0]['twitter_creator']) ? $config[0]['twitter_creator'] : ''; ?>">
+	<h3>Share image</h3>
+	<p>The image that will be set for both og:image and twitter:image in the meta data. Must be 1200x630px. Must be a valid URL.</p>
+	<input type="text" name="share_img" cols="120" value="<?php echo isset($config[0]['share_img']) ? $config[0]['share_img'] : ''; ?>">
+
 	<input type="submit" value="Update team details"><?php echo $savedmessage; ?>
 </form>
 
