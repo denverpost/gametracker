@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('America/Denver');
+
 //get the xml from SportsDirect
 function simplexml_insert_after(SimpleXMLElement $insert, SimpleXMLElement $target)
 {
@@ -16,31 +18,58 @@ function get_http_response_code($url) {
     return substr($headers[0], 9, 3);
 }
 
-$fileteam = 'broncos';
-function get_config($teamdir) {
-	// Puts the config into an array
-    $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
-    return $configs;
-}
-$config = get_config($fileteam);
-$feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NFL/schedule/schedule_NFL.xml';
+$feedurls = array(	array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/football/NFL/schedule/schedule_NFL.xml',
+							'name'=>'broncos',
+							'teamid'=>'21',
+							'sport'=>'football'
+							),
+					array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/football/NCAAF/schedule/schedule_NCAAF.xml',
+							'name'=>'csu',
+							'teamid'=>'89',
+							'sport'=>'football'
+							),
+					array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/football/NCAAF/schedule/schedule_NCAAF.xml',
+							'name'=>'cu',
+							'teamid'=>'90',
+							'sport'=>'football'
+							),
+					array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/schedule/schedule_NHL.xml',
+							'name'=>'avs',
+							'teamid'=>'1',
+							'sport'=>'hockey'
+							)
+					);
 //echo $feedurl;
 
-//run 20 times since cron can only do every 60 sec and we're checking every 5.
-$i = 0;
-while($i < 20) {
-	if (get_http_response_code($feedurl) != "404") {
-		$xml = file_get_contents($feedurl);
+foreach ($feedurls as $feedteam) {
+	if (get_http_response_code($feedteam['url']) != "404") {
+		$xml = file_get_contents($feedteam['url']);
 	}
 	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
-	//var_dump($xml);
+
 	if ($xml) {
 		$object = simplexml_load_string($xml);
 
-		//echo isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'});
+		//var_dump($object);
+		foreach($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'season-content'}[0]->{'competition'} as $competitions) {
+			$teamtrim = '/sport/' . $feedteam['sport'] . '/team:';
+			$comptrim = '/sport/' . $feedteam['sport'] . '/competition:';
+			if (ltrim($competitions->{'home-team-content'}[0]->{'team'}[0]->{'id'}[0],$teamtrim) == $feedteam['teamid']) {
+				$teamlocation = 'home';
+				$gameid = ltrim($competitions->{'id'}[0],$comptrim);
+				$gametime = strtotime($competitions->{'start-date'}[0]);
+				echo $feedteam['name'] . ': ' . $teamlocation . ', id: ' . $gameid . ', at: ' . date("Y-m-d h:i:sa T",$gametime) . ' (' . $gametime . ')' . "\n";
+			} else if (ltrim($competitions->{'away-team-content'}[0]->{'team'}[0]->{'id'}[0],$teamtrim) == $feedteam['teamid']) {
+				$teamlocation = 'away';
+				$gameid = ltrim($competitions->{'id'}[0],$comptrim);
+				$gametime = strtotime($competitions->{'start-date'}[0]);
+				echo $feedteam['name'] . ': ' . $teamlocation . ', id: ' . $gameid . ', at: ' . date("Y-m-d h:i:sa T",$gametime) . ' (' . $gametime . ')' . "\n";
+			}
+		}
+		break;
 
 		//find a particular tag that has both attributes and a value and insert the values as key-value pairs in the DOM instead
-		if (isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}) ) {
+		/*if (isset($object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}) ) {
 			
 			$yardlineside = $object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-line'}[0]->attributes()->align;
 
@@ -50,11 +79,16 @@ while($i < 20) {
 				simplexml_insert_after($insert, $target);
 				$object->{'team-sport-content'}[0]->{'league-content'}[0]->{'competition'}[0]->{'competition-state'}[0]->{'yard-direction'} = $yardlineside;
 			}
-		}
-	
+		}*/
+
 	}
 
 	//write the xml to disk if it exists, else place a blank xml file that the interpreter knows to ignore -- but only up until game time -- then we keep whatever we got last.
+	
+
+	/*
+
+
 	if ($xml) {
 		$object->asXML('updates.xml');
 	} else if (time() < 1391347800) {
@@ -62,9 +96,9 @@ while($i < 20) {
 		file_put_contents('updates.xml', $alternative);
 		//echo $i;
 	}
-	//Check every 5 seconds -- max rate recommended by SportsDirect
-	sleep(5);
-	$i++;
+
+	*/
+
 }
 
 ?>
