@@ -1,1 +1,57 @@
-<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/football/competition:42017</id><start-date>2014-08-07T21:00:00-04:00</start-date></competition></league-content></team-sport-content></sport:content>
+<?xml version="1.0" encoding="UTF-8"?>
+<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<team-sport-content>
+<sport>
+<id>/sport/football</id>
+<name>football</name>
+</sport>
+<league-content>
+<league>
+<id>/sport/football/league:2</id>
+<name>NCAA Football</name>
+<name type="nick">NCAAF</name>
+</league>
+<competition>
+<id>/sport/football/competition:43143</id>
+<start-date>2014-09-20T14:00:00.000-04:00</start-date>
+<result-scope>
+<competition-status>in-progress</competition-status>
+<scope type="period" num="1"/>
+<scope-status>in-progress</scope-status>
+<clock>00:05:26</clock>
+<update-date>2014-09-20T14:28:26.000-04:00</update-date>
+</result-scope>
+<home-team-content>
+<team>
+<id>/sport/football/team:90</id>
+<name>Colorado</name>
+<name type="short">COLO</name>
+</team>
+<stat-group>
+<scope type="competition"/>
+<stat type="score" num="0"/>
+</stat-group>
+<stat-group>
+<scope type="period" num="1"/>
+<stat type="score" num="0"/>
+</stat-group>
+</home-team-content>
+<away-team-content>
+<team>
+<id>/sport/football/team:50</id>
+<name>Hawaii</name>
+<name type="short">HAW</name>
+</team>
+<stat-group>
+<scope type="competition"/>
+<stat type="score" num="0"/>
+</stat-group>
+<stat-group>
+<scope type="period" num="1"/>
+<stat type="score" num="0"/>
+</stat-group>
+</away-team-content>
+</competition>
+</league-content>
+</team-sport-content>
+</sport:content>

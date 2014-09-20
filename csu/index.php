@@ -36,7 +36,7 @@ require('../header.php');
         </div>
         <div id="swipe3" class="slide">
             <div id="ajaxheadlines">
-                <script type="text/javascript" src="http://extras.denverpost.com/cache/gametracker-broncos.js"></script>
+                <script type="text/javascript" src="http://extras.denverpost.com/cache/gametracker-<?php echo strtolower($config[0]['friendlyname']); ?>.js"></script>
             </div>
             <div id="headlinesrefresh">
                 <img src="../button-refresh.png" alt="Tap to refresh headlines" />
@@ -349,7 +349,7 @@ require('../header.php');
     parseGameData();
 
     function refreshNews() {
-        $.getScript('http://extras.denverpost.com/cache/gametracker-broncos.js').done(function( script, textStatus) {
+        $.getScript('http://extras.denverpost.com/cache/gametracker-<?php echo strtolower($config[0]['friendlyname']); ?>.js').done(function( script, textStatus) {
                 console.log('Successfully refreshed headlines.');
             }).fail(function(jqxhr, settings,exception ) {
                 $('#ajaxheadlines').prepend('<p class="newserror">There was a problem retreiving new headlines.</p>')

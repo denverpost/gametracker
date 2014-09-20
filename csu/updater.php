@@ -16,14 +16,14 @@ function get_http_response_code($url) {
     return substr($headers[0], 9, 3);
 }
 
-$fileteam = 'broncos';
+$fileteam = 'csu';
 function get_config($teamdir) {
 	// Puts the config into an array
     $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
     return $configs;
 }
 $config = get_config($fileteam);
-$feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/livescores_' . $config[0]['gameid'] . '.xml';
+$feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NCAAF/livescores/livescores_' . $config[0]['gameid'] . '.xml';
 //echo $feedurl;
 
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
