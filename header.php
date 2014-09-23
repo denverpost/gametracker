@@ -99,6 +99,7 @@ $config = get_config($fileteam);
 <script type="text/javascript">
     //configure Chartbeat variables
     var _sf_startpt=(new Date()).getTime();
+    var teamNewsFeed = 'http://extras.denverpost.com/cache/gametracker-<?php echo strtolower($config[0]['friendlyname']); ?>.js';
 </script>
 
 </head>

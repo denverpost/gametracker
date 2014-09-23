@@ -2,7 +2,8 @@
 <head>
 	<title>Add Media | Denver Post Gametracker</title>
 
-	<link rel="stylesheet" type="text/css" href="./style.css">
+	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
+	<!-- <link rel="stylesheet" type="text/css" href="./style.css" /> -->
 </head>
 
 <body>
@@ -77,7 +78,8 @@
 
 		if (!$fileteam) { ?>
 		
-		<h2>Update Gametracker</h2>
+		<div class="row">
+		<h1>Update Gametracker</h1>
 		<p>Choose a team to update the gametracker for:</p>
 		<ul>
 			<li><a href="index.php?team=avs">Avalanche</a></li>
@@ -85,6 +87,7 @@
 			<li><a href="index.php?team=csu">CSU Rams</a></li>
 			<li><a href="index.php?team=cu">CU Buffs</a></li>
 		</ul>
+		</div>
 		
 		<?php } else {
 
@@ -108,6 +111,7 @@
 				$config[0]['news_keywords'] = $news_keywordsclean;
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
 				$config[0]['share_img'] = $share_imgclean;
+				$config[0]['sport'] = trim($_POST['sporttype']);
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " team details updated.</p>" : "There was an error updating the configuration.";
 			} else {
 				$data = explode("\n", $_POST['videos']);
@@ -129,9 +133,11 @@
 		} ?>
 
 <?php if (!$editdetails) { ?>
+<div class="row">
+
 <h2>Updating the <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> gametracker</h2>
 <p>Mostly you will only use this to add and remove media items. Don't change the top three configuration items if you're not sure what you're doing!</p>
-<p><a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> - DON'T TOUCH!</p>
+<p><a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> <span style="color:red">- HERE THERE BE DRAGONS.</span></p>
 <p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
 
 <form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
@@ -160,9 +166,14 @@
 
 <p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
 
+</div>
+
 <?php } else if ($editdetails) { ?>
 
-<h2>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h2>
+<div class="row">
+
+<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
+
 <p style="color:red">IF YOU DO NOT KNOW EXACTLY WHAT YOU ARE DOING, DO NOT TOUCH ANYTHING HERE. YOU RISK BREAKING NOT ONLY THE GAMETRACKER FOR THIS TEAM, BUT ALL GAMETRACKERS EVERYWHERE.</p>
 <p>The world will mourn them and shun you if you fail.</p>
 <p><a href="index.php?team=<?php echo $fileteam; ?>">GO BACK TO GAMETRACKER MEDIA EDITOR</a> (strongly recommended)</p>
@@ -180,6 +191,10 @@
 	<h3>Shortname</h3>
 	<p>Used as an identifier in SportsDirect feeds (yes, three ways of identifying teams).</p>
 	<input type="text" name="shortname" cols="120" value="<?php echo isset($config[0]['shortname']) ? $config[0]['shortname'] : ''; ?>">
+	<h3>Sport type</h3>
+	<p>Determines what kind of parsing will be done for game data. A mismatch will result in mangled data. Parsing is only possible for the sports listed here.</p>
+	<p><input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?>> Football<br />
+	<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?>> Hockey</p>
 	<h3>Display shortname</h3>
 	<p>Used as an alternate to display team shortname in live scores area (addresses "COLO" vs. "CU").</p>
 	<input type="text" name="displayshort" cols="120" value="<?php echo isset($config[0]['displayshort']) ? $config[0]['displayshort'] : ''; ?>">
@@ -200,6 +215,7 @@
 </form>
 
 <p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
+</div>
 
 <?php }
 }

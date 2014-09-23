@@ -26,9 +26,9 @@ $config = get_config($fileteam);
 $feedurl = 'http://xml.sportsdirectinc.com/sport/v2/football/NFL/livescores/livescores_' . $config[0]['gameid'] . '.xml';
 //echo $feedurl;
 
-//run 20 times since cron can only do every 60 sec and we're checking every 5.
+//run 12 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
-while($i < 20) {
+while($i < 12) {
 	/*if (get_http_response_code($feedurl) != "404") {
 		$xml = file_get_contents($feedurl);
 	} */
