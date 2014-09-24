@@ -4,6 +4,7 @@
 
 	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
 	<link rel="stylesheet" type="text/css" href="./style.css" />
+	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
 </head>
 
 <body>
@@ -57,6 +58,10 @@
   		// Puts the config into an array
 			$configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
 			return $configs;
+		}
+		function get_schedule() {
+			$sched = json_decode(file_get_contents('./schedule.json'),true);
+			return $sched;
 		}
 		function put_config($teamdir,$configin) {
 			file_put_contents('../'.$teamdir.'/config.json', json_encode($configin)) or die("Couldn't open $teamdir config for writing!");
@@ -115,7 +120,7 @@
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
 				$config[0]['share_img'] = $share_imgclean;
 				$config[0]['sport'] = trim($_POST['sporttype']);
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " team details updated.</p>" : "There was an error updating the configuration.";
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " team details updated.</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
 			} else {
 				$data = explode("\n", $_POST['videos']);
 				unset($config[0]['videos']);
@@ -124,34 +129,56 @@
 					$config[0]['videos'][$i] = trim($line);
 					$i++;
 				}
+				if (trim($_POST['gameid']) != trim($_POST['gameselect']) && trim($_POST['gameselect']) != 'noselect') {
+					$gameid_final = trim($_POST['gameselect']);
+				} else {
+					$gameid_final = trim($_POST['gameid']);
+				}
 				$photos = explode("#",trim($_POST['photos']));
-				$config[0]['gameid'] = trim($_POST['gameid']);
+				$config[0]['gameid'] = $gameid_final;
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
 			}
 
-			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"saveError\">There was an error updating the configuration.</p>";
+			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
 		} ?>
 
 <?php if (!$editdetails) { ?>
-<div class="row">
-	<div class="large-12 columns">
-		<h2>Updating the <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> gametracker</h2>
-		<p>Mostly you will only use this to add and remove media items. Don't change the top any configuration items if you're not sure what you're doing!</p>
-		<p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
-		<p><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a> | <a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> <span style="color:red">- HERE THERE BE DRAGONS</span></p>
+
+<?php
+
+$schedule = get_schedule();
+
+?>
+
+<div class="headerstyle">
+	<div class="row">
+		<div class="large-12 columns">
+			<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> game details</h1>
+			<p>Here you can configure the live blog, boxscore URL, photo gallery and videos for the team's Gametracker during the game.</p>
+			<p>Don't change any configuration items if you're not sure what you're doing!</p>
+			<div class="row">
+				<div class="large-4 columns">
+					<a href="index.php" class="button large-12 columns">OTHER GAMETRACKERS</a>
+				</div>
+				<div class="large-4 columns">
+					<a href="../<?php echo $fileteam; ?>" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+				</div>
+				<div class="large-4 columns">
+					<a href="index.php?team=<?php echo $fileteam; ?>&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
-<div class="row">
+<div id="theforms" class="row">
 	<div class="large-12 columns">
 		<form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
 			<?php if ($savedmessage != ''): ?>
-				<fieldset>
 					<?php echo $savedmessage; ?>
-				</fieldset>
 			<?php endif; ?>
 			<fieldset>
 				<legend>Game to track</legend>
@@ -160,17 +187,23 @@
 						<label class="biglabel">Game ID
 							<input class="smallmargin" type="text" name="gameid" value="<?php echo isset($config[0]['gameid']) ? $config[0]['gameid'] : ''; ?>" />
 						</label>
-						<p class="helptext">Determines what score feed/game to track. Should be automatic.</p>
+						<p class="helptext">Determines what score feed/game to track. <!--Should be automatic.--></p>
 					</div>
 					<div class="large-6 columns">
 						<label class="biglabel">Select from upcoming games
-							<select name="game" class="smallmargin">
-								<option value="game1">game 1</option>
-								<option value="game2">game 2</option>
-								<option value="game3">game 3</option>
+							<select name="gameselect" class="smallmargin">
+								<option value="noselect" style="color:#888;">Select from upcoming games...</option>
+								<?php
+
+								foreach($schedule[$fileteam] as $games) {
+									$selected = ($config[0]['gameid'] == $games['gameid']) ? ' selected' : '';
+									echo '<option value="'.$games['gameid'].'"'.$selected.'>'.$games['us'].$games['vs'] . ' ('.$games['gametimepretty'].')</option>';
+								}
+
+								?>
 							</select>
 						</label>
-						<p class="helptext">Use to override automatic input in left.</p>
+						<p class="helptext">Use to override <!--automatic--> input in left.</p>
 					</div>
 				</div>
 			</fieldset>
@@ -193,28 +226,45 @@
 					<p class="helptext">Ooyala video IDs (not player IDs!). Enter multiple videos on their own lines. Videos will be displayed in the order they are input.</p>
 				</label>
 			</fieldset>
-			<input type="submit" class="button large-12 columns" style="float:right;" value="Update game details" />
+			<div class="row">
+				<div class="large-6 columns">
+					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>">RELOAD (REFRESH WITHOUT SAVING)</a>
+				</div>
+				<div class="large-6 columns">
+					<input type="submit" class="button large-12 columns" style="float:right;" value="Update game details" />
+				</div>
+			</div>
 		</form>
 	</div>
 </div>
 
 <?php } else if ($editdetails) { ?>
 
-<div class="row">
-	<div class="large-12 columns">
-		<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
-		<p style="color:red">IF YOU DO NOT KNOW EXACTLY WHAT YOU ARE DOING, DO NOT TOUCH ANYTHING HERE. YOU RISK BREAKING NOT ONLY THE GAMETRACKER FOR THIS TEAM, BUT ALL GAMETRACKERS EVERYWHERE.</p>
-		<p>The world will mourn them and shun you if you fail.</p>
-		<p><a href="index.php?team=<?php echo $fileteam; ?>">GO BACK TO THE MEDIA EDITOR</a> (strongly recommended) | <a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Configure a different team</a></p>
+<div class="headerstyle">
+	<div class="row">
+		<div class="large-12 columns">
+			<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
+			<p class="alert-box alert round">HERE THERE BE DRAGONS: If you are not 100% positive that you know exactly what you are doing with any field in this form, do not touch it. In fact, don't touch anything here. Go back to the Game Details page. Messing up in here could not only break this team's Gametracker, but all Gametrackers everywhere. The world will mourn, and probably shun you if you fail.</p>
+			<div class="row">
+				<div class="large-4 columns">
+					<a href="index.php" class="button large-12 columns">OTHER GAMETRACKERS</a>
+				</div>
+				<div class="large-4 columns">
+					<a href="../<?php echo $fileteam; ?>" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+				</div>
+				<div class="large-4 columns">
+					<a href="index.php?team=<?php echo $fileteam; ?>" class="button success large-12 columns">BACK TO GAME DETAILS</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="row">
+
+<div id="theforms" class="row">
 	<div class="large-12 columns">
 		<form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
 			<?php if ($savedmessage != ''): ?>
-				<fieldset>
 					<?php echo $savedmessage; ?>
-				</fieldset>
 			<?php endif; ?>
 			<fieldset>
 				<legend>Team name variants</legend>
@@ -296,7 +346,14 @@
 					<p class="helptext">10 or more newsy SEO terms for the "news_keywords" meta tag, separated by commas.</p>
 				</label>
 			</fieldset>
-			<input type="submit" class="button large-12 columns" style="float:right;" value="Update team details" />
+			<div class="row">
+				<div class="large-6 columns">
+					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>">RELOAD (REFRESH WITHOUT SAVING)</a>
+				</div>
+				<div class="large-6 columns">
+					<input type="submit" class="button large-12 columns" style="float:right;" value="Update team details" />
+				</div>
+			</div>
 		</form>
 	</div>
 </div>

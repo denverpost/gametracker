@@ -1,5 +1,8 @@
 body {
-	padding:2rem 0 3rem;
+	padding:0 0 3rem;
+}
+div#theforms {
+	margin-bottom:2em;
 }
 p.helptext {
 	font-size:.9em;
@@ -11,12 +14,12 @@ p.helptext {
 }
 p.savedTo {
 	font-size:1.1em;
-	color:#2222ff;
+	color:#3333ff;
 	margin:0;
 }
 p.saveError {
 	font-size:1.1em;
-	color:#ff2222;
+	color:#ff3333;
 	margin:0;
 }
 input.smallmargin, textarea.smallmargin, select.smallmargin {
@@ -35,4 +38,23 @@ label.biglabel {
 }
 input[type="submit"] {
 	text-transform: uppercase;
+}
+div.headerstyle {
+	width:100%;
+	background:#286a88;
+	padding:2em 0 .5em;
+	margin:0 0 1em;
+}
+div.headerstyle h1 {
+	margin-bottom:.5em;
+}
+div.headerstyle h1, div.headerstyle p, div.headerstyle a {
+	color:#f5f5f5;
+}
+div.headerstyle a {
+	text-decoration: underline;
+}
+div.headerstyle .alert-box.alert {
+	font-size:1rem;
+	padding:1rem 1.5rem;
 }
