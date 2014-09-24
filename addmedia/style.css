@@ -1,63 +1,38 @@
-#wrapper {
-	width: 1000px;
-	margin: 0 auto;
+body {
+	padding:2rem 0 3rem;
+}
+p.helptext {
+	font-size:.9em;
+	font-style: italic;
+	color: #888;
+	padding:0 .5em;
+	text-transform: none;
+	font-weight: normal;
 }
 p.savedTo {
-	color: #dd0000;
-	font-size: 20px;
-	float: left;
-	padding-left: 20px;
-	margin-top: 15px;
-	margin-bottom: 0;
+	font-size:1.1em;
+	color:#2222ff;
+	margin:0;
 }
-p.clear {
-	clear: both;
-	padding-top: 10px;
+p.saveError {
+	font-size:1.1em;
+	color:#ff2222;
+	margin:0;
 }
-h2 {
-	font-size: 32px;
-	color: #444499;
-	font-family: 'Helvetica','Arial',sans-serif;
-	margin: 15px 0;
+input.smallmargin, textarea.smallmargin, select.smallmargin {
+	margin:.2em 0 .3em;
 }
-h3 {
-	font-size: 24px;
-	color: #444466;
-	font-family: 'Helvetica','Arial',sans-serif;
-	margin: 15px 0;
+input[type="radio"] {
+	margin: .5rem 0;
 }
-p,ul {
-	font-size: 18px;
-	color: #181818;
-	line-height: 1.25;
-	margin: 0 0 10px;
-	font-family: 'Helvetica','Arial',sans-serif;
+label {
+	text-transform: none;
 }
-ul li {
-	margin: 0 0 6px;
-}
-textarea#styled {
-	font-size: 15px;
-	color: #292929;
-	font-family: 'Courier New',monospace;
-	line-height: 1.2;
-	padding: 5px;
-	width: 100%;
+label.biglabel {
+	font-weight:bold;
+	text-transform: uppercase;
+	font-size:.9em;
 }
 input[type="submit"] {
-	margin-top: 10px;
-	float: left;
-	width: 200px;
-	font-size: 14px;
-	line-height: 1.2;
-	height: 32px;
-}
-input[type="text"] {
-	font-size: 15px;
-	color: #292929;
-	font-family: 'Courier New',monospace;
-	line-height: 1.2;
-	padding: 5px;
-	width: 100%;
-	margin: 0 0 10px;
+	text-transform: uppercase;
 }

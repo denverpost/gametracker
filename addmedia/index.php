@@ -3,7 +3,7 @@
 	<title>Add Media | Denver Post Gametracker</title>
 
 	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="./style.css" /> -->
+	<link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 
 <body>
@@ -68,7 +68,7 @@
 			$response = curl_exec($handle);
 			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 			if($httpCode != 200) {
-			    $returns = 'Please try again with a valid URL.';
+			    $returns = false;
 			} else {
 				$returns = $image_url;
 			}
@@ -94,11 +94,14 @@
 		$config = get_config($fileteam);
 
 		$saving = (isset($_REQUEST['saving'])) ? $_REQUEST['saving'] : false;
+		
+		$imgerror = false;
 
 		if ($saving == 1) {
 			
 			if ($editdetails == 1) {
 				$share_imgclean = test_img_url(trim($_POST['share_img']));
+				$imgerror = ($share_imgclean) ? false : true;
 				$teamcolorclean = str_replace('#','',trim($_POST['teamcolor']));
 				$news_keywordsclean = rtrim(trim($_POST['news_keywords']),',');
 				$twitter_creatorclean = ltrim(trim($_POST['twitter_creator']),'@');
@@ -129,97 +132,181 @@
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
 			}
 
-			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "There was an error updating the configuration.";
+			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"savedTo\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"saveError\">There was an error updating the configuration.</p>";
 		} ?>
 
 <?php if (!$editdetails) { ?>
 <div class="row">
+	<div class="large-12 columns">
+		<h2>Updating the <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> gametracker</h2>
+		<p>Mostly you will only use this to add and remove media items. Don't change the top any configuration items if you're not sure what you're doing!</p>
+		<p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
+		<p><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a> | <a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> <span style="color:red">- HERE THERE BE DRAGONS</span></p>
+	</div>
+</div>
 
-<h2>Updating the <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> gametracker</h2>
-<p>Mostly you will only use this to add and remove media items. Don't change the top three configuration items if you're not sure what you're doing!</p>
-<p><a href="index.php?team=<?php echo $fileteam; ?>&details=1">Edit team details</a> <span style="color:red">- HERE THERE BE DRAGONS.</span></p>
-<p>The News page on the Gametracker is pre-configured for each team, so no updates are possible.</p>
-
-<form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
-	<h3>GameID</h3>
-	<p>This is parsed from the schedule feed and determines what game is presently in the Gametracker. DO NOT CHANGE IT IF YOU'RE NOT SURE!</p>
-	<input type="text" name="gameid" cols="120" value="<?php echo $config[0]['gameid']; ?>">
-	<h3>ScribbleLive</h3>
-	<p>Paste in a link to the ScribbleLive on live.denverpost.com (it will be converted to mobile.scribblelive.com). Ex: http://live.denverpost.com/Event/Colorado_Avalanche_vs_Minnesota_Wild_Game_7_Live_Blog</p>
-	<input type="text" name="scribble" cols="120" value="<?php echo $config[0]['scribble']; ?>">
-	<h3>Boxscore</h3>
-	<p>Paste in a link to the boxscore on denverpost.sportsdirectinc.com (it will be converted to m.denverpost.sportsdirectinc.com). Ex: http://denverpost.sportsdirectinc.com/hockey/nhl-boxscores.aspx?page=/data/NHL/results/2013-2014/boxscore63057.html</p>
-	<input type="text" name="boxscore" cols="120" value="<?php echo $config[0]['boxscore']; ?>">
-	<h3>Photos</h3>
-	<p>Paste in a link to the game photo gallery on MediaCenter. Ex: http://photos.denverpost.com/2014/04/28/photos-colorado-avalanche-vs-minnesota-wild-game-6-of-stanley-cup-playoffs/</p>
-	<input type="text" name="photos" cols="120" value="<?php echo $config[0]['photos']; ?>">
-	<h3>Videos</h3>
-	<p>You can add multiple videos to the videos tab:</p>
-	<ul>
-		<li><strong>Brightcove video:</strong> Use only the videoID &mdash; it should be a 13-digit number (deprecated).</li>
-		<li><strong>Ooyala video:</strong> Use the video ID (not the player ID) &mdash; it should be a 32-character hexadecimal (alphanumeric) string.</li>
-	</ul>
-	<p>You can rearrange the order of the videos by changing the order in this list. They are displayed in the order they are listed.</p>
-	<textarea id="styled" name="videos" cols="120" rows="5"><?php $media = (isset($config[0]['videos']) ) ? implode("\n",$config[0]['videos']) : ''; echo $media; ?></textarea>
-	<input type="submit" value="Update Gametracker!"><?php echo $savedmessage; ?>
-</form>
-
-<p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
-
+<div class="row">
+	<div class="large-12 columns">
+		<form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
+			<?php if ($savedmessage != ''): ?>
+				<fieldset>
+					<?php echo $savedmessage; ?>
+				</fieldset>
+			<?php endif; ?>
+			<fieldset>
+				<legend>Game to track</legend>
+				<div class="row">
+					<div class="large-6 columns">
+						<label class="biglabel">Game ID
+							<input class="smallmargin" type="text" name="gameid" value="<?php echo isset($config[0]['gameid']) ? $config[0]['gameid'] : ''; ?>" />
+						</label>
+						<p class="helptext">Determines what score feed/game to track. Should be automatic.</p>
+					</div>
+					<div class="large-6 columns">
+						<label class="biglabel">Select from upcoming games
+							<select name="game" class="smallmargin">
+								<option value="game1">game 1</option>
+								<option value="game2">game 2</option>
+								<option value="game3">game 3</option>
+							</select>
+						</label>
+						<p class="helptext">Use to override automatic input in left.</p>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Non-feed game data</legend>
+				<label class="biglabel<?php echo (!isset($config[0]['scribble']) || $config[0]['scribble'] == '') ? ' error' : ''; ?>">Live blog URL
+					<input type="text" class="smallmargin" name="scribble" value="<?php echo isset($config[0]['scribble']) ? $config[0]['scribble'] : ''; ?>">
+					<p class="helptext">Paste a valid link to the game live blog on live.denverpost.com. URL will be changed to mobile-friendly.</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['boxscore']) || $config[0]['boxscore'] == '') ? ' error' : ''; ?>">Boxscore URL
+					<input type="text" class="smallmargin" name="boxscore" value="<?php echo isset($config[0]['boxscore']) ? $config[0]['boxscore'] : ''; ?>">
+					<p class="helptext">Paste a valid link to the boxscore on denverpost.sportsdirect.com. URL will be changed to mobile-friendly.</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['photos']) || $config[0]['photos'] == '') ? ' error' : ''; ?>">Photo gallery URL
+					<input type="text" class="smallmargin" name="photos" value="<?php echo isset($config[0]['photos']) ? $config[0]['photos'] : ''; ?>">
+					<p class="helptext">Paste a valid link to the game or pre-game slideshow on photos.denverpost.com.</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['videos']) || count($config[0]['videos']) == 0) ? ' error' : ''; ?>">Videos to embed
+					<textarea name="videos" class="smallmargin" rows="5"><?php echo (isset($config[0]['videos']) ) ? implode("\n",$config[0]['videos']) : ''; ?></textarea>
+					<p class="helptext">Ooyala video IDs (not player IDs!). Enter multiple videos on their own lines. Videos will be displayed in the order they are input.</p>
+				</label>
+			</fieldset>
+			<input type="submit" class="button large-12 columns" style="float:right;" value="Update game details" />
+		</form>
+	</div>
 </div>
 
 <?php } else if ($editdetails) { ?>
 
 <div class="row">
-
-<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
-
-<p style="color:red">IF YOU DO NOT KNOW EXACTLY WHAT YOU ARE DOING, DO NOT TOUCH ANYTHING HERE. YOU RISK BREAKING NOT ONLY THE GAMETRACKER FOR THIS TEAM, BUT ALL GAMETRACKERS EVERYWHERE.</p>
-<p>The world will mourn them and shun you if you fail.</p>
-<p><a href="index.php?team=<?php echo $fileteam; ?>">GO BACK TO GAMETRACKER MEDIA EDITOR</a> (strongly recommended)</p>
-
-<form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
-	<h3>Team Name</h3>
-	<p>Used to identify the team in SportsDirect feeds.</p>
-	<input type="text" name="teamname" cols="120" value="<?php echo isset($config[0]['teamname']) ? $config[0]['teamname'] : ''; ?>">
-	<h3>Team Nickname</h3>
-	<p>Also used as a team identifier in some feeds ("mascot," esp for college teams).</p>
-	<input type="text" name="nickname" cols="120" value="<?php echo isset($config[0]['nickname']) ? $config[0]['nickname'] : ''; ?>">
-	<h3>Friendly name</h3>
-	<p>Used to refer to the team in a friendly/colloquial way, i.e. "Avs," or "Buffs."</p>
-	<input type="text" name="friendlyname" cols="120" value="<?php echo isset($config[0]['friendlyname']) ? $config[0]['friendlyname'] : ''; ?>">
-	<h3>Shortname</h3>
-	<p>Used as an identifier in SportsDirect feeds (yes, three ways of identifying teams).</p>
-	<input type="text" name="shortname" cols="120" value="<?php echo isset($config[0]['shortname']) ? $config[0]['shortname'] : ''; ?>">
-	<h3>Sport type</h3>
-	<p>Determines what kind of parsing will be done for game data. A mismatch will result in mangled data. Parsing is only possible for the sports listed here.</p>
-	<p><input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?>> Football<br />
-	<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?>> Hockey</p>
-	<h3>Display shortname</h3>
-	<p>Used as an alternate to display team shortname in live scores area (addresses "COLO" vs. "CU").</p>
-	<input type="text" name="displayshort" cols="120" value="<?php echo isset($config[0]['displayshort']) ? $config[0]['displayshort'] : ''; ?>">
-	<h3>Team color</h3>
-	<p>Official team color, used for background of live scores area (#topper). Preferably the brightest color available from the teams colors, i.e. Orange for Broncos, Blue for Avalanche, Gold for CU, etc. Use Hex numeric color.</p>
-	<input type="text" name="teamcolor" cols="120" value="<?php echo isset($config[0]['teamcolor']) ? $config[0]['teamcolor'] : ''; ?>">
-	<h3>News keywords</h3>
-	<p>Written into the news_keywords meta tag exactly as displayed here. Separate with a comma and a space for neatness.</p>
-	<input type="text" name="news_keywords" cols="120" value="<?php echo isset($config[0]['news_keywords']) ? $config[0]['news_keywords'] : ''; ?>">
-	<h3>Twitter creator</h3>
-	<p>The twitter account that will be promoted in the Twitter Card code on the page -- usually @DPostSports. THe '@' is not required.</p>
-	<input type="text" name="twitter_creator" cols="120" value="<?php echo isset($config[0]['twitter_creator']) ? $config[0]['twitter_creator'] : ''; ?>">
-	<h3>Share image</h3>
-	<p>The image that will be set for both og:image and twitter:image in the meta data. Must be 1200x630px. Must be a valid URL.</p>
-	<input type="text" name="share_img" cols="120" value="<?php echo isset($config[0]['share_img']) ? $config[0]['share_img'] : ''; ?>">
-
-	<input type="submit" value="Update team details"><?php echo $savedmessage; ?>
-</form>
-
-<p class="clear"><a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Pick a different team tracker</a></p>
+	<div class="large-12 columns">
+		<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
+		<p style="color:red">IF YOU DO NOT KNOW EXACTLY WHAT YOU ARE DOING, DO NOT TOUCH ANYTHING HERE. YOU RISK BREAKING NOT ONLY THE GAMETRACKER FOR THIS TEAM, BUT ALL GAMETRACKERS EVERYWHERE.</p>
+		<p>The world will mourn them and shun you if you fail.</p>
+		<p><a href="index.php?team=<?php echo $fileteam; ?>">GO BACK TO THE MEDIA EDITOR</a> (strongly recommended) | <a href="index.php?team=<?php echo $fileteam; ?>">Refresh</a> | <a href="index.php">Configure a different team</a></p>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 columns">
+		<form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
+			<?php if ($savedmessage != ''): ?>
+				<fieldset>
+					<?php echo $savedmessage; ?>
+				</fieldset>
+			<?php endif; ?>
+			<fieldset>
+				<legend>Team name variants</legend>
+				<div class="row">
+					<div class="large-6 columns">
+						<label class="biglabel">Team Name
+							<input class="smallmargin" type="text" name="teamname" value="<?php echo isset($config[0]['teamname']) ? $config[0]['teamname'] : ''; ?>" />
+						</label>
+						<p class="helptext">Used to identify the team in SportsDirect feeds.</p>
+					</div>
+					<div class="large-6 columns">
+						<label class="biglabel">Nickname
+							<input class="smallmargin" type="text" name="nickname" value="<?php echo isset($config[0]['nickname']) ? $config[0]['nickname'] : ''; ?>" />
+						</label>
+						<p class="helptext">Used to identify team in feeds. (a.k.a. "mascot")</p>
+					</div>
+				</div>
+				<div class="row">
+						<div class="large-6 columns">
+						<label class="biglabel">Friendly Name
+							<input class="smallmargin" type="text" name="friendlyname" value="<?php echo isset($config[0]['friendlyname']) ? $config[0]['friendlyname'] : ''; ?>" />
+						</label>
+						<p class="helptext">Colloquial name, i.e. "Avs," "Buffs."</p>
+					</div>
+					<div class="large-6 columns">
+						<label class="biglabel">Shortname
+							<input class="smallmargin" type="text" name="shortname" value="<?php echo isset($config[0]['shortname']) ? $config[0]['shortname'] : ''; ?>" />
+						</label>
+						<p class="helptext">Another SportsDirect feed identified.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-6 columns">
+						<label class="biglabel">Display Name
+							<input class="smallmargin" type="text" name="displayshort" value="<?php echo isset($config[0]['displayshort']) ? $config[0]['displayshort'] : ''; ?>" />
+						</label>
+						<p class="helptext">Short name to display with scores.</p>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Page configuration</legend>
+				<div class="row">
+					<div class="large-6 columns">
+						<label class="biglabel">Team Color
+							<input class="smallmargin" type="text" name="teamcolor" value="<?php echo isset($config[0]['teamcolor']) ? $config[0]['teamcolor'] : ''; ?>">
+							<p class="helptext">Official team color for scores area.</p>
+						</label>
+					</div>
+					<div class="large-6 columns">
+						<label class="biglabel <?php echo (!isset($config[0]['sport'])) ? ' error' : ''; ?>">Sport type (REQUIRED)
+							<div class="row">
+								<div class="large-6 columns">
+									<label>
+										<input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?> /> Football</label>
+								</div>
+								<div class="large-6 columns">
+									<label>
+										<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?> /> Hockey</label>
+								</div>
+								<p class="helptext">What sport to parse scores data as.</p>
+							</div>
+						</label>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>Page Meta Options</legend>
+				<label class="biglabel">Twitter Creator
+					<input class="smallmargin" type="text" name="twitter_creator" value="<?php echo isset($config[0]['twitter_creator']) ? $config[0]['twitter_creator'] : ''; ?>" />
+					<p class="helptext">The twitter account that will be promoted in the Twitter Card. '@' is not required.</p>
+				</label>
+				<label class="biglabel">Share Image
+					<input class="smallmargin" type="text" name="share_img" value="<?php echo isset($config[0]['share_img']) ? $config[0]['share_img'] : ''; ?>" />
+					<p class="helptext">Image to use for Facebook shares and Twitter cards. Must be 1200x630px. URL must be valid.</p>
+				</label>
+				<label class="biglabel<?php echo ($imgerror) ? ' error' : ''; ?>">News Keywords
+					<textarea name="news_keywords" class="smallmargin"><?php echo isset($config[0]['news_keywords']) ? $config[0]['news_keywords'] : ''; ?></textarea>
+					<p class="helptext">10 or more newsy SEO terms for the "news_keywords" meta tag, separated by commas.</p>
+				</label>
+			</fieldset>
+			<input type="submit" class="button large-12 columns" style="float:right;" value="Update team details" />
+		</form>
+	</div>
 </div>
 
 <?php }
 }
 ?>
 </div>
+
+<script type="text/javascript" href="//cdn.foundation5.zurb.com/foundation.js"></script>
+
 </body>
 </html>
