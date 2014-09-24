@@ -2,25 +2,7 @@
 
 date_default_timezone_set('America/Denver');
 
-//get the xml from SportsDirect
-function simplexml_insert_after(SimpleXMLElement $insert, SimpleXMLElement $target)
-{
-    $target_dom = dom_import_simplexml($target);
-    $insert_dom = $target_dom->ownerDocument->importNode(dom_import_simplexml($insert), true);
-    if ($target_dom->nextSibling) {
-        return $target_dom->parentNode->insertBefore($insert_dom, $target_dom->nextSibling);
-    } else {
-        return $target_dom->parentNode->appendChild($insert_dom);
-    }
-}
-function get_http_response_code($url) {
-    $headers = get_headers($url);
-    return substr($headers[0], 9, 3);
-}
-function put_schedule($configin) {
-	file_put_contents('./schedule.json', json_encode($configin)) or die("Couldn't open schedule.json for writing!");
-	return true;
-}
+include('../functions.php');
 
 $feedurls = array(	array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/football/NFL/schedule/schedule_NFL.xml',
 							'name'=>'broncos',
@@ -60,20 +42,22 @@ foreach ($feedurls as $feedteam) {
 			if (ltrim($competitions->{'home-team-content'}[0]->{'team'}[0]->{'id'}[0],$teamtrim) == $feedteam['teamid']) {
 				$sched[$feedteam['name']][$line]['location'] = 'home';
 				$sched[$feedteam['name']][$line]['gameid'] = ltrim($competitions->{'id'}[0],$comptrim);
-				$sched[$feedteam['name']][$line]['gametime'] = $gametime = strtotime($competitions->{'start-date'}[0]);
+				$sched[$feedteam['name']][$line]['gametime'] = $competitions->{'start-date'}[0];
+				$sched[$feedteam['name']][$line]['gametimeunix'] = $gametime = strtotime($competitions->{'start-date'}[0]);
 				$sched[$feedteam['name']][$line]['gametimepretty'] = date("M j, Y g:i T",$gametime);
 				$sched[$feedteam['name']][$line]['us'] = (string)$competitions->{'home-team-content'}[0]->{'team'}[0]->{'name'}[0];
 				$sched[$feedteam['name']][$line]['vs'] = ' vs. ' . $competitions->{'away-team-content'}[0]->{'team'}[0]->{'name'}[0];
-				echo $sched[$feedteam['name']][$line]['gametimepretty'];
+				echo $sched[$feedteam['name']][$line]['gametime']."\n";
 				$line++;
 			} else if (ltrim($competitions->{'away-team-content'}[0]->{'team'}[0]->{'id'}[0],$teamtrim) == $feedteam['teamid']) {
 				$sched[$feedteam['name']][$line]['location'] = 'away';
 				$sched[$feedteam['name']][$line]['gameid'] = ltrim($competitions->{'id'}[0],$comptrim);
-				$sched[$feedteam['name']][$line]['gametime'] = $gametime = strtotime($competitions->{'start-date'}[0]);
+				$sched[$feedteam['name']][$line]['gametime'] = $competitions->{'start-date'}[0];
+				$sched[$feedteam['name']][$line]['gametimeunix'] = $gametime = strtotime($competitions->{'start-date'}[0]);
 				$sched[$feedteam['name']][$line]['gametimepretty'] = date("M j, Y g:i T",$gametime);
 				$sched[$feedteam['name']][$line]['us'] = (string)$competitions->{'away-team-content'}[0]->{'team'}[0]->{'name'}[0];
 				$sched[$feedteam['name']][$line]['vs'] = ' at ' . $competitions->{'home-team-content'}[0]->{'team'}[0]->{'name'}[0];
-				echo $sched[$feedteam['name']][$line]['gametimepretty'];
+				echo $sched[$feedteam['name']][$line]['gametime']."\n";
 				$line++;
 				//echo $feedteam['name'] . ': ' . $teamlocation . ', id: ' . $gameid . ', at: ' . date("Y-m-d h:i:sa T",$gametime) . ' (' . $gametime . ')' . "\n";
 			}

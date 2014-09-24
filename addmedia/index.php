@@ -54,32 +54,7 @@
 		$savedmessage = '';
 		$editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
 
-  		function get_config($teamdir) {
-  		// Puts the config into an array
-			$configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
-			return $configs;
-		}
-		function get_schedule() {
-			$sched = json_decode(file_get_contents('./schedule.json'),true);
-			return $sched;
-		}
-		function put_config($teamdir,$configin) {
-			file_put_contents('../'.$teamdir.'/config.json', json_encode($configin)) or die("Couldn't open $teamdir config for writing!");
-			return get_config($teamdir);
-		}
-		function test_img_url($image_url) {
-			$handle = curl_init($image_url);
-			curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-			$response = curl_exec($handle);
-			$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-			if($httpCode != 200) {
-			    $returns = false;
-			} else {
-				$returns = $image_url;
-			}
-			curl_close($handle);
-			return $returns;
-		}
+  		include('../functions.php');
 
 		if (!$fileteam) { ?>
 		
