@@ -16,10 +16,10 @@
 <id>/sport/football/competition:26315</id>
 <start-date>2009-06-11T10:00:00.000-04:00</start-date>
 <result-scope>
-<competition-status>in-progress</competition-status>
+<competition-status>complete</competition-status>
 <scope num="1" type="period"/>
-<scope-status>in-progress</scope-status>
-<clock>00:13:32</clock>
+<scope-status>complete</scope-status>
+<clock>00:03:32</clock>
 <update-date>2009-06-11T10:10:32.000-04:00</update-date>
 </result-scope>
 <home-team-content>

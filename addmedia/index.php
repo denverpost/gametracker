@@ -219,7 +219,9 @@ $schedule = get_schedule();
 	<div class="row">
 		<div class="large-12 columns">
 			<h1>Updating <?php echo $config[0]['teamname'] . ' ' . $config[0]['nickname']; ?> team details</h1>
-			<p class="alert-box alert round">HERE THERE BE DRAGONS: If you are not 100% positive that you know exactly what you are doing with any field in this form, do not touch it. In fact, don't touch anything here. Go back to the Game Details page. Messing up in here could not only break this team's Gametracker, but all Gametrackers everywhere. The world will mourn, and probably shun you if you fail.</p>
+			<p class="alert-box alert radius">HERE THERE BE DRAGONS: If you are not 100% positive that you know exactly what you are doing with any field in this form, do not touch it. In fact, don't touch anything here. Go back to the Game Details page. Messing up in here could not only break this team's Gametracker, but all Gametrackers everywhere. The world will mourn, and probably shun you if you fail.</p>
+			<p>The details here are used to both identify the team (in several ways, because different feeds or parts of feeds refer to the same teams in several ways, and we might not want to use any of those ways to ultimately display the name) and to configure the team's page settings for color and SEO/SMO purposes.</p>
+			<p>These are settings that should not normally change from game-to-game.</p>
 			<div class="row">
 				<div class="large-4 columns">
 					<a href="index.php" class="button large-12 columns">OTHER GAMETRACKERS</a>
@@ -248,13 +250,13 @@ $schedule = get_schedule();
 						<label class="biglabel">Team Name
 							<input class="smallmargin" type="text" name="teamname" value="<?php echo isset($config[0]['teamname']) ? $config[0]['teamname'] : ''; ?>" />
 						</label>
-						<p class="helptext">Used to identify the team in SportsDirect feeds.</p>
+						<p class="helptext">Used to identify the team in most SportsDirect feeds.</p>
 					</div>
 					<div class="large-6 columns">
 						<label class="biglabel">Nickname
 							<input class="smallmargin" type="text" name="nickname" value="<?php echo isset($config[0]['nickname']) ? $config[0]['nickname'] : ''; ?>" />
 						</label>
-						<p class="helptext">Used to identify team in feeds. (a.k.a. "mascot")</p>
+						<p class="helptext">Used to identify team in feeds. ("mascot," esp. for colleges)</p>
 					</div>
 				</div>
 				<div class="row">
@@ -262,13 +264,13 @@ $schedule = get_schedule();
 						<label class="biglabel">Friendly Name
 							<input class="smallmargin" type="text" name="friendlyname" value="<?php echo isset($config[0]['friendlyname']) ? $config[0]['friendlyname'] : ''; ?>" />
 						</label>
-						<p class="helptext">Colloquial name, i.e. "Avs," "Buffs."</p>
+						<p class="helptext">Team's more familiar name/nickname, i.e. "Avs," "Buffs."</p>
 					</div>
 					<div class="large-6 columns">
 						<label class="biglabel">Shortname
 							<input class="smallmargin" type="text" name="shortname" value="<?php echo isset($config[0]['shortname']) ? $config[0]['shortname'] : ''; ?>" />
 						</label>
-						<p class="helptext">Another SportsDirect feed identified.</p>
+						<p class="helptext">Another SportsDirect feed identifier.</p>
 					</div>
 				</div>
 				<div class="row">
@@ -276,7 +278,7 @@ $schedule = get_schedule();
 						<label class="biglabel">Display Name
 							<input class="smallmargin" type="text" name="displayshort" value="<?php echo isset($config[0]['displayshort']) ? $config[0]['displayshort'] : ''; ?>" />
 						</label>
-						<p class="helptext">Short name to display with scores.</p>
+						<p class="helptext">Used in case <i>shortname</i> is unusual, i.e. "COLO" sted "CU").</p>
 					</div>
 				</div>
 			</fieldset>
@@ -286,21 +288,23 @@ $schedule = get_schedule();
 					<div class="large-6 columns">
 						<label class="biglabel">Team Color
 							<input class="smallmargin" type="text" name="teamcolor" value="<?php echo isset($config[0]['teamcolor']) ? $config[0]['teamcolor'] : ''; ?>">
-							<p class="helptext">Official team color for scores area.</p>
+							<p class="helptext">Official team color for scores area. Pick the boldest one.</p>
 						</label>
 					</div>
 					<div class="large-6 columns">
 						<label class="biglabel <?php echo (!isset($config[0]['sport'])) ? ' error' : ''; ?>">Sport type (REQUIRED)
 							<div class="row">
-								<div class="large-6 columns">
-									<label>
-										<input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?> /> Football</label>
-								</div>
-								<div class="large-6 columns">
-									<label>
-										<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?> /> Hockey</label>
-								</div>
-								<p class="helptext">What sport to parse scores data as.</p>
+								<fieldset class="radiobox">
+									<div class="large-6 columns">
+										<label>
+											<input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?> /> Football</label>
+									</div>
+									<div class="large-6 columns">
+										<label>
+											<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?> /> Hockey</label>
+									</div>
+								</fieldset>
+								<p class="helptext">What sport to parse scores data as. Mismatches mean disaster.</p>
 							</div>
 						</label>
 					</div>
@@ -323,7 +327,7 @@ $schedule = get_schedule();
 			</fieldset>
 			<div class="row">
 				<div class="large-6 columns">
-					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>">RELOAD (REFRESH WITHOUT SAVING)</a>
+					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>&details=1">RELOAD (REFRESH WITHOUT SAVING)</a>
 				</div>
 				<div class="large-6 columns">
 					<input type="submit" class="button large-12 columns" style="float:right;" value="Update team details" />

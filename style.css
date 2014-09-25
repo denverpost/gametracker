@@ -96,7 +96,7 @@ img.dplogo {
 	color:#eee;
 	display: inline-block;
 	float:left;
-	margin:5px 10px;
+	margin:5px 0;
 }
 #away {
 	height:90px;
@@ -124,6 +124,7 @@ img.dplogo {
 	display: block;
 	clear: both;
 	text-align:center;
+	margin:0 10px;
 }
 #scores div.gamedata {
 	height:25%;
@@ -132,9 +133,10 @@ img.dplogo {
 	clear: both;
 	text-align:center;
 	position: relative;
-}
-div.gamedata {
 	font-size:1em;
+}
+#scores span#down {
+	margin:0 18px;
 }
 span.possessors {
 	display:none;

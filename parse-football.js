@@ -132,7 +132,7 @@ function parseGameData() {
             if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]["competition-status"] != 'complete' && data["team-sport-content"]["league-content"]["competition"]["result-scope"]["scope-status"] != 'complete') {
                 var timeRemain = data["team-sport-content"]["league-content"]["competition"]["result-scope"]["clock"];
                 var timeChunks = timeRemain.split(':');
-                var timeRemaining = timeChunks[1] + ':' + timeChunks[2];
+                var timeRemaining = parseInt(timeChunks[1],10) + ':' + timeChunks[2];
             }
         }
         // if we have a quarter, we'll display it, otherwise we'll put in the start time
