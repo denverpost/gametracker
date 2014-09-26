@@ -181,7 +181,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
 				$config[0]['share_img'] = $share_imgclean;
 				$config[0]['sport'] = trim($_POST['sporttype']);
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " team details updated.</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " team details updated.</p>" : "<p class=\"alert-box warning radius\">There was an error updating the team configuration.</p>";
 			} else {
 				$data = explode("\n", $_POST['videos']);
 				unset($config[0]['videos']);
@@ -200,7 +200,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated successfully!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the game configuration.</p>";
 			}
 
 			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
