@@ -166,11 +166,13 @@ if ($fileteam && !$editdetails) {
 		if ($saving == 1) {
 			
 			if ($editdetails == 1) {
-				$share_imgclean = test_img_url(trim($_POST['share_img']));
+				$share_imgclean = test_url($_POST['share_img']);
 				$imgerror = ($share_imgclean) ? false : true;
 				$teamcolorclean = str_replace('#','',trim($_POST['teamcolor']));
 				$news_keywordsclean = rtrim(trim($_POST['news_keywords']),',');
 				$twitter_creatorclean = ltrim(trim($_POST['twitter_creator']),'@');
+				$scores_urlclean = clean_xml_url($_POST['scores_url']);
+				$feederror = (!$scores_urlclean) ? true : false;
 				$config[0]['teamname'] = ucfirst(trim($_POST['teamname']));
 				$config[0]['nickname'] = ucfirst(trim($_POST['nickname']));
 				$config[0]['shortname'] = strtoupper(trim($_POST['shortname']));
@@ -181,7 +183,12 @@ if ($fileteam && !$editdetails) {
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
 				$config[0]['share_img'] = $share_imgclean;
 				$config[0]['sport'] = trim($_POST['sporttype']);
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " team details updated.</p>" : "<p class=\"alert-box warning radius\">There was an error updating the team configuration.</p>";
+				$config[0]['scores_url'] = $scores_urlclean;
+				$success = (!$imgerror && !$feederror) ? 'success ' : 'warning ';
+				$warnmsg = ($success == 'warning ') ? ', with errors' : '';
+				$savedmessage = (put_config($fileteam,$config)) ? '<p class="alert-box '.$success.'radius">' . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . ' team details updated'.$warnmsg.'.</p>' : '<p class="alert-box alert radius">There was an error updating the team configuration.</p>';
+				$warningmessage = ($imgerror) ? '<p class="alert-box warning radius">The Share Image URL was not provided or was invalid.</p>' : '';
+				$warningmessage .= ($feederror) ? '<p class="alert-box warning radius">The Scores Feed URL was not provided or was invalid.</p>' : '';
 			} else {
 				$data = explode("\n", $_POST['videos']);
 				unset($config[0]['videos']);
@@ -200,10 +207,11 @@ if ($fileteam && !$editdetails) {
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
-				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated successfully!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the game configuration.</p>";
+				$success = (!$gameid_final) ? 'warning ' : 'success ';
+				$warnmsg = ($success == 'warning ') ? ', with errors' : '';
+				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box ".$success."radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated".$warnmsg.".</p>" : "<p class=\"alert-box alert radius\">There was an error updating the game configuration.</p>";
+				$warningmessage = (!$gameid_final) ? '<p class="alert-box warning radius">The Gametracker will nto work without a valid Game ID.</p>' : '';
 			}
-
-			$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box success radius\">" . ucfirst($fileteam) . " Gametracker configuration updated!</p>" : "<p class=\"alert-box warning radius\">There was an error updating the configuration.</p>";
 		} ?>
 
 <?php if (!$editdetails) { ?>
@@ -238,14 +246,17 @@ $schedule = get_schedule();
 <div id="theforms" class="row">
 	<div class="large-12 columns">
 		<form name="form1" method="post" action="index.php?team=<?php echo $fileteam; ?>&saving=1">
-			<?php if ($savedmessage != ''): ?>
+			<?php if (isset($savedmessage) && $savedmessage != ''): ?>
 					<?php echo $savedmessage; ?>
+			<?php endif; ?>
+			<?php if (isset($warningmessage) && $warningmessage != ''): ?>
+					<?php echo $warningmessage; ?>
 			<?php endif; ?>
 			<fieldset>
 				<legend>Game to track</legend>
 				<div class="row">
 					<div class="large-6 columns">
-						<label class="biglabel">Game ID
+						<label class="biglabel<?php echo (!isset($config[0]['gameid']) || $config[0]['gameid'] == '') ? ' error' : ''; ?>">Game ID
 							<input class="smallmargin" type="text" name="gameid" value="<?php echo isset($config[0]['gameid']) ? $config[0]['gameid'] : ''; ?>" />
 						</label>
 						<p class="helptext">Determines what score feed/game to track. <!--Should be automatic.--></p>
@@ -327,8 +338,11 @@ $schedule = get_schedule();
 <div id="theforms" class="row">
 	<div class="large-12 columns">
 		<form name="form2" method="post" action="index.php?team=<?php echo $fileteam; ?>&details=1&saving=1">
-			<?php if ($savedmessage != ''): ?>
+			<?php if (isset($savedmessage) && $savedmessage != ''): ?>
 					<?php echo $savedmessage; ?>
+			<?php endif; ?>
+			<?php if (isset($warningmessage) && $warningmessage != ''): ?>
+					<?php echo $warningmessage; ?>
 			<?php endif; ?>
 			<fieldset>
 				<legend>Team name variants</legend>
@@ -379,7 +393,7 @@ $schedule = get_schedule();
 						</label>
 					</div>
 					<div class="large-6 columns">
-						<label class="biglabel <?php echo (!isset($config[0]['sport'])) ? ' error' : ''; ?>">Sport type (REQUIRED)
+						<label class="biglabel<?php echo (!isset($config[0]['sport']) || $config[0]['sport'] == '') ? ' error' : ''; ?>">Sport type (REQUIRED)
 							<div class="row">
 								<fieldset class="radiobox">
 									<div class="large-6 columns">
@@ -399,17 +413,24 @@ $schedule = get_schedule();
 			</fieldset>
 			<fieldset>
 				<legend>Page Meta Options</legend>
-				<label class="biglabel">Twitter Creator
+				<label class="biglabel<?php echo (!isset($config[0]['twitter_creator']) || $config[0]['twitter_creator'] == '') ? ' error' : ''; ?>">Twitter Creator
 					<input class="smallmargin" type="text" name="twitter_creator" value="<?php echo isset($config[0]['twitter_creator']) ? $config[0]['twitter_creator'] : ''; ?>" />
 					<p class="helptext">The twitter account that will be promoted in the Twitter Card. '@' is not required.</p>
 				</label>
-				<label class="biglabel">Share Image
+				<label class="biglabel<?php echo (!isset($config[0]['share_img']) || $config[0]['share_img'] == '') ? ' error' : ''; ?>">Share Image
 					<input class="smallmargin" type="text" name="share_img" value="<?php echo isset($config[0]['share_img']) ? $config[0]['share_img'] : ''; ?>" />
 					<p class="helptext">Image to use for Facebook shares and Twitter cards. Must be 1200x630px. URL must be valid.</p>
 				</label>
-				<label class="biglabel<?php echo ($imgerror) ? ' error' : ''; ?>">News Keywords
+				<label class="biglabel<?php echo (!isset($config[0]['news_keywords']) || $config[0]['news_keywords'] == '') ? ' error' : ''; ?>">News Keywords
 					<textarea name="news_keywords" class="smallmargin"><?php echo isset($config[0]['news_keywords']) ? $config[0]['news_keywords'] : ''; ?></textarea>
 					<p class="helptext">10 or more newsy SEO terms for the "news_keywords" meta tag, separated by commas.</p>
+				</label>
+			</fieldset>
+			<fieldset>
+				<legend>Really Technical Stuff</legend>
+				<label class="biglabel<?php echo (!isset($config[0]['scores_url']) || $config[0]['scores_url'] == '') ? ' error' : ''; ?>">Livescores Feed URL
+					<input class="smallmargin" type="text" name="scores_url" value="<?php echo isset($config[0]['scores_url']) ? $config[0]['scores_url'] : ''; ?>">
+					<p class="helptext">The complete livescores feed URL to use, with '%s' replacing the Game ID. This is required for the Gametracker to work.</p>
 				</label>
 			</fieldset>
 			<div class="row">

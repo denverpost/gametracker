@@ -1,7 +1,5 @@
 <?php
 
-date_default_timezone_set('America/Denver');
-
 include('../functions.php');
 
 $feedurls = array(	array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/football/NFL/schedule/schedule_NFL.xml',

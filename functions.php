@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Denver');
 if (!function_exists('get_config'))
 {
 	//gets and individual team's config file and returns its data as an array
@@ -35,24 +36,6 @@ if (!function_exists('put_schedule'))
 		return true;
 	}
 }
-if (!function_exists('test_img_url'))
-{
-	//tests a URL to make sure it gets a 200 status; returns the URL if true
-	function test_img_url($image_url)
-	{
-		$handle = curl_init($image_url);
-		curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-		$response = curl_exec($handle);
-		$httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-		if($httpCode != 200) {
-		    $returns = false;
-		} else {
-			$returns = $image_url;
-		}
-		curl_close($handle);
-		return $returns;
-	}
-}
 if (!function_exists('simplexml_insert_after'))
 {
 	//inserts a SimpleXML DOM element after the specific element
@@ -67,13 +50,44 @@ if (!function_exists('simplexml_insert_after'))
 	    }
 	}
 }
-if (!function_exists('get_http_response_code'))
+if (!function_exists('test_url'))
 {
-	//just gets HTTP response code
-	function get_http_response_code($url)
+	//tests a URL to make sure it gets a 200 status; returns the URL if true
+	function test_url($url)
 	{
-	    $headers = get_headers($url);
-	    return substr($headers[0], 9, 3);
+		$url = trim($url);
+		if (filter_var($url,FILTER_VALIDATE_URL))
+		{
+		    $headers = get_headers($url);
+		    if (substr($headers[0], 9, 3) == '200')
+		    {
+		    	return $url;
+		    } else {
+		    	return false;
+		    }
+		} else {
+			return false;
+		}
+	}
+}
+if (!function_exists('clean_xml_url'))
+{
+	//tests a URL to make sure it gets a 200 status; returns the URL if true
+	function clean_xml_url($url)
+	{
+		$url = trim($url);
+	    if (filter_var($url, FILTER_VALIDATE_URL))
+	    {
+	    	$urlparts = parse_url($url);
+	    	if ( ($urlparts['scheme'] == 'http' || $urlparts['scheme'] == 'http') && (substr($urlparts['path'],-4,4) == '.xml') && $urlparts['host'] == 'xml.sportsdirectinc.com' )
+	    	{
+	    		return $url;
+		    } else {
+		    	return false;
+		    }
+	    } else {
+	    	return false;
+	    }
 	}
 }
 ?>
