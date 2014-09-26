@@ -1,7 +1,65 @@
 <html>
-<head>
-	<title>Add Media | Denver Post Gametracker</title>
+<?php 
 
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+
+include('../functions.php');
+
+//Just here for safekeeping for now...
+$teams = array(
+	'HOU' => 'Houston Texans',
+	'JAC' => 'Jacksonville Jaguars',
+	'IND' => 'Indianapolis Colts',
+	'TEN' => 'Tennessee Titans',
+	'BAL' => 'Baltimore Ravens',
+	'PIT' => 'Pittsburgh Steelers',
+	'CLE' => 'Cleveland Browns',
+	'CIN' => 'Cincinnati Bengals',
+	'MIA' => 'Miami Dolphins',
+	'NE' => 'New England Patriots',
+	'BUF' => 'Buffalo Bills',
+	'NYJ' => 'New York Jets',
+	'KC' => 'Kansas City Chiefs',
+	'DEN' => 'Denver Broncos',
+	'SD' => 'San Diego Chargers',
+	'OAK' => 'Oakland Raiders',
+	'MIN' => 'Minnesota Vikings',
+	'GB' => 'Green Bay Packers',
+	'DET' => 'Detroit Lions',
+	'CHI' => 'Chicago Bears',
+	'PHI' => 'Philadeplphia Eagles',
+	'DAL' => 'Dallas Cowboys',
+	'NYG' => 'New York Giants',
+	'WAS' => 'Washington Redskins',
+	'ARI' => 'Arizona Cardinals',
+	'STL' => 'St. Louis Rams',
+	'SF' => 'San Francisco 49ers',
+	'SEA' => 'Seattle Seahawks',
+	'ATL' => 'Atlanta Falcons',
+	'TB' => 'Tampa Bay Buccaneers',
+	'NO' => 'New Orleans',
+	'CAR' => 'Carolina Panthers'
+);
+
+$fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
+$savedmessage = '';
+$editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
+
+$config = get_config($fileteam);
+
+if ($fileteam && !$editdetails) {
+	$pagetitle = 'Editing '.ucfirst($config[0]['friendlyname']).' Game Details';
+} else if ($fileteam && $editdetails) {
+	$pagetitle = 'Editing '.ucfirst($config[0]['friendlyname']).' Team Details';
+} else {
+	$pagetitle = '';
+}
+
+?>
+<head>
+	<title><?php echo ($pagetitle != '') ? $pagetitle : 'Gametracker Editor'; ?> | Denver Post Gametracker</title>
 	<link rel="stylesheet" type="text/css" href="//cdn.foundation5.zurb.com/foundation.css" />
 	<link rel="stylesheet" type="text/css" href="./style.css" />
 	<link rel="icon" href="http://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
@@ -10,68 +68,96 @@
 <body>
 	<div id="wrapper">
 		<?php
-		error_reporting(E_ALL);
-		ini_set('display_errors', TRUE);
-		ini_set('display_startup_errors', TRUE);
-
-		//Just here for safekeeping for now...
-		$teams = array(
-			'HOU' => 'Houston Texans',
-			'JAC' => 'Jacksonville Jaguars',
-			'IND' => 'Indianapolis Colts',
-			'TEN' => 'Tennessee Titans',
-			'BAL' => 'Baltimore Ravens',
-			'PIT' => 'Pittsburgh Steelers',
-			'CLE' => 'Cleveland Browns',
-			'CIN' => 'Cincinnati Bengals',
-			'MIA' => 'Miami Dolphins',
-			'NE' => 'New England Patriots',
-			'BUF' => 'Buffalo Bills',
-			'NYJ' => 'New York Jets',
-			'KC' => 'Kansas City Chiefs',
-			'DEN' => 'Denver Broncos',
-			'SD' => 'San Diego Chargers',
-			'OAK' => 'Oakland Raiders',
-			'MIN' => 'Minnesota Vikings',
-			'GB' => 'Green Bay Packers',
-			'DET' => 'Detroit Lions',
-			'CHI' => 'Chicago Bears',
-			'PHI' => 'Philadeplphia Eagles',
-			'DAL' => 'Dallas Cowboys',
-			'NYG' => 'New York Giants',
-			'WAS' => 'Washington Redskins',
-			'ARI' => 'Arizona Cardinals',
-			'STL' => 'St. Louis Rams',
-			'SF' => 'San Francisco 49ers',
-			'SEA' => 'Seattle Seahawks',
-			'ATL' => 'Atlanta Falcons',
-			'TB' => 'Tampa Bay Buccaneers',
-			'NO' => 'New Orleans',
-			'CAR' => 'Carolina Panthers'
-		);
-
-		$fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
-		$savedmessage = '';
-		$editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
-
-  		include('../functions.php');
 
 		if (!$fileteam) { ?>
-		
-		<div class="row">
-		<h1>Update Gametracker</h1>
-		<p>Choose a team to update the gametracker for:</p>
-		<ul>
-			<li><a href="index.php?team=avs">Avalanche</a></li>
-			<li><a href="index.php?team=broncos">Broncos</a></li>
-			<li><a href="index.php?team=csu">CSU Rams</a></li>
-			<li><a href="index.php?team=cu">CU Buffs</a></li>
-		</ul>
+		<!-- Show the team chooser -->
+		<div class="headerstyle">
+			<div class="row">
+				<div class="large-12 columns">
+					<h1>Gametracker Editor</h1>
+					<p>Use this interface to update the details for each Gametracker instance and each team with a Gametracker.</p>
+					<ul>
+						<li>You should only need to update the Game Details with any frequency.</li>
+						<li>The Team Details is to be avoided unless you are certain a problem exists there.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="theforms" class="row">
+			<div class="large-12 columns">
+				<h4>Teams and Gametrackers available to edit:</h4>
+				
+				<form name="formchooser">
+					<fieldset>
+						<legend>Professional Football Teams</legend>
+							<label>
+								<div class="large-12 columns">
+									<h4>Denver Broncos</h4>
+								</div>
+								<div class="large-4 columns">
+									<a href="../broncos" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=broncos" class="button success large-12 columns">EDIT GAME DETAILS</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=broncos&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								</div>
+							</label>
+					</fieldset>
+					<fieldset>
+						<legend>College Football Teams</legend>
+							<label>
+								<div class="large-12 columns">
+									<h4>Colorado Buffaloes</h4>
+								</div>
+								<div class="large-4 columns">
+									<a href="../cu" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=cu" class="button success large-12 columns">EDIT GAME DETAILS</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=cu&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								</div>
+							</label>
+							<label>
+								<div class="large-12 columns">
+									<h4>Colorado State Rams</h4>
+								</div>
+								<div class="large-4 columns">
+									<a href="../csu" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=csu" class="button success large-12 columns">EDIT GAME DETAILS</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=csu&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								</div>
+							</label>
+					</fieldset>
+					<fieldset>
+						<legend>Professional Hockey Teams</legend>
+							<label>
+								<div class="large-12 columns">
+									<h4>Colorado Avalanche</h4>
+								</div>
+								<div class="large-4 columns">
+									<a href="../avs" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=avs" class="button success large-12 columns">EDIT GAME DETAILS</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=avs&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								</div>
+							</label>
+					</fieldset>
+				</form>
+			</div>
 		</div>
 		
 		<?php } else {
-
-		$config = get_config($fileteam);
 
 		$saving = (isset($_REQUEST['saving'])) ? $_REQUEST['saving'] : false;
 		
@@ -121,7 +207,7 @@
 		} ?>
 
 <?php if (!$editdetails) { ?>
-
+<!-- Show the regular game editor -->
 <?php
 
 $schedule = get_schedule();
@@ -139,7 +225,7 @@ $schedule = get_schedule();
 					<a href="index.php" class="button large-12 columns">OTHER GAMETRACKERS</a>
 				</div>
 				<div class="large-4 columns">
-					<a href="../<?php echo $fileteam; ?>" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+					<a href="../<?php echo $fileteam; ?>" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
 				</div>
 				<div class="large-4 columns">
 					<a href="index.php?team=<?php echo $fileteam; ?>&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
@@ -178,7 +264,7 @@ $schedule = get_schedule();
 								?>
 							</select>
 						</label>
-						<p class="helptext">Use to override <!--automatic--> input in left.</p>
+						<p class="helptext">Use to override <!--automatic--> input on left.</p>
 					</div>
 				</div>
 			</fieldset>
@@ -214,6 +300,7 @@ $schedule = get_schedule();
 </div>
 
 <?php } else if ($editdetails) { ?>
+<!-- Show the team details editor -->
 
 <div class="headerstyle">
 	<div class="row">
@@ -227,7 +314,7 @@ $schedule = get_schedule();
 					<a href="index.php" class="button large-12 columns">OTHER GAMETRACKERS</a>
 				</div>
 				<div class="large-4 columns">
-					<a href="../<?php echo $fileteam; ?>" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+					<a href="../<?php echo $fileteam; ?>" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
 				</div>
 				<div class="large-4 columns">
 					<a href="index.php?team=<?php echo $fileteam; ?>" class="button success large-12 columns">BACK TO GAME DETAILS</a>
