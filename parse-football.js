@@ -5,7 +5,7 @@ function parseGameData() {
     $.getJSON(getDataLoc, function(data) {
         hometeamid = awayteamid = hometeamname = awayteamname = '';
         //set up team names and logos
-        if (data["team-sport-content"]["league-content"]["competition"]) {
+        if (data["team-sport-content"]["league-content"]["competition"]["home-team-content"] && data["team-sport-content"]["league-content"]["competition"]["away-team-content"]) {
             hometeamid = data["team-sport-content"]["league-content"]["competition"]["home-team-content"]["team"]["name"][1];
             awayteamid = data["team-sport-content"]["league-content"]["competition"]["away-team-content"]["team"]["name"][1];
             hometeamname = data["team-sport-content"]["league-content"]["competition"]["home-team-content"]["team"]["name"][0];
@@ -18,6 +18,8 @@ function parseGameData() {
             $('#home').prepend('<img src="./img/logo-' + hometeamid.toLowerCase() + '.png" alt="' + hometeamname + ' logo" />');
             }
             //console.log(hometeamid + ', ' + awayteamid + ', ' + hometeamname + ', ' + awayteamname);
+        } else if (data["custom-content"]["heading"]) {
+            $('#scores > div.teams').html('<h2>' + data["custom-content"]["heading"]) + '</h2>';
         }
 
         //change possession arrow
@@ -149,7 +151,16 @@ function parseGameData() {
             }
         } else {
             $('#quarter').html(timeDisplay);
+            var inputtime = new Date(data["custom-content"]["unixtime"]*1000);
+            if (!startedCount) startCountdown(inputtime);
         }
     });
 }
 parseGameData();
+
+$(document).ready(function() {
+    $.ajaxSetup({ cache: false });
+    setInterval(function() {
+        parseGameData();
+    }, 10000);
+});

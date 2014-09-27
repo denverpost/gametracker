@@ -90,8 +90,8 @@ require('../header.php');
     </ul>
 </div>
 
-<script type="text/javascript" src="../parse-<?php echo $config[0]['sport']; ?>.js"></script>
 <script type="text/javascript" src="../functions.js"></script>
+<script type="text/javascript" src="../parse-<?php echo $config[0]['sport']; ?>.js"></script>
 <!-- <script type="text/javascript" src="../adrun.js"></script> -->
 
 <?php

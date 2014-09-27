@@ -7,44 +7,7 @@ ini_set('display_startup_errors', TRUE);
 
 include('../functions.php');
 
-//Just here for safekeeping for now...
-$teams = array(
-	'HOU' => 'Houston Texans',
-	'JAC' => 'Jacksonville Jaguars',
-	'IND' => 'Indianapolis Colts',
-	'TEN' => 'Tennessee Titans',
-	'BAL' => 'Baltimore Ravens',
-	'PIT' => 'Pittsburgh Steelers',
-	'CLE' => 'Cleveland Browns',
-	'CIN' => 'Cincinnati Bengals',
-	'MIA' => 'Miami Dolphins',
-	'NE' => 'New England Patriots',
-	'BUF' => 'Buffalo Bills',
-	'NYJ' => 'New York Jets',
-	'KC' => 'Kansas City Chiefs',
-	'DEN' => 'Denver Broncos',
-	'SD' => 'San Diego Chargers',
-	'OAK' => 'Oakland Raiders',
-	'MIN' => 'Minnesota Vikings',
-	'GB' => 'Green Bay Packers',
-	'DET' => 'Detroit Lions',
-	'CHI' => 'Chicago Bears',
-	'PHI' => 'Philadeplphia Eagles',
-	'DAL' => 'Dallas Cowboys',
-	'NYG' => 'New York Giants',
-	'WAS' => 'Washington Redskins',
-	'ARI' => 'Arizona Cardinals',
-	'STL' => 'St. Louis Rams',
-	'SF' => 'San Francisco 49ers',
-	'SEA' => 'Seattle Seahawks',
-	'ATL' => 'Atlanta Falcons',
-	'TB' => 'Tampa Bay Buccaneers',
-	'NO' => 'New Orleans',
-	'CAR' => 'Carolina Panthers'
-);
-
 $fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
-$savedmessage = '';
 $editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
 
 $config = get_config($fileteam);
@@ -160,8 +123,6 @@ if ($fileteam && !$editdetails) {
 		<?php } else {
 
 		$saving = (isset($_REQUEST['saving'])) ? $_REQUEST['saving'] : false;
-		
-		$imgerror = false;
 
 		if ($saving == 1) {
 			

@@ -90,4 +90,22 @@ if (!function_exists('clean_xml_url'))
 	    }
 	}
 }
+if (!function_exists('get_next_game'))
+{
+	function get_next_game($teamschedule,$team,$date,$offset)
+	{
+		$teamsched = $teamschedule[$team]; //gets entries for one team only
+		//sorts array by value of 'gametimeunix' key
+		usort($teamsched, function($a, $b) {
+		    return $a['gametimeunix'] - $b['gametimeunix'];
+		});
+		//checks array items, in order, for a time that is less than $offset seconds in the future
+		foreach($teamsched as $gt) {
+			if (($gt['gametimeunix'] - $offset) < ($date)) 
+			{
+				return $gt;
+			}
+		}
+	}
+}
 ?>

@@ -1,16 +1,4 @@
-//Do the countdown until the game...
-var current="";
-var year=2014;
-var month=02;
-var day=02;
-var hour=16;
-var minute=30;
-var second=0;
-var tz=-7;
-var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-var thecountdown = '';
-
-function countdown(yr,m,d,hr,min,sec){
+function countdown(yr,m,d,hr,min,sec,montharray){
     theyear=yr;themonth=m;theday=d;thehour=hr;theminute=min;thesecond=sec;
     var today=new Date();
     var todayy=today.getYear();
@@ -39,13 +27,17 @@ function countdown(yr,m,d,hr,min,sec){
         setTimeout("countdown(theyear,themonth,theday,thehour,theminute,thesecond)",1000);
     }
 }
-countdown(year,month,day,hour,minute,second);
 
-$.event.special.swipe.horizontalDistanceThreshold = (screen.availWidth)/3;
-$.event.special.swipe.verticalDistanceThreshold = (screen.availWidth)/10;
-$.event.special.swipe.scrollSupressionThreshold = (screen.availWidth)/6;
-
-var body = document.getElementsByTagName('body')[0];
-var positions = [];
-var currentPage = 0;
-var offset = [];
+function startCountdown(inputtime){
+    var current="";
+    var year=inputtime.getYear();
+    var month=inputtime.getMonth();
+    var day=inputtime.getDate();
+    var hour=inputtime.getHours();
+    var minute=inputtime.getMinutes();
+    var second=inputtime.getSeconds();
+    var tz=-7;
+    var months=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+    var thecountdown = '';
+    countdown(year,month,day,hour,minute,second,months);
+}
