@@ -24,7 +24,7 @@ p.alert-box {
 input.smallmargin, textarea.smallmargin, select.smallmargin {
 	margin:.2rem 0 .3rem;
 }
-input[type="radio"] {
+input[type="radio"], input[type="checkbox"] {
 	margin: .5rem 0;
 }
 label {
@@ -60,4 +60,12 @@ div.headerstyle .alert-box.alert {
 fieldset.radiobox {
 	padding:.2rem;
 	margin:.2rem;
+}
+code {
+	display:block;
+	padding:1em;
+}
+code b {
+	background-color:#FF0;
+	padding: .2em .1em;
 }

@@ -142,7 +142,7 @@ function parseGameData() {
             $('#quarter').html(quarterOut);
             if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]) {
                 if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]["competition-status"] == 'in-progress') {
-                    if (timeRemaining) { $('#bullet').html('&bull;'); }
+                    if (timeRemaining) { $('#bullet').html('&bull;'); } else { $('#bullet').html(''); }
                     var timeToShow = (timeRemaining) ? timeRemaining : '';
                     $('#remaining').html(timeToShow);
                 } else if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]["competition-status"] == 'complete') {

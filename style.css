@@ -189,6 +189,13 @@ span#homeposs {
 	min-height:100%;
 	position: relative;
 }
+.commentwrap {
+	background: #fff;
+	margin:10px auto;
+	padding:18px;
+	width:50%;
+	height:100%;
+}
 .gallerywrap {
 	background: #2f2f2f;
 	margin:10px auto;
@@ -311,6 +318,46 @@ p.newserror {
 	color:#444;
 }
 #swipe1 { background:#fff; }
+
+#commentsGroundRules {
+    border-bottom:1px solid #ddd;
+    margin:10px 0 15px;
+    width:100%;
+}
+#commentsGroundRulesInner {
+	color: #666;
+    font-size: 1em;
+    font-family: Helvetica, Arial, sans-serif;
+    width:90%;
+    margin:10px auto;
+}
+#commentsGroundRulesInner ul li {
+    margin-bottom:5px;
+    list-style-type:disc;
+}
+#commentsGroundRules div.subLinks {
+	width:100%;
+	border-top:1px solid #ddd;
+	height:34px;
+}
+#commentsGroundRules div.subLinks ul {
+	list-style-type:none;
+	margin:.5em;
+	padding:0;
+}
+#commentsGroundRules div.subLinks ul li {
+	width:33%;
+	text-align:center;
+	float:left;
+	padding:0;
+	margin:0;
+    font-family: Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	font-size:.85em;
+}
+#putDisqusCommentsHere {
+	padding-top:15px;
+}
 @media only screen and (max-width:740px) {
 	#topper {
 		height:50px;

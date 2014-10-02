@@ -1,38 +1,36 @@
 <?php
 
+include('../functions.php');
+
+$iterations = (isset($argv[1])) ? $argv[1] : 60;
 //get the xml from SportsDirect
-function get_http_response_code($url) {
-    $headers = get_headers($url);
-    return substr($headers[0], 9, 3);
-}
 
 $fileteam = 'avs';
-function get_config($teamdir) {
-	// Puts the config into an array
-    $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
-    return $configs;
-}
+
+$today = time();
+$dateoffset = 432000; //5 days (in seconds)
+
 $config = get_config($fileteam);
-$feedurl = 'http://xml.sportsdirectinc.com/sport/v2/hockey/NHL/livescores/livescores_' . $config[0]['gameid'] . '.xml';
-//echo $feedurl;
+$schedule = get_schedule();
+
+$nextgame = get_next_game($schedule,$fileteam,$today,$dateoffset);
+var_dump($nextgame);
+
+$feedurl = sprintf($config[0]['scores_url'],$config[0]['gameid']);
 
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;
-while($i < 20) {
-	if (get_http_response_code($feedurl) != "404") {
+while($i < $iterations) {
+	if (test_url($feedurl)) {
 		$xml = file_get_contents($feedurl);
 	}
-	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/avs/nhl_overtime_complete_sample.xml'); //for testing purposes
-	var_dump($xml);
-	if ($xml) {
-		$object = simplexml_load_string($xml);	
-	}
+	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
 
 	//write the xml to disk if it exists, else place a blank xml file that the interpreter knows to ignore -- but only up until game time -- then we keep whatever we got last.
-	if ($xml) {
+	if (isset($xml)) {
 		$object->asXML('updates.xml');
-	} else if (time() < 1398907800) {
-		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/hockey/competition:63057</id><start-date>2014-04-30T21:30:00-04:00</start-date></competition></league-content></team-sport-content></sport:content>';
+	} else if (time() < $nextgame['gametimeunix']) {
+		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/'.$config[0]['sport'].'/competition:'.$nextgame['gameid'].'</id><start-date>'.$nextgame['gametime'].'</start-date></competition></league-content></team-sport-content><custom-content><heading>'.$nextgame['us'].$nextgame['vs'].'</heading><unixtime>'.$nextgame['gametimeunix'].'</unixtime></custom-content></sport:content>';
 		file_put_contents('updates.xml', $alternative);
 		//echo $i;
 	}

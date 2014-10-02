@@ -1,3 +1,4 @@
+<?php if (isset($config[0]['adsenabled']) && $config[0]['adsenabled']) { ?>
 <div id="adwrapper">
     <a class="boxclose" href="javascript:void(0)" onclick="hideAdManual();"></a>
     
@@ -30,3 +31,4 @@
     </center>
 
 </div>
+<?php } ?>

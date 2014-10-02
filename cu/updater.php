@@ -8,7 +8,7 @@ $iterations = (isset($argv[1])) ? $argv[1] : 60;
 $fileteam = 'cu';
 
 $today = time();
-$dateoffset = 172800; //48 hours (in seconds)
+$dateoffset = 432000; //5 days (in seconds)
 
 $config = get_config($fileteam);
 $schedule = get_schedule();
@@ -50,7 +50,7 @@ while($i < $iterations) {
 	if (isset($xml)) {
 		$object->asXML('updates.xml');
 	} else if (time() < $nextgame['gametimeunix']) {
-		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/football/competition:'.$nextgame['gameid'].'</id><start-date>'.$nextgame['gametime'].'</start-date></competition></league-content></team-sport-content><custom-content><heading>'.$nextgame['us'].$nextgame['vs'].'</heading><unixtime>'.$nextgame['gametimeunix'].'</unixtime></custom-content></sport:content>';
+		$alternative = '<sport:content xmlns:sport="http://xml.sportsdirectinc.com/sport/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><team-sport-content><league-content><competition><id>/sport/'.$config[0]['sport'].'/competition:'.$nextgame['gameid'].'</id><start-date>'.$nextgame['gametime'].'</start-date></competition></league-content></team-sport-content><custom-content><heading>'.$nextgame['us'].$nextgame['vs'].'</heading><unixtime>'.$nextgame['gametimeunix'].'</unixtime></custom-content></sport:content>';
 		file_put_contents('updates.xml', $alternative);
 		//echo $i;
 	}

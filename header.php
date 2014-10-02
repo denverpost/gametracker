@@ -2,13 +2,9 @@
 <html lang="en" class="no-js">
 
 <?php 
+include('../functions.php');
 
 $fileteam = end(array_filter(explode('/',trim($_SERVER['REQUEST_URI']))));
-function get_config($teamdir) {
-// Puts the config into an array
-    $configs = json_decode(file_get_contents('../'.$teamdir.'/config.json'),true);
-    return $configs;
-}
 $config = get_config($fileteam);
 ?>
 

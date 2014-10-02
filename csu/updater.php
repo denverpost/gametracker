@@ -8,7 +8,7 @@ $iterations = (isset($argv[1])) ? $argv[1] : 60;
 $fileteam = 'csu';
 
 $today = time();
-$dateoffset = 172800; //48 hours (in seconds)
+$dateoffset = 432000; //5 days (in seconds)
 
 $config = get_config($fileteam);
 $schedule = get_schedule();

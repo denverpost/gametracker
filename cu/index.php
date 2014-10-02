@@ -22,7 +22,7 @@ require('../header.php');
 
 </div>
 
-<?php //include('../addiv.php'); ?>
+<?php include('../addiv.php'); ?>
 
 <div id="slider" class="swipe">
     <div class="swipe-wrap" id="slidehi">
@@ -79,20 +79,6 @@ require('../header.php');
         </div>
     </div>
 </div>
-
-<div id="bottombuttons">
-    <ul>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(0,200);switchShowingClass(this);"><img src="../button-live.png" />Live</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(1,200);switchShowingClass(this);"><img src="../button-stats.png" />Stats</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(2,200);switchShowingClass(this);"><img src="../button-news.png" />News</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(3,200);switchShowingClass(this);"><img src="../button-media.png" />Photos</a></li>
-        <li class="button"><a href="javascript:void(0)" onClick="mySwipe.slide(4,200);switchShowingClass(this);"><img src="../button-video.png" />Video</a></li>
-    </ul>
-</div>
-
-<script type="text/javascript" src="../functions.js"></script>
-<script type="text/javascript" src="../parse-<?php echo $config[0]['sport']; ?>.js"></script>
-<!-- <script type="text/javascript" src="../adrun.js"></script> -->
 
 <?php
 require('../footer.php');
