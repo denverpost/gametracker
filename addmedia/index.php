@@ -404,10 +404,10 @@ $('#gameidselect').on('change',function(){
 						<label class="biglabel">Team Logo
 							<div class="row">
 								<div class="large-9 columns">
-									<input class="smallmargin" type="text" name="displayshort" value="logo-<?php echo $config[0]['shortname']; ?>.png" readonly />
+									<input class="smallmargin" type="text" name="displayshort" value="logo-<?php echo strtolower($config[0]['shortname']); ?>.png" readonly />
 								</div>
 								<div class="large-3 columns">
-									<img src="../<?php echo strtolower($fileteam); ?>/img/logo-<?php echo $config[0]['shortname']; ?>.png" height="40" style="margin:-8 auto 0;display:block;"/>
+									<img src="../<?php echo strtolower($fileteam); ?>/img/logo-<?php echo strtolower($config[0]['shortname']); ?>.png" height="40" style="margin:-8 auto 0;display:block;"/>
 								</div>
 							</div>
 						</label>

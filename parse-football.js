@@ -150,7 +150,7 @@ function parseGameData() {
             }
         } else {
             $('#quarter').html(timeDisplay);
-            var inputtime = new Date(data["custom-content"]["unixtime"]*1000);
+            var inputtime = new Date(parseInt(data["custom-content"]["unixtime"])*1000);
             if (!startedCount) startCountdown(inputtime);
         }
     });
