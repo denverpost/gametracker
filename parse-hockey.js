@@ -17,7 +17,8 @@ function parseGameData() {
             if ( $('#home > img').length == 0) {
             $('#home').prepend('<img src="./img/logo-' + hometeamid.toLowerCase() + '.png" alt="' + hometeamname + ' logo" />');
             }
-            console.log(hometeamid + ', ' + awayteamid + ', ' + hometeamname + ', ' + awayteamname);
+        } else if (data["custom-content"]["heading"]) {
+            $('#scores > div.teams').html('<h2>' + data["custom-content"]["heading"]) + '</h2>';
         }
 
         //update home team score
@@ -89,7 +90,7 @@ function parseGameData() {
             if (data["team-sport-content"]["league-content"]["competition"]["result-scope"]["competition-status"] != 'complete' && data["team-sport-content"]["league-content"]["competition"]["result-scope"]["scope-status"] != 'complete') {
                 var timeRemain = data["team-sport-content"]["league-content"]["competition"]["result-scope"]["clock"];
                 var timeChunks = timeRemain.split(':');
-                var timeRemaining = timeChunks[1] + ':' + timeChunks[2];
+                var timeRemaining = parseInt(timeChunks[1],10) + ':' + timeChunks[2];
             }
         }
         // if we have a quarter we'll display it, otherwise we'll put in the start time
@@ -105,8 +106,17 @@ function parseGameData() {
                 }
             }
         } else {
-            $('#quarter').html('Next game: ' + timeDisplay);
+            $('#quarter').html(timeDisplay);
+            var inputtime = new Date(data["custom-content"]["unixtime"]*1000);
+            if (!startedCount) startCountdown(inputtime);
         }
     });
 }
 parseGameData();
+
+$(document).ready(function() {
+    $.ajaxSetup({ cache: false });
+    setInterval(function() {
+        parseGameData();
+    }, 10000);
+});

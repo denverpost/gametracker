@@ -103,7 +103,7 @@ function countdown(yr,m,d,hr,min,sec,montharray){
     var dmin=Math.floor(((dd%(60*60*1000*24))%(60*60*1000))/(60*1000)*1);
     var dsec=Math.floor((((dd%(60*60*1000*24))%(60*60*1000))%(60*1000))/1000*1);
     if(dday>0||dhour>0||dmin>0||dsec>0){
-        var thecountdown = dday + 'd, ' + dhour + 'h, ' + dmin + 'm, ' + dsec + 's to kickoff';
+        var thecountdown = dday + 'd, ' + dhour + 'h, ' + dmin + 'm, ' + dsec + 's';
         thecountdown = (thecountdown.substring(0,1) != 0 ) ? thecountdown : thecountdown.substring(4);
         thecountdown = (thecountdown.substring(0,1) != 0 ) ? thecountdown : thecountdown.substring(4);
         thecountdown = (thecountdown.substring(0,1) != 0 ) ? thecountdown : thecountdown.substring(4);

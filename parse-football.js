@@ -17,7 +17,6 @@ function parseGameData() {
             if ( $('#home > img').length == 0) {
             $('#home').prepend('<img src="./img/logo-' + hometeamid.toLowerCase() + '.png" alt="' + hometeamname + ' logo" />');
             }
-            //console.log(hometeamid + ', ' + awayteamid + ', ' + hometeamname + ', ' + awayteamname);
         } else if (data["custom-content"]["heading"]) {
             $('#scores > div.teams').html('<h2>' + data["custom-content"]["heading"]) + '</h2>';
         }
