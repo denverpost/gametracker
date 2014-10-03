@@ -247,12 +247,13 @@
 
 <div id="slider" class="news-heds swipe">
 
-    <h2>Choose the team you want to follow:</h2>
-    <ul>
-        <li><a href="./broncos" title="Denver Broncos">Denver Broncos</a></li>
-        <li><a href="./cu" title="CU Buffs">CU Buffs</a></li>
-        <li><a href="./csu" title="CSU Rams">CSU Rams</a></li>
-        <li><a href="./avs" title="Colorado Avalanche">Colorado Avalanche</a></li>
+    <h2>Team Gametrackers:</h2>
+    <ul class="teamlist">
+        <li><a href="./broncos" title="Denver Broncos" style="color:#e55515;"><img src="./broncos/img/logo-den.png" class="teamlistimg" />Denver Broncos</a></li>
+        <li><a href="./cu" title="CU Buffs" style="color:#ceb77f;"><img src="./cu/img/logo-colo.png" class="teamlistimg" />CU Buffs</a></li>
+        <li><a href="./csu" title="CSU Rams" style="color:#207253;"><img src="./csu/img/logo-csu.png" class="teamlistimg" />CSU Rams</a></li>
+        <li><a href="./avs" title="Colorado Avalanche" style="color:#01548A;"><img src="./avs/img/logo-col.png" class="teamlistimg" />Colorado Avalanche</a></li>
+        <li><a href="./nuggets" title="Denver Nuggets" style="color:#4B90CD;"><img src="./nuggets/img/logo-den.png" class="teamlistimg" />Denver Nuggets</a></li>
     </ul>
 
 </div>

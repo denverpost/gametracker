@@ -63,6 +63,22 @@ img.dplogo {
 	margin:10px auto;
 	text-align: center;
 }
+ul.teamlist li {
+	margin-bottom:1em;
+	display: block;
+}
+ul.teamlist a {
+	font-size:1.25em;
+	line-height:1;
+	font-family: 'Chivo', Helvetica, Arial, sans-serif;
+	font-weight:bold;
+	display:inline-block;
+}
+img.teamlistimg {
+	float:left;
+	height:1.25em;
+	margin-right:1em;
+}
 @media only screen and (max-width:540px) {
 	#topper {
 		height:50px;
