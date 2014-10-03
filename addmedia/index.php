@@ -1,10 +1,10 @@
 <html>
 <?php 
-/*
+
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
 ini_set('display_startup_errors', TRUE);
-*/
+
 include('../functions.php');
 
 $fileteam = ( isset($_REQUEST['team']) && $_REQUEST['team'] == ('avs' || 'broncos' || 'rockies' || 'nuggets' || 'rapids' || 'cu' || 'csu') ) ? $_REQUEST['team'] : false;
@@ -192,8 +192,6 @@ if ($fileteam && !$editdetails) {
 			if ($editdetails == 1) {
 				$share_imgclean = test_url($_POST['share_img']);
 				$imgerror = ($share_imgclean) ? false : true;
-				$teamcolorclean = str_replace('#','',trim($_POST['teamcolor']));
-				$news_keywordsclean = rtrim(trim($_POST['news_keywords']),',');
 				$twitter_creatorclean = ltrim(trim($_POST['twitter_creator']),'@');
 				$scores_urlclean = clean_xml_url($_POST['scores_url']);
 				$feederror = (!$scores_urlclean) ? true : false;
@@ -202,10 +200,15 @@ if ($fileteam && !$editdetails) {
 				$config[0]['shortname'] = strtoupper(trim($_POST['shortname']));
 				$config[0]['friendlyname'] = ucfirst(trim($_POST['friendlyname']));
 				$config[0]['displayshort'] = strtoupper(trim($_POST['displayshort']));
-				$config[0]['teamcolor'] = $teamcolorclean;
-				$config[0]['adsenabled'] = trim($_POST['adsenabled']);
-				$config[0]['news_keywords'] = $news_keywordsclean;
+				$config[0]['teamcolor'] = str_replace('#','',trim($_POST['teamcolor']));
+				$config[0]['adsenabled'] = (isset($_POST['adsenabled'])) ? $_POST['adsenabled'] : false;
+				$config[0]['news_keywords'] = rtrim(trim($_POST['news_keywords']),',');
+				$config[0]['page_title'] = trim($_POST['page_title']);
+				$config[0]['twitter_title'] = trim($_POST['twitter_title']);
+				$config[0]['twitter_description'] = trim($_POST['twitter_description']);
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
+				$config[0]['fb_title'] = trim($_POST['fb_title']);
+				$config[0]['fb_description'] = trim($_POST['fb_description']);
 				$config[0]['share_img'] = $share_imgclean;
 				$config[0]['sport'] = trim($_POST['sporttype']);
 				$config[0]['league'] = trim($_POST['league']);
@@ -241,6 +244,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = $boxscore_clean;
+				$config[0]['boxedit'] = $_POST['boxedit'];
 				$success = (!$gameid_final || !$commentid_clean) ? 'warning ' : 'success ';
 				$warnmsg = ($success == 'warning ') ? ', with errors' : '';
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box ".$success."radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated".$warnmsg.".</p>" : "<p class=\"alert-box alert radius\">There was an error updating the game configuration.</p>";
@@ -324,11 +328,27 @@ $schedule = get_schedule();
 					<input type="text" class="smallmargin" name="commentid" value="<?php echo isset($config[0]['commentid']) ? $config[0]['commentid'] : ''; ?>" />
 					<p class="helptext">Article ID for the NGPS story to show Disqus comments from.</p>
 				</label>
-				<label class="biglabel<?php echo (!isset($config[0]['boxscore']) || $config[0]['boxscore'] == '') ? ' error' : ''; ?>">Boxscore URL
-					<input type="text" class="smallmargin" id="boxscore" name="boxscore" value="<?php echo isset($config[0]['boxscore']) ? $config[0]['boxscore'] : ''; ?>" readonly />
-					<input type="hidden" name="boxedit" value="false" />
-					<p class="helptext">Based on sport, league, year and Game ID; updates automatically unless you <a href="javascript:editBoxscore();" tabindex="-1"><b>edit the URL directly</b></a>.</p>
-				</label>
+				<div class="row">
+					<div class="large-10 columns">
+						<label class="biglabel<?php echo (!isset($config[0]['boxscore']) || $config[0]['boxscore'] == '') ? ' error' : ''; ?>">Boxscore URL
+							<input type="text" class="smallmargin" id="boxscore" name="boxscore" value="<?php echo isset($config[0]['boxscore']) ? $config[0]['boxscore'] : ''; ?>" readonly />
+							<p class="helptext">Based on sport, league, year and Game ID; updates automatically unless overridden (checkbox at right). Reverts to automatic if you uncheck Override and then hit Update.</p>
+						</label>
+					</div>
+					<div class="large-2 columns">
+						<label class="biglabel">Override
+							<div class="row">
+								<fieldset class="radiobox">
+									<div class="large-12 columns">
+										<label>
+											<input class="smallmargin" type="checkbox" name="boxedit" id="boxedit" value="true" <?php echo (isset($config[0]['boxedit']) && $config[0]['boxedit']) ? 'checked' : ''; ?> /> Override
+										</label>
+									</div>
+								</fieldset>
+							</div>
+						</label>
+					</div>
+				</div>
 				<label class="biglabel<?php echo (!isset($config[0]['photos']) || $config[0]['photos'] == '') ? ' error' : ''; ?>">Photo gallery URL
 					<input type="text" class="smallmargin" name="photos" value="<?php echo isset($config[0]['photos']) ? $config[0]['photos'] : ''; ?>" />
 					<p class="helptext">Paste a valid link to the game or pre-game slideshow on photos.denverpost.com.</p>
@@ -377,14 +397,13 @@ $schedule = get_schedule();
 function editGameId() {
 	$('input#gameid').removeAttr('readonly');
 }
-function editBoxscore() {
-	$('input#boxscore').removeAttr('readonly');
-	$('input#boxedit').val('true');
-}
 $('#gameidselect').on('change',function(){
 	if ($('#gameidselect option:selected').val() != 'noselect') {
 		$('input#gameid').val($('#gameidselect option:selected').val());
 	}
+});
+$('#boxedit').on('change',function(){
+	$('input#boxscore').removeAttr('readonly');
 });
 </script>
 
@@ -558,13 +577,33 @@ $('#gameidselect').on('change',function(){
 			</fieldset>
 			<fieldset>
 				<legend>Page Meta Options</legend>
+				<label class="biglabel<?php echo (!isset($config[0]['page_title']) || $config[0]['page_title'] == '') ? ' error' : ''; ?>">Page Title
+					<input class="smallmargin" type="text" name="page_title" value="<?php echo isset($config[0]['page_title']) ? $config[0]['page_title'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;title&gt;</b> tag in the page (used by Google and browser tabs).</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['twitter_title']) || $config[0]['twitter_title'] == '') ? ' error' : ''; ?>">Twitter Title
+					<input class="smallmargin" type="text" name="twitter_title" value="<?php echo isset($config[0]['twitter_title']) ? $config[0]['twitter_title'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;twitter:title&gt;</b> tag (used by Twitter Card previews).</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['twitter_description']) || $config[0]['twitter_description'] == '') ? ' error' : ''; ?>">Twitter Description
+					<input class="smallmargin" type="text" name="twitter_description" value="<?php echo isset($config[0]['twitter_description']) ? $config[0]['twitter_description'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;twitter:description&gt;</b> tag (used by Twitter Card previews).</p>
+				</label>
 				<label class="biglabel<?php echo (!isset($config[0]['twitter_creator']) || $config[0]['twitter_creator'] == '') ? ' error' : ''; ?>">Twitter Creator
 					<input class="smallmargin" type="text" name="twitter_creator" value="<?php echo isset($config[0]['twitter_creator']) ? $config[0]['twitter_creator'] : ''; ?>" />
-					<p class="helptext">The twitter account that will be promoted in the Twitter Card. '@' is not required.</p>
+					<p class="helptext">Value to fill in for the <b>&lt;twitter:creator&gt;</b> tag in the page (used by Twitter Card previews).</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['fb_title']) || $config[0]['fb_title'] == '') ? ' error' : ''; ?>">Facebook Title
+					<input class="smallmargin" type="text" name="fb_title" value="<?php echo isset($config[0]['fb_title']) ? $config[0]['fb_title'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;og:title&gt;</b> tag (used by Facebook Link previews).</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['fb_description']) || $config[0]['fb_description'] == '') ? ' error' : ''; ?>">Facebook Description
+					<input class="smallmargin" type="text" name="fb_description" value="<?php echo isset($config[0]['fb_description']) ? $config[0]['fb_description'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;og:description&gt;</b> tag in the page (used by Facebook Link previews).</p>
 				</label>
 				<label class="biglabel<?php echo (!isset($config[0]['share_img']) || $config[0]['share_img'] == '') ? ' error' : ''; ?>">Share Image
 					<input class="smallmargin" type="text" name="share_img" value="<?php echo isset($config[0]['share_img']) ? $config[0]['share_img'] : ''; ?>" />
-					<p class="helptext">Image to use for Facebook shares and Twitter cards. Must be 1200x630px. URL must be valid.</p>
+					<p class="helptext">Image to use for Facebook shares and Twitter cards. Must be 1200x630px and a valid URL. <a href="../gametracker-fb-image-template.psd"><b>Click to download the Photoshop template</b></a>.</p>
 				</label>
 				<label class="biglabel<?php echo (!isset($config[0]['news_keywords']) || $config[0]['news_keywords'] == '') ? ' error' : ''; ?>">News Keywords
 					<textarea name="news_keywords" class="smallmargin"><?php echo isset($config[0]['news_keywords']) ? $config[0]['news_keywords'] : ''; ?></textarea>

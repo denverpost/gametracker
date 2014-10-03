@@ -7,29 +7,28 @@ include('../functions.php');
 $fileteam = end(array_filter(explode('/',trim($_SERVER['REQUEST_URI']))));
 $config = get_config($fileteam);
 ?>
-
 <head profile="http://gmpg.org/xfn/11">
 
-<title><?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post</title>
+<title><?php echo (isset($config[0]['page_title']) && trim($config[0]['page_title']) != '') ? $config[0]['page_title'] : ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' Gametracker from The Denver Post'; ?></title>
 
 <meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <meta name="twitter:card" value="summary" />
 <meta name="twitter:url" value="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/" />
-<meta name="twitter:title" value="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
-<meta name="twitter:description" value="Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game." />
+<meta name="twitter:title" value="<?php echo (isset($config[0]['twitter_title']) && trim($config[0]['twitter_title']) != '') ? $config[0]['twitter_title'] : ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' Gametracker from The Denver Post'; ?>" />
+<meta name="twitter:description" value="<?php echo (isset($config[0]['twitter_description']) && trim($config[0]['twitter_description']) != '') ? $config[0]['twitter_description'] : 'Live updates, news, photos, videos and more from today\'s ' . ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' game.'; ?>" />
 <meta name="twitter:image" value="<?php echo $config[0]['share_img']; ?>" />
 <meta name="twitter:site" value="@denverpost" />
-<meta name="twitter:creator" content="@<?php echo $config[0]['twitter_creator']; ?>" />
+<meta name="twitter:creator" content="@<?php echo (isset($config[0]['twitter_creator']) && trim($config[0]['twitter_creator']) != '') ? $config[0]['twitter_creator'] : 'denverpost'; ?>" />
 <meta name="twitter:domain" value="gametracker.denverpost.com" />
 
-<meta property="og:title" content="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
+<meta property="og:title" content="<?php echo (isset($config[0]['fb_title']) && trim($config[0]['fb_title']) != '') ? $config[0]['fb_title'] : ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' Gametracker from The Denver Post'; ?>" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://gametracker.denverpost.com/<?php echo $fileteam; ?>/" />
 <meta property="og:image" content="<?php echo $config[0]['share_img']; ?>" />
-<meta property="og:site_name" content="<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post" />
-<meta property="og:description" content="Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game." />
+<meta property="og:site_name" content="<?php echo (isset($config[0]['page_title']) && trim($config[0]['page_title']) != '') ? $config[0]['page_title'] : ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' Gametracker from The Denver Post'; ?>" />
+<meta property="og:description" content="<?php echo (isset($config[0]['fb_description']) && trim($config[0]['fb_description']) != '') ? $config[0]['fb_description'] : 'Live updates, news, photos, videos and more from today\'s ' . ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' game.'; ?>" />
 <meta property="article:publisher" content="http://www.facebook.com/denversports" />
 
 <meta name="distribution" content="global" />
