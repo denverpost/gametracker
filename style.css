@@ -408,8 +408,8 @@ p.newserror {
 	}
 	#scores h2 span {
 		font-size:15px;
-	}
-	.gallerywrap {
+	}.commentwrap
+	.gallerywrap, .commentwrap {
 		width:95%;
 		margin:10px auto;
 	}

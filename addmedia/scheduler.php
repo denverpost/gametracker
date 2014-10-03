@@ -21,6 +21,11 @@ $feedurls = array(	array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/footba
 							'name'=>'cu',
 							'teamid'=>'90',
 							'sport'=>'football'
+							),
+					array(	'url'=>'http://xml.sportsdirectinc.com/sport/v2/basketball/NBA/schedule/schedule_NBA.xml',
+							'name'=>'nuggets',
+							'teamid'=>'404065',
+							'sport'=>'basketball'
 							)
 					);
 

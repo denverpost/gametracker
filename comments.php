@@ -18,11 +18,13 @@
 	    </div>
 	</div>
 
+
+<?php if (isset($config[0]['commentid']) && (trim($config[0]['commentid']) != '')) { ?>
 	<div id="putDisqusCommentsHere">
 		<div id="disqus_thread"></div>
 		<script type="text/javascript">
 	        var disqus_shortname = 'dfm-denverpost';
-	        <?php if (isset($config[0]['commentid']) && (trim($config[0]['commentid']) != '')): ?>var disqus_identifier = <?php echo $config[0]['commentid']; ?>;<?php endif; ?>
+	        var disqus_identifier = <?php echo $config[0]['commentid']; ?>;
 	        (function() {
 	            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -30,6 +32,8 @@
 	        })();
 	    </script>
 	</div>
-
+<?php } else { ?>
+	<h3>Discussion for this game hasn't begun yet. Check back on gameday!</h3>
+<?php } ?>
 	<div class="clear"></div>
 </div>

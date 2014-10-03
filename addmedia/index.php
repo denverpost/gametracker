@@ -120,6 +120,23 @@ if ($fileteam && !$editdetails) {
 								</div>
 							</label>
 					</fieldset>
+					<fieldset>
+						<legend>Professional Basketball Teams</legend>
+							<label>
+								<div class="large-12 columns">
+									<h4>Denver Nuggets</h4>
+								</div>
+								<div class="large-4 columns">
+									<a href="../nuggets" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=nuggets" class="button success large-12 columns">EDIT GAME DETAILS</a>
+								</div>
+								<div class="large-4 columns">
+									<a href="index.php?team=nuggets&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								</div>
+							</label>
+					</fieldset>
 				</form>
 			</div>
 		</div>
@@ -404,44 +421,48 @@ $('#gameidselect').on('change',function(){
 						<label class="biglabel">Team Logo
 							<div class="row">
 								<div class="large-9 columns">
-									<input class="smallmargin" type="text" name="displayshort" value="logo-<?php echo strtolower($config[0]['shortname']); ?>.png" readonly />
+									<input class="smallmargin" type="text" name="teamlogo" value="logo-<?php echo strtolower($config[0]['shortname']); ?>.png" readonly />
+									<p class="helptext">(Non-editable)</p>
 								</div>
 								<div class="large-3 columns">
 									<img src="../<?php echo strtolower($fileteam); ?>/img/logo-<?php echo strtolower($config[0]['shortname']); ?>.png" height="40" style="margin:-8 auto 0;display:block;"/>
 								</div>
 							</div>
 						</label>
-						<p class="helptext">(Non-editable)</p>
 					</div>
 				</div>
 			</fieldset>
 			<fieldset>
 				<legend>Page configuration</legend>
 				<div class="row">
-					<div class="large-4 columns">
+					<div class="large-3 columns">
 						<label class="biglabel">Team Color
 							<input class="smallmargin" type="text" name="teamcolor" value="<?php echo isset($config[0]['teamcolor']) ? $config[0]['teamcolor'] : ''; ?>">
 							<p class="helptext">Official team color for scores area. Pick the boldest one.</p>
 						</label>
 					</div>
-					<div class="large-4 columns">
+					<div class="large-6 columns">
 						<label class="biglabel<?php echo (!isset($config[0]['sport']) || $config[0]['sport'] == '') ? ' error' : ''; ?>">Sport type (REQUIRED)
 							<div class="row">
 								<fieldset class="radiobox">
-									<div class="large-6 columns">
+									<div class="large-4 columns">
 										<label>
 											<input type="radio" name="sporttype" value="football"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'football') ? ' checked' : ''; ?> /> Football</label>
 									</div>
-									<div class="large-6 columns">
+									<div class="large-4 columns">
 										<label>
 											<input type="radio" name="sporttype" value="hockey"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'hockey') ? ' checked' : ''; ?> /> Hockey</label>
+									</div>
+									<div class="large-4 columns">
+										<label>
+											<input type="radio" name="sporttype" value="basketball"<?php echo (isset($config[0]['sport']) && $config[0]['sport'] == 'basketball') ? ' checked' : ''; ?> /> Basketball</label>
 									</div>
 								</fieldset>
 								<p class="helptext">What sport to parse scores data as. Mismatches mean disaster.</p>
 							</div>
 						</label>
 					</div>
-					<div class="large-4 columns">
+					<div class="large-3 columns">
 						<label class="biglabel">Advertising
 							<div class="row">
 								<fieldset class="radiobox">
@@ -470,17 +491,21 @@ $('#gameidselect').on('change',function(){
 						<label class="biglabel<?php echo (!isset($config[0]['league']) || $config[0]['league'] == '') ? ' error' : ''; ?>">League
 							<div class="row">
 								<fieldset class="radiobox">
-									<div class="large-4 columns">
+									<div class="large-3 columns">
 										<label>
 											<input type="radio" name="league" value="NFL"<?php echo (isset($config[0]['league']) && $config[0]['league'] == 'NFL') ? ' checked' : ''; ?> /> NFL</label>
 									</div>
-									<div class="large-4 columns">
+									<div class="large-3 columns">
 										<label>
 											<input type="radio" name="league" value="NCAAF"<?php echo (isset($config[0]['league']) && $config[0]['league'] == 'NCAAF') ? ' checked' : ''; ?> /> NCAAF</label>
 									</div>
-									<div class="large-4 columns">
+									<div class="large-3 columns">
 										<label>
 											<input type="radio" name="league" value="NHL"<?php echo (isset($config[0]['league']) && $config[0]['league'] == 'NHL') ? ' checked' : ''; ?> /> NHL</label>
+									</div>
+									<div class="large-3 columns">
+										<label>
+											<input type="radio" name="league" value="NBA"<?php echo (isset($config[0]['league']) && $config[0]['league'] == 'NBA') ? ' checked' : ''; ?> /> NBA</label>
 									</div>
 								</fieldset>
 								<p class="helptext">What league to fetch scores data from. Mismatches are bad.</p>
