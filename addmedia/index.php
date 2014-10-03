@@ -47,6 +47,7 @@ if ($fileteam && !$editdetails) {
 						<li>You should only need to update the Game Details with any frequency.</li>
 						<li>The Team Details is to be avoided unless you are certain a problem exists there.</li>
 					</ul>
+					<p class="changelink">What's new? <a href="#" data-reveal-id="changeLog">View the changelog</a></p>
 				</div>
 			</div>
 		</div>
@@ -56,88 +57,129 @@ if ($fileteam && !$editdetails) {
 				
 				<form name="formchooser">
 					<fieldset>
-						<legend>Professional Football Teams</legend>
+						<legend>Professional Football (NFL)</legend>
 							<label>
-								<div class="large-12 columns">
-									<h4>Denver Broncos</h4>
-								</div>
-								<div class="large-4 columns">
-									<a href="../broncos" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=broncos" class="button success large-12 columns">EDIT GAME DETAILS</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=broncos&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="../broncos/img/logo-den.png" class="editorimg" style="width:19%;" />
+										<h4>Denver Broncos</h4>
+									</div>
+									<div class="large-8 columns">
+										<div class="row">
+											<div class="large-4 columns">
+												<a href="../broncos" target="_blank" class="button large-12 columns">LIVE GAMETRACKER</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=broncos" class="button success large-12 columns">EDIT GAME DETAILS</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=broncos&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+											</div>
+										</div>
+									</div>
 								</div>
 							</label>
 					</fieldset>
 					<fieldset>
-						<legend>College Football Teams</legend>
+						<legend>College Football (NCAAF)</legend>
 							<label>
-								<div class="large-12 columns">
-									<h4>Colorado Buffaloes</h4>
-								</div>
-								<div class="large-4 columns">
-									<a href="../cu" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=cu" class="button success large-12 columns">EDIT GAME DETAILS</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=cu&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="../cu/img/logo-colo.png" class="editorimg" />
+										<h4>Colorado Buffaloes</h4>
+									</div>
+									<div class="large-8 columns">
+										<div class="row">
+											<div class="large-4 columns">
+												<a href="../cu" target="_blank" class="button large-12 columns">LIVE GAMETRACKER</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=cu" class="button success large-12 columns">GAME DETAILS</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=cu&details=1" class="button alert large-12 columns">TEAM DETAILS</a>
+											</div>
+										</div>
+									</div>
 								</div>
 							</label>
 							<label>
-								<div class="large-12 columns">
-									<h4>Colorado State Rams</h4>
-								</div>
-								<div class="large-4 columns">
-									<a href="../csu" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=csu" class="button success large-12 columns">EDIT GAME DETAILS</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=csu&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
-								</div>
-							</label>
-					</fieldset>
-					<fieldset>
-						<legend>Professional Hockey Teams</legend>
-							<label>
-								<div class="large-12 columns">
-									<h4>Colorado Avalanche</h4>
-								</div>
-								<div class="large-4 columns">
-									<a href="../avs" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=avs" class="button success large-12 columns">EDIT GAME DETAILS</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=avs&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="../csu/img/logo-csu.png" class="editorimg" />
+										<h4>Colorado State Rams</h4>
+									</div>
+									<div class="large-8 columns">
+										<div class="row">
+											<div class="large-4 columns">
+												<a href="../csu" target="_blank" class="button large-12 columns">LIVE GAMETRACKER</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=csu" class="button success large-12 columns">GAME DETAILS</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=csu&details=1" class="button alert large-12 columns">TEAM DETAILS</a>
+											</div>
+										</div>
+									</div>
 								</div>
 							</label>
 					</fieldset>
 					<fieldset>
-						<legend>Professional Basketball Teams</legend>
+						<legend>Professional Hockey (NHL)</legend>
 							<label>
-								<div class="large-12 columns">
-									<h4>Denver Nuggets</h4>
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="../avs/img/logo-col.png" class="editorimg" />
+										<h4>Colorado Avalanche</h4>
+									</div>
+									<div class="large-8 columns">
+										<div class="row">
+											<div class="large-4 columns">
+												<a href="../avs" target="_blank" class="button large-12 columns">LIVE GAMETRACKER</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=avs" class="button success large-12 columns">GAME DETAILS</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=avs&details=1" class="button alert large-12 columns">TEAM DETAILS</a>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="large-4 columns">
-									<a href="../nuggets" target="_blank" class="button large-12 columns">VIEW LIVE GAMETRACKER</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=nuggets" class="button success large-12 columns">EDIT GAME DETAILS</a>
-								</div>
-								<div class="large-4 columns">
-									<a href="index.php?team=nuggets&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+							</label>
+					</fieldset>
+					<fieldset>
+						<legend>Professional Basketball (NBA)</legend>
+							<label>
+								<div class="row">
+									<div class="large-4 columns">
+										<img src="../nuggets/img/logo-den.png" class="editorimg" />
+										<h4>Denver Nuggets</h4>
+									</div>
+									<div class="large-8 columns">
+										<div class="row">
+											<div class="large-4 columns">
+												<a href="../nuggets" target="_blank" class="button large-12 columns">LIVE GAMETRACKER</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=nuggets" class="button success large-12 columns">EDIT GAME DETAILS</a>
+											</div>
+											<div class="large-4 columns">
+												<a href="index.php?team=nuggets&details=1" class="button alert large-12 columns">EDIT TEAM DETAILS</a>
+											</div>
+										</div>
+									</div>
 								</div>
 							</label>
 					</fieldset>
 				</form>
+			</div>
+		</div>
+
+		<div id="changeLog" class="reveal-modal" data-reveal>
+			<div class="changelog">
+				<?php include('../changelog.html'); ?>
 			</div>
 		</div>
 		
@@ -320,11 +362,11 @@ $schedule = get_schedule();
 	<code class="prettyprint lang-html">
 	&lt;iframe width="560" height="315" src="//www.youtube.com/embed/<b>fXT23fh99OM</b>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 	</code>
-	<h4>YouTube:</h4>
+	<h4>NDN:</h4>
 	<code class="prettyprint lang-html">
 	&lt;div class="ndn_embed" style="width:654px;height:368px;" data-config-widget-id="2" data-config-type="VideoPlayer/Single" data-config-tracking-group="90115" data-config-video-id="<b>27361955</b>" data-config-site-section="denverpost2se"&gt;&lt;/div&gt;
 	</code>
-	<h4>YouTube:</h4>
+	<h4>Ooyala:</h4>
 	<code class="prettyprint lang-html">
 	&lt;script height="100%" width="100%" src="http://player.ooyala.com/iframe.js #pbid=fce2cf476df14253a15351f1727031b4&ec=<b>hxNG5mazoHMPXtXR_SXeyYOavxtHis0f</b>"&gt;&lt;/script&gt;
 	</code>
