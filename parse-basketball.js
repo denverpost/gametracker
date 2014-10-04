@@ -67,11 +67,13 @@ function parseGameData() {
             var quarterover = data["team-sport-content"]["league-content"]["competition"]["result-scope"]["scope-status"];
             if (overtime == 'period') {
                 if (quarter == 1) {
-                    quarterOut = (quarterover == 'complete') ? 'End of 1st' : '1st period';
+                    quarterOut = (quarterover == 'complete') ? 'End of 1st' : '1st quarter';
                 } else if (quarter == 2) {
-                    quarterOut = (quarterover == 'complete') ? 'End of 2nd' : '2nd period';
+                    quarterOut = (quarterover == 'complete') ? 'Halftime' : '2nd quarter';
                 } else if (quarter == 3) {
-                    quarterOut = (quarterover == 'complete' && (homescore != awayscore)) ? 'Final' : '3rd period';
+                    quarterOut = (quarterover == 'complete') ? 'End of 3rd' : '3rd quarter';
+                } else if (quarter == 4) {
+                    quarterOut = (quarterover == 'complete' && (homescore != awayscore)) ? 'Final' : '4th quarter';
                 }
             } else if (overtime == 'overtime') {
                 if (quarter == 1) {

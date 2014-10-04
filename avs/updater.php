@@ -7,7 +7,7 @@ include('../functions.php');
 $fileteam = 'avs';
 
 $today = time();
-$dateoffset = 432000; //5 days (in seconds)
+$dateoffset = 64800; // 18 hours (in seconds)
 
 $config = get_config($fileteam);
 $schedule = get_schedule();
@@ -27,6 +27,10 @@ while($i < $iterations) {
 		$xml = file_get_contents($feedurl);
 	}
 	//$xml = file_get_contents('/Users/danielschneider/Sites/gametracker/broncos/nfl_1st_quarter_sample.xml'); //for testing purposes
+
+	if ($xml) {
+ 		$object = simplexml_load_string($xml);	
+ 	}
 
 	//write the xml to disk if it exists, else place a blank xml file that the interpreter knows to ignore -- but only up until game time -- then we keep whatever we got last.
 	if (isset($xml)) {
