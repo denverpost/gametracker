@@ -74,7 +74,7 @@ $config = get_config($fileteam);
     dfm.api("data","pageId",          "");
     dfm.api("data","pageUrl",         "http://gamecenter.denverpost.com/<?php echo $fileteam; ?>/"); //Full URl of site
     dfm.api("data","pageVanityUrl",   "http://gamecenter.denverpost.com/<?php echo $fileteam; ?>/"); //Full URl of site
-    dfm.api("data","pageTitle",       "<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?>Gametracker from The Denver Post");
+    dfm.api("data","pageTitle",       "<?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> Gametracker from The Denver Post");
     dfm.api("data","pageType",        "");
     dfm.api("data","abstract",        "Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game.");
     dfm.api("data","keywords",        "Live updates, news, photos, videos and more from today's <?php echo ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']); ?> game.");

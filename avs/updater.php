@@ -13,12 +13,13 @@ $config = get_config($fileteam);
 $schedule = get_schedule();
 
 $nextgame = get_next_game($schedule,$fileteam,$today,$dateoffset);
-//var_dump($nextgame);
+var_dump($nextgame);
 
 $iterations = ($nextgame['gametimeunix'] < (time() + 1200)) ? 60 : 1;
 $iterations = (isset($argv[1])) ? $argv[1] : 60;
 
 $feedurl = sprintf($config[0]['scores_url'],$config[0]['gameid']);
+var_dump($feedurl);
 
 //run 20 times since cron can only do every 60 sec and we're checking every 5.
 $i = 0;

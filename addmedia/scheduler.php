@@ -65,7 +65,7 @@ foreach ($feedurls as $feedteam) {
 			}
 		}
 	}
-	sleep(10);
+	sleep(30);
 }
 
 if (put_schedule($sched)) echo "\n" . 'Schedule data updated!' . "\n"."\n";

@@ -233,7 +233,7 @@ if ($fileteam && !$editdetails) {
 					$gameid_final = trim($_POST['gameid']);
 				}
 				$config[0]['gameid'] = $gameid_final;
-				if ($_POST['boxedit'] == 'true') {
+				if (isset($_POST['boxedit']) && $_POST['boxedit'] == 'true') {
 					$boxscore_clean = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
 				} else {
 					$boxscore_clean = boxscore_url($config[0]);
@@ -244,7 +244,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = $boxscore_clean;
-				$config[0]['boxedit'] = $_POST['boxedit'];
+				$config[0]['boxedit'] = ( isset($_POST['boxedit']) ) ? $_POST['boxedit'] : false;
 				$success = (!$gameid_final || !$commentid_clean) ? 'warning ' : 'success ';
 				$warnmsg = ($success == 'warning ') ? ', with errors' : '';
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box ".$success."radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated".$warnmsg.".</p>" : "<p class=\"alert-box alert radius\">There was an error updating the game configuration.</p>";
@@ -315,6 +315,12 @@ $schedule = get_schedule();
 							</select>
 						</label>
 						<p class="helptext">Select the game to track from a list. This auto-updates the field on the left.</p>
+					</div>
+					<div class="large-12 columns">
+						<label class="biglabel<?php echo (!isset($config[0]['scores_url']) || !isset($config[0]['gameid'])) ? ' error' : ''; ?>">Game Details Feed URL
+							<input type="text" class="smallmargin" id="boxscore" name="boxscore" value="<?php echo ( isset($config[0]['scores_url']) && isset($config[0]['gameid']) ) ? sprintf( $config[0]['scores_url'], $config[0]['gameid']) : ''; ?>" readonly />
+							<p class="helptext">This is the feed URL being used to power this Gametracker right now. <?php echo ( isset($config[0]['scores_url']) && isset($config[0]['gameid']) ) ? sprintf('<a href="%1$s" target="_blank"><b>Click here to check the livescores feed</b></a>.', sprintf( $config[0]['scores_url'],$config[0]['gameid']) ) : ''; ?></p>
+						</label>
 					</div>
 				</div>
 			</fieldset>
