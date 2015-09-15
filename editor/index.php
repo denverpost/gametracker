@@ -239,8 +239,9 @@ if ($fileteam && !$editdetails) {
 						$boxscore_clean = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
 					} else {
 						$config[0]['boxedit'] = false;
-						$boxscore_clean = boxscore_url($config[0]);
 					}
+				} else {
+					$boxscore_clean = boxscore_url($config[0]);
 				}
 				$photos = explode("#",trim($_POST['photos']));
 				$commentid_clean = (trim($_POST['commentid']) > 1000000 && trim($_POST['commentid']) < 99999999) ? trim($_POST['commentid']) : false;
