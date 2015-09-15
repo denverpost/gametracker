@@ -1,4 +1,0 @@
-AuthName "Media Adder - Permission Required"
-AuthType Basic
-AuthUserFile /Users/danielschneider/Sites/gametracker/.htpasswd
-require valid-user
