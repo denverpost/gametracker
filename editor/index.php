@@ -233,10 +233,14 @@ if ($fileteam && !$editdetails) {
 					$gameid_final = trim($_POST['gameid']);
 				}
 				$config[0]['gameid'] = $gameid_final;
-				if (isset($_POST['boxedit']) && $_POST['boxedit'] == 'true') {
-					$boxscore_clean = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
-				} else {
-					$boxscore_clean = boxscore_url($config[0]);
+				if ( isset($_POST['boxedit']) ) {
+					if ( $_POST['boxedit'] == 'true' ) {
+						$config[0]['boxedit'] = $_POST['boxedit'];
+						$boxscore_clean = trim(str_replace('http://denverpost.sportsdirectinc.com','http://m.denverpost.sportsdirectinc.com', $_POST['boxscore']));
+					} else {
+						$config[0]['boxedit'] = false;
+						$boxscore_clean = boxscore_url($config[0]);
+					}
 				}
 				$photos = explode("#",trim($_POST['photos']));
 				$commentid_clean = (trim($_POST['commentid']) > 1000000 && trim($_POST['commentid']) < 99999999) ? trim($_POST['commentid']) : false;
@@ -244,7 +248,6 @@ if ($fileteam && !$editdetails) {
 				$config[0]['photos'] = $photos[0];
 				$config[0]['scribble'] = trim(str_replace('live.denverpost','mobile.scribblelive', $_POST['scribble']));
 				$config[0]['boxscore'] = $boxscore_clean;
-				$config[0]['boxedit'] = ( isset($_POST['boxedit']) ) ? $_POST['boxedit'] : false;
 				$success = (!$gameid_final || !$commentid_clean) ? 'warning ' : 'success ';
 				$warnmsg = ($success == 'warning ') ? ', with errors' : '';
 				$savedmessage = (put_config($fileteam,$config)) ? "<p class=\"alert-box ".$success."radius\">" . $config[0]['teamname'] . ' ' . $config[0]['nickname'] . " game details updated".$warnmsg.".</p>" : "<p class=\"alert-box alert radius\">There was an error updating the game configuration.</p>";
@@ -367,7 +370,7 @@ $schedule = get_schedule();
 			</fieldset>
 			<div class="row">
 				<div class="large-6 columns">
-					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>">RELOAD (REFRESH WITHOUT SAVING)</a>
+					<a class="button info large-12 columns" href="index.php?team=<?php echo $fileteam; ?>">RELOAD (REFRESH WITHOUT SAVING)</a>
 				</div>
 				<div class="large-6 columns">
 					<input type="submit" class="button large-12 columns" style="float:right;" value="Update game details" />
@@ -625,7 +628,7 @@ $('#boxedit').on('change',function(){
 			</fieldset>
 			<div class="row">
 				<div class="large-6 columns">
-					<a class="button large-12 columns" href="index.php?team=<?php echo $fileteam; ?>&details=1">RELOAD (REFRESH WITHOUT SAVING)</a>
+					<a class="button info large-12 columns" href="index.php?team=<?php echo $fileteam; ?>&details=1">RELOAD (REFRESH WITHOUT SAVING)</a>
 				</div>
 				<div class="large-6 columns">
 					<input type="submit" class="button large-12 columns" style="float:right;" value="Update team details" />
