@@ -12,12 +12,18 @@ $editdetails = (isset($_REQUEST['details'])) ? $_REQUEST['details'] : false;
 
 if ($fileteam) { $config = get_config($fileteam); }
 
+$titlename = '';
+if ( isset($config[0]['friendlyname'])) {
+	$titlename = ucfirst( $config[0]['friendlyname'] );
+} else if ( isset( $_POST['friendlyname'] ) ) {
+	$titlename = ucfirst( trim( $_POST['friendlyname'] ) );
+}
 if ($fileteam && !$editdetails) {
-	$pagetitle = 'Editing '.ucfirst($config[0]['friendlyname']).' Game Details';
+	$pagetitle = 'Editing '.$titlename.' Game Details';
 } else if ($fileteam && $editdetails) {
-	$pagetitle = 'Editing '.ucfirst($config[0]['friendlyname']).' Team Details';
+	$pagetitle = 'Editing '.$titlename.' Team Details';
 } else {
-	$pagetitle = '';
+	$pagetitle = 'Denver Post Gametracker';
 }
 
 ?>
