@@ -4,7 +4,7 @@
 <?php 
 include('../functions.php');
 
-$fileteam = end(array_filter(explode('/',trim($_SERVER['REQUEST_URI']))));
+$fileteam = get_team();
 $config = get_config($fileteam);
 ?>
 <head profile="http://gmpg.org/xfn/11">

@@ -1,5 +1,13 @@
 <?php
 date_default_timezone_set('America/Denver');
+if (!function_exists('get_team'))
+{
+	//gets the team being requested from the URL
+	function get_team() {
+		$team_name = end( array_filter( explode( '/', trim( strtok( $_SERVER['REQUEST_URI'], '?' ) ) ) ) );
+		return $team_name;
+	}
+}
 if (!function_exists('get_config'))
 {
 	//gets and individual team's config file and returns its data as an array
