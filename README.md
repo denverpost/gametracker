@@ -1,10 +1,12 @@
 # ABOUT #
 
-v 0.2.7
+v 0.3.0
 
 Gametracker pulls and displays live stats in a mobile-focused web display in concert with other elements such as a live blog, photo galleries, stats/box score, news feed and videos.
 
 ## Dev environment setup ##
+
+**DO NOT DO THIS ON PRODUCTION ENVIRONMENTS**
 
 *Note: In Linux or Mac OS, you can run ```bash dev.sh``` from the gametracker directory to complete these steps automatically.*
 
