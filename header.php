@@ -35,6 +35,7 @@ $config = get_config($fileteam);
 <meta name="robots" content="follow, all" />
 <meta name="language" content="en, sv" />
 <meta name="Copyright" content="Copyright 2014 The Denver Post." />
+<meta name="description" content="<?php echo (isset($config[0]['meta_description']) && trim($config[0]['meta_description']) != '') ? $config[0]['meta_description'] : 'Live updates, news, photos, videos and more from today\'s ' . ucfirst($config[0]['teamname']) . ' ' . ucfirst($config[0]['nickname']) . ' game.'; ?>">
 <meta name="keywords" content="<?php echo $config[0]['news_keywords']; ?>" />
 <meta name="news_keywords" content="<?php echo $config[0]['news_keywords']; ?>" />
 

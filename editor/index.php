@@ -210,6 +210,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['adsenabled'] = (isset($_POST['adsenabled'])) ? $_POST['adsenabled'] : false;
 				$config[0]['news_keywords'] = rtrim(trim($_POST['news_keywords']),',');
 				$config[0]['page_title'] = trim($_POST['page_title']);
+				$config[0]['meta_description'] = trim($_POST['meta_description']);
 				$config[0]['twitter_title'] = trim($_POST['twitter_title']);
 				$config[0]['twitter_description'] = trim($_POST['twitter_description']);
 				$config[0]['twitter_creator'] = $twitter_creatorclean;
@@ -596,6 +597,10 @@ $('#boxedit').on('change',function(){
 				<label class="biglabel<?php echo (!isset($config[0]['page_title']) || $config[0]['page_title'] == '') ? ' error' : ''; ?>">Page Title
 					<input class="smallmargin" type="text" name="page_title" value="<?php echo isset($config[0]['page_title']) ? $config[0]['page_title'] : ''; ?>" />
 					<p class="helptext">Value to fill in for the <b>&lt;title&gt;</b> tag in the page (used by Google and browser tabs).</p>
+				</label>
+				<label class="biglabel<?php echo (!isset($config[0]['meta_description']) || $config[0]['meta_description'] == '') ? ' error' : ''; ?>">Meta Description
+					<input class="smallmargin" type="text" name="meta_description" value="<?php echo isset($config[0]['meta_description']) ? $config[0]['meta_description'] : ''; ?>" />
+					<p class="helptext">Value to fill in for the <b>&lt;meta name="description" ... &gt;</b> tag (used by search engines).</p>
 				</label>
 				<label class="biglabel<?php echo (!isset($config[0]['twitter_title']) || $config[0]['twitter_title'] == '') ? ' error' : ''; ?>">Twitter Title
 					<input class="smallmargin" type="text" name="twitter_title" value="<?php echo isset($config[0]['twitter_title']) ? $config[0]['twitter_title'] : ''; ?>" />
