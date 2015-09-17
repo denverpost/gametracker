@@ -185,7 +185,9 @@ if ($fileteam && !$editdetails) {
 
 		<div id="changeLog" class="reveal-modal" data-reveal>
 			<div class="changelog">
+				<h2>Changelog</h2>
 				<?php include('../changelog.html'); ?>
+				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 			</div>
 		</div>
 		
@@ -667,7 +669,13 @@ function editAds() {
 
 <script type="text/javascript" src="../js/foundation.min.js"></script>
 <script>
-  $(document).foundation();
+	$(document).foundation();
+	$(document).ready(function(){
+		if (location.hash == '#changelog') {
+			$('#changeLog').foundation('reveal', 'open');
+		}
+	});
+	
 </script>
 
 </body>
