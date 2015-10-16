@@ -109,7 +109,7 @@ if (!function_exists('get_next_game'))
 		});
 		//checks array items, in order, for a time that is less than $offset seconds in the future
 		foreach($teamsched as $gt) {
-			if (($gt['gametimeunix'] - $offset) < ($date)) 
+			if ( ( $gt['gametimeunix'] > $date) && ( ($gt['gametimeunix'] - $offset) < ($date) ) ) 
 			{
 				return $gt;
 			}
