@@ -190,7 +190,7 @@ if ($fileteam && !$editdetails) {
 				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 			</div>
 		</div>
-		
+
 		<?php } else {
 
 		$saving = (isset($_REQUEST['saving'])) ? $_REQUEST['saving'] : false;
@@ -306,6 +306,7 @@ $schedule = get_schedule();
 			<?php endif; ?>
 			<fieldset>
 				<legend>Game to track</legend>
+				<p><i>The Game ID should automatically update to the next future game when there are less than 3 days to go.</i></p>
 				<div class="row">
 					<div class="large-6 columns">
 						<label class="biglabel<?php echo (!isset($config[0]['gameid']) || $config[0]['gameid'] == '') ? ' error' : ''; ?>">Game ID

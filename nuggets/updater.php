@@ -14,8 +14,11 @@ $dateoffset = 64800; // 18 hours (in seconds)
 $config = get_config($fileteam);
 $schedule = get_schedule();
 
-$nextgame = get_next_game($schedule,$fileteam,$today,$dateoffset);
-//var_dump($nextgame);
+$nextgame = get_next_game( $schedule, $fileteam, $today, $dateoffset );
+if ( $config[0]['gameid'] < $nextgame['gameid'] ) {
+	$config[0]['gameid'] = $nextgame['gameid'];
+	put_config( $fileteam, $config );
+}
 
 $iterations = ($nextgame['gametimeunix'] < (time() + 1200)) ? 60 : 1;
 $iterations = (isset($options['once'])) ? 1 : 60;
