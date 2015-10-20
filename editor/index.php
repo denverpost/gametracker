@@ -209,7 +209,7 @@ if ($fileteam && !$editdetails) {
 				$config[0]['friendlyname'] = ucfirst(trim($_POST['friendlyname']));
 				$config[0]['displayshort'] = strtoupper(trim($_POST['displayshort']));
 				$config[0]['teamcolor'] = str_replace('#','',trim($_POST['teamcolor']));
-				$config[0]['adsenabled'] = (isset($_POST['adsenabled'])) ? $_POST['adsenabled'] : false;
+				$config[0]['adsenabled'] = (isset($_POST['adsenabled'])) ? $_POST['adsenabled'] : $config[0]['adsenabled'];
 				$config[0]['news_keywords'] = rtrim(trim($_POST['news_keywords']),',');
 				$config[0]['page_title'] = trim($_POST['page_title']);
 				$config[0]['meta_description'] = trim($_POST['meta_description']);
@@ -375,8 +375,9 @@ $schedule = get_schedule();
 				</label>
 				<label class="biglabel<?php echo (!isset($config[0]['videos']) || count($config[0]['videos']) == 0) ? ' error' : ''; ?>">Videos to embed
 					<textarea name="videos" class="smallmargin" rows="5"><?php echo (isset($config[0]['videos']) ) ? implode("\n",$config[0]['videos']) : ''; ?></textarea>
-					<p class="helptext">Enter video IDs (not player IDs!) on their own lines. Videos will be displayed in the order they are input.</p>
-					<p class="helptext">Currently supports Ooyala (32-character ID), Brightcove (13), Youtube (11), NDN (8) and Tout (6). <a href="#" data-reveal-id="videoHelp">How to find the video ID you need</a></p>
+					<p class="helptext">Enter video IDs (not player IDs!) on their own lines. Videos will be displayed in the order they are input. <br />
+					Currently supports Ooyala (32-character ID), Perform (26), Brightcove (13), Youtube (11), NDN (8) and Tout (6).<br />
+					<strong><a href="#" data-reveal-id="videoHelp">How to find the video ID you need</a>.<strong></p>
 				</label>
 			</fieldset>
 			<div class="row">
@@ -405,6 +406,10 @@ $schedule = get_schedule();
 	<h4>NDN:</h4>
 	<code class="prettyprint lang-html">
 	&lt;div class="ndn_embed" style="width:654px;height:368px;" data-config-widget-id="2" data-config-type="VideoPlayer/Single" data-config-tracking-group="90115" data-config-video-id="<b>27361955</b>" data-config-site-section="denverpost2se"&gt;&lt;/div&gt;
+	</code>
+	<h4>Perform:</h4>
+	<code class="prettyprint lang-html">
+	&lt;script src="http://player.performgroup.com/eplayer.js#<b>c7a529f63a5f9ab797656acf4e</b>.11hrrvnxxgcho15mv6dsnvd13y.s" async&gt;&lt;/script&gt;
 	</code>
 	<h4>Ooyala:</h4>
 	<code class="prettyprint lang-html">
